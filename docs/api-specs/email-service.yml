@@ -1,0 +1,93 @@
+openapi: 3.1.0
+info:
+  title: Inopsio Email Service API
+  version: 1.0.0
+  description: Email marketing and campaign management API
+
+servers:
+  - url: https://api.inopsio.com/v1/email
+    description: Production Email API
+
+tags:
+  - name: Campaigns
+    description: Email campaign management
+  - name: Templates
+    description: Email template management
+  - name: Analytics
+    description: Email analytics and metrics
+
+paths:
+  /campaigns:
+    get:
+      summary: List all email campaigns
+      tags: [Campaigns]
+      responses:
+        "200":
+          description: List of campaigns
+
+    post:
+      summary: Create new campaign
+      tags: [Campaigns]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCampaignRequest'
+      responses:
+        "201":
+          description: Campaign created successfully
+
+  /campaigns/{id}/send:
+    post:
+      summary: Send campaign
+      tags: [Campaigns]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Campaign sent successfully
+
+  /templates:
+    get:
+      summary: List email templates
+      tags: [Templates]
+      responses:
+        "200":
+          description: List of templates
+
+components:
+  schemas:
+    CreateCampaignRequest:
+      type: object
+      required:
+        - name
+        - subject
+        - recipients
+      properties:
+        name:
+          type: string
+        subject:
+          type: string
+        templateId:
+          type: string
+          format: uuid
+        recipients:
+          type: array
+          items:
+            type: string
+            format: email
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []

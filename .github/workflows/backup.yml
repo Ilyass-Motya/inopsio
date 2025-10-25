@@ -1,0 +1,107 @@
+name: Nightly Backup
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # Daily at 2 AM
+  workflow_dispatch:
+
+jobs:
+  database-backup:
+    runs-on: ubuntu-latest
+    environment: production
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+      
+      - name: Create database backup
+        run: |
+          # Create RDS snapshot
+          aws rds create-db-snapshot \
+            --db-instance-identifier inopsio-production \
+            --db-snapshot-identifier inopsio-backup-$(date +%Y%m%d-%H%M%S)
+      
+      - name: Backup application data
+        run: |
+          # Backup S3 buckets
+          aws s3 sync s3://inopsio-production-data s3://inopsio-backup-data/$(date +%Y%m%d)/
+          
+          # Backup secrets from Vault
+          vault kv get -format=json secret/backup > backup-secrets.json
+          aws s3 cp backup-secrets.json s3://inopsio-backup-secrets/$(date +%Y%m%d)/
+      
+      - name: Cleanup old backups
+        run: |
+          # Delete backups older than 30 days
+          aws s3 rm s3://inopsio-backup-data/ --recursive --exclude "*" --include "*/" | \
+          while read line; do
+            if [[ $line == *"DELETE"* ]]; then
+              folder=$(echo $line | awk '{print $3}' | sed 's/.*backup-data\///' | sed 's/\/.*//')
+              if [[ $folder < $(date -d '30 days ago' +%Y%m%d) ]]; then
+                aws s3 rm s3://inopsio-backup-data/$folder/ --recursive
+              fi
+            fi
+          done
+  
+  configuration-backup:
+    runs-on: ubuntu-latest
+    environment: production
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+      
+      - name: Backup Kubernetes configurations
+        run: |
+          # Backup K8s configurations
+          kubectl get all -o yaml > k8s-backup-$(date +%Y%m%d).yaml
+          aws s3 cp k8s-backup-$(date +%Y%m%d).yaml s3://inopsio-backup-configs/
+      
+      - name: Backup Terraform state
+        run: |
+          # Backup Terraform state
+          aws s3 cp s3://inopsio-terraform-state/terraform.tfstate s3://inopsio-backup-state/terraform-$(date +%Y%m%d).tfstate
+      
+      - name: Backup monitoring configurations
+        run: |
+          # Backup Prometheus and Grafana configs
+          kubectl get configmap prometheus-config -o yaml > prometheus-backup-$(date +%Y%m%d).yaml
+          kubectl get configmap grafana-config -o yaml > grafana-backup-$(date +%Y%m%d).yaml
+          aws s3 cp prometheus-backup-$(date +%Y%m%d).yaml s3://inopsio-backup-configs/
+          aws s3 cp grafana-backup-$(date +%Y%m%d).yaml s3://inopsio-backup-configs/
+  
+  notification:
+    runs-on: ubuntu-latest
+    needs: [database-backup, configuration-backup]
+    if: always()
+    
+    steps:
+      - name: Send backup notification
+        run: |
+          if [ "${{ needs.database-backup.result }}" == "success" ] && [ "${{ needs.configuration-backup.result }}" == "success" ]; then
+            echo "✅ Backup completed successfully"
+            # Send success notification to Slack
+            curl -X POST -H 'Content-type: application/json' \
+              --data '{"text":"✅ Inopsio backup completed successfully"}' \
+              ${{ secrets.SLACK_WEBHOOK_URL }}
+          else
+            echo "❌ Backup failed"
+            # Send failure notification to Slack
+            curl -X POST -H 'Content-type: application/json' \
+              --data '{"text":"❌ Inopsio backup failed - please check logs"}' \
+              ${{ secrets.SLACK_WEBHOOK_URL }}
+          fi

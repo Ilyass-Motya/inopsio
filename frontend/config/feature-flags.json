@@ -1,0 +1,120 @@
+{
+  "featureFlags": {
+    "global": {
+      "newDashboard": {
+        "enabled": true,
+        "description": "Enable new dashboard design",
+        "rolloutPercentage": 100,
+        "userSegments": ["all"],
+        "environments": ["development", "staging", "production"]
+      },
+      "aiInsights": {
+        "enabled": true,
+        "description": "Enable AI-powered insights",
+        "rolloutPercentage": 50,
+        "userSegments": ["premium", "enterprise"],
+        "environments": ["staging", "production"]
+      },
+      "advancedAnalytics": {
+        "enabled": false,
+        "description": "Enable advanced analytics features",
+        "rolloutPercentage": 0,
+        "userSegments": ["enterprise"],
+        "environments": ["development", "staging"]
+      },
+      "realTimeNotifications": {
+        "enabled": true,
+        "description": "Enable real-time notifications",
+        "rolloutPercentage": 100,
+        "userSegments": ["all"],
+        "environments": ["development", "staging", "production"]
+      }
+    },
+    "modules": {
+      "crm": {
+        "leadScoring": {
+          "enabled": true,
+          "description": "Enable AI-powered lead scoring",
+          "rolloutPercentage": 75,
+          "userSegments": ["premium", "enterprise"],
+          "environments": ["staging", "production"]
+        },
+        "automatedFollowUp": {
+          "enabled": false,
+          "description": "Enable automated follow-up sequences",
+          "rolloutPercentage": 0,
+          "userSegments": ["enterprise"],
+          "environments": ["development"]
+        }
+      },
+      "erp": {
+        "inventoryOptimization": {
+          "enabled": true,
+          "description": "Enable inventory optimization algorithms",
+          "rolloutPercentage": 100,
+          "userSegments": ["all"],
+          "environments": ["staging", "production"]
+        },
+        "predictiveAnalytics": {
+          "enabled": false,
+          "description": "Enable predictive analytics for demand forecasting",
+          "rolloutPercentage": 0,
+          "userSegments": ["enterprise"],
+          "environments": ["development"]
+        }
+      },
+      "email": {
+        "aiContentGeneration": {
+          "enabled": true,
+          "description": "Enable AI-powered email content generation",
+          "rolloutPercentage": 50,
+          "userSegments": ["premium", "enterprise"],
+          "environments": ["staging", "production"]
+        },
+        "advancedSegmentation": {
+          "enabled": true,
+          "description": "Enable advanced customer segmentation",
+          "rolloutPercentage": 100,
+          "userSegments": ["all"],
+          "environments": ["development", "staging", "production"]
+        }
+      },
+      "inosec": {
+        "threatIntelligence": {
+          "enabled": true,
+          "description": "Enable threat intelligence feeds",
+          "rolloutPercentage": 100,
+          "userSegments": ["all"],
+          "environments": ["development", "staging", "production"]
+        },
+        "behavioralAnalytics": {
+          "enabled": false,
+          "description": "Enable behavioral analytics for user monitoring",
+          "rolloutPercentage": 0,
+          "userSegments": ["enterprise"],
+          "environments": ["development"]
+        }
+      }
+    },
+    "experiments": {
+      "newOnboardingFlow": {
+        "enabled": true,
+        "description": "Test new user onboarding flow",
+        "rolloutPercentage": 25,
+        "userSegments": ["new_users"],
+        "environments": ["staging", "production"],
+        "startDate": "2024-01-01",
+        "endDate": "2024-03-31"
+      },
+      "pricingPageRedesign": {
+        "enabled": false,
+        "description": "Test redesigned pricing page",
+        "rolloutPercentage": 0,
+        "userSegments": ["all"],
+        "environments": ["development"],
+        "startDate": "2024-02-01",
+        "endDate": "2024-04-30"
+      }
+    }
+  }
+}

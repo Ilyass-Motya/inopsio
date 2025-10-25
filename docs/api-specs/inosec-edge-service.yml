@@ -1,0 +1,76 @@
+openapi: 3.1.0
+info:
+  title: Inopsio InoSec Edge Service API
+  version: 1.0.0
+  description: Edge security device management and monitoring API
+
+servers:
+  - url: https://api.inopsio.com/v1/inosec/edge
+    description: Production InoSec Edge API
+
+tags:
+  - name: Devices
+    description: Edge device management
+  - name: Telemetry
+    description: Device telemetry and monitoring
+
+paths:
+  /devices:
+    get:
+      summary: List edge devices
+      tags: [Devices]
+      responses:
+        "200":
+          description: List of edge devices
+
+    post:
+      summary: Register new edge device
+      tags: [Devices]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterDeviceRequest'
+      responses:
+        "201":
+          description: Device registered successfully
+
+  /devices/{id}/telemetry:
+    get:
+      summary: Get device telemetry
+      tags: [Telemetry]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Device telemetry data
+
+components:
+  schemas:
+    RegisterDeviceRequest:
+      type: object
+      required:
+        - name
+        - deviceType
+      properties:
+        name:
+          type: string
+        deviceType:
+          type: string
+        location:
+          type: string
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []

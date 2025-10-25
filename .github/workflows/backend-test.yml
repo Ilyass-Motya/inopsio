@@ -1,0 +1,220 @@
+name: Backend Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'backend/**'
+      - 'package.json'
+      - 'yarn.lock'
+      - 'package-lock.json'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+      - 'package.json'
+      - 'yarn.lock'
+      - 'package-lock.json'
+
+jobs:
+  test-auth-service:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.modified, 'backend/auth-service') || contains(github.event.head_commit.added, 'backend/auth-service') || github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Run tests
+        uses: ./.github/actions/backend-test
+        with:
+          service-path: 'backend/auth-service'
+          test-type: 'all'
+          coverage-threshold: '80'
+
+  test-user-service:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.modified, 'backend/user-service') || contains(github.event.head_commit.added, 'backend/user-service') || github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Run tests
+        uses: ./.github/actions/backend-test
+        with:
+          service-path: 'backend/user-service'
+          test-type: 'all'
+          coverage-threshold: '80'
+
+  test-ai-service:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.modified, 'backend/ai-service') || contains(github.event.head_commit.added, 'backend/ai-service') || github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Run tests
+        uses: ./.github/actions/backend-test
+        with:
+          service-path: 'backend/ai-service'
+          test-type: 'all'
+          coverage-threshold: '75'
+
+  test-crm-service:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.modified, 'backend/crm-service') || contains(github.event.head_commit.added, 'backend/crm-service') || github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Run tests
+        uses: ./.github/actions/backend-test
+        with:
+          service-path: 'backend/crm-service'
+          test-type: 'all'
+          coverage-threshold: '80'
+
+  test-erp-service:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.modified, 'backend/erp-service') || contains(github.event.head_commit.added, 'backend/erp-service') || github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Run tests
+        uses: ./.github/actions/backend-test
+        with:
+          service-path: 'backend/erp-service'
+          test-type: 'all'
+          coverage-threshold: '80'
+
+  test-email-service:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.modified, 'backend/email-service') || contains(github.event.head_commit.added, 'backend/email-service') || github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Run tests
+        uses: ./.github/actions/backend-test
+        with:
+          service-path: 'backend/email-service'
+          test-type: 'all'
+          coverage-threshold: '75'
+
+  test-workflow-service:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.modified, 'backend/workflow-service') || contains(github.event.head_commit.added, 'backend/workflow-service') || github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Run tests
+        uses: ./.github/actions/backend-test
+        with:
+          service-path: 'backend/workflow-service'
+          test-type: 'all'
+          coverage-threshold: '80'
+
+  test-gateway:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.modified, 'backend/gateway') || contains(github.event.head_commit.added, 'backend/gateway') || github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Run tests
+        uses: ./.github/actions/backend-test
+        with:
+          service-path: 'backend/gateway'
+          test-type: 'all'
+          coverage-threshold: '85'
+
+  test-monitoring-service:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.modified, 'backend/monitoring-service') || contains(github.event.head_commit.added, 'backend/monitoring-service') || github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Run tests
+        uses: ./.github/actions/backend-test
+        with:
+          service-path: 'backend/monitoring-service'
+          test-type: 'all'
+          coverage-threshold: '80'
+
+  test-inosec-core-service:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.modified, 'backend/inosec-core-service') || contains(github.event.head_commit.added, 'backend/inosec-core-service') || github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Run tests
+        uses: ./.github/actions/backend-test
+        with:
+          service-path: 'backend/inosec-core-service'
+          test-type: 'all'
+          coverage-threshold: '85'
+
+  test-inosec-edge-service:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.modified, 'backend/inosec-edge-service') || contains(github.event.head_commit.added, 'backend/inosec-edge-service') || github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Run tests
+        uses: ./.github/actions/backend-test
+        with:
+          service-path: 'backend/inosec-edge-service'
+          test-type: 'all'
+          coverage-threshold: '85'
+
+  # Summary job to aggregate results
+  test-summary:
+    runs-on: ubuntu-latest
+    needs: [
+      test-auth-service,
+      test-user-service,
+      test-ai-service,
+      test-crm-service,
+      test-erp-service,
+      test-email-service,
+      test-workflow-service,
+      test-gateway,
+      test-monitoring-service,
+      test-inosec-core-service,
+      test-inosec-edge-service
+    ]
+    if: always()
+    
+    steps:
+      - name: Generate test summary
+        run: |
+          echo "## 🧪 Backend Test Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Service | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|---------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Auth Service | ${{ needs.test-auth-service.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| User Service | ${{ needs.test-user-service.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| AI Service | ${{ needs.test-ai-service.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| CRM Service | ${{ needs.test-crm-service.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| ERP Service | ${{ needs.test-erp-service.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Email Service | ${{ needs.test-email-service.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Workflow Service | ${{ needs.test-workflow-service.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Gateway | ${{ needs.test-gateway.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Monitoring Service | ${{ needs.test-monitoring-service.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Inosec Core Service | ${{ needs.test-inosec-core-service.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Inosec Edge Service | ${{ needs.test-inosec-edge-service.result }} |" >> $GITHUB_STEP_SUMMARY

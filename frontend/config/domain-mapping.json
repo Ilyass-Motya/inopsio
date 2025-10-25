@@ -1,0 +1,157 @@
+{
+  "domains": {
+    "production": {
+      "marketing": {
+        "primary": "inopsio.com",
+        "aliases": ["www.inopsio.com"],
+        "ssl": true,
+        "cdn": true,
+        "analytics": "GA4"
+      },
+      "platform": {
+        "primary": "app.inopsio.com",
+        "aliases": ["platform.inopsio.com"],
+        "ssl": true,
+        "cdn": true,
+        "analytics": "GA4"
+      },
+      "admin": {
+        "primary": "admin.inopsio.com",
+        "aliases": ["dashboard.inopsio.com"],
+        "ssl": true,
+        "cdn": false,
+        "analytics": "GA4"
+      },
+      "inosec": {
+        "pattern": "{tenant}.inosec.com",
+        "ssl": true,
+        "cdn": true,
+        "analytics": "GA4"
+      }
+    },
+    "staging": {
+      "marketing": {
+        "primary": "staging.inopsio.com",
+        "aliases": ["www.staging.inopsio.com"],
+        "ssl": true,
+        "cdn": false,
+        "analytics": "GA4"
+      },
+      "platform": {
+        "primary": "app.staging.inopsio.com",
+        "aliases": ["platform.staging.inopsio.com"],
+        "ssl": true,
+        "cdn": false,
+        "analytics": "GA4"
+      },
+      "admin": {
+        "primary": "admin.staging.inopsio.com",
+        "aliases": ["dashboard.staging.inopsio.com"],
+        "ssl": true,
+        "cdn": false,
+        "analytics": "GA4"
+      },
+      "inosec": {
+        "pattern": "{tenant}.staging.inosec.com",
+        "ssl": true,
+        "cdn": false,
+        "analytics": "GA4"
+      }
+    },
+    "development": {
+      "marketing": {
+        "primary": "localhost:3000",
+        "aliases": ["127.0.0.1:3000"],
+        "ssl": false,
+        "cdn": false,
+        "analytics": null
+      },
+      "platform": {
+        "primary": "localhost:3001",
+        "aliases": ["127.0.0.1:3001"],
+        "ssl": false,
+        "cdn": false,
+        "analytics": null
+      },
+      "admin": {
+        "primary": "localhost:3003",
+        "aliases": ["127.0.0.1:3003"],
+        "ssl": false,
+        "cdn": false,
+        "analytics": null
+      },
+      "inosec": {
+        "pattern": "localhost:3002",
+        "ssl": false,
+        "cdn": false,
+        "analytics": null
+      }
+    }
+  },
+  "tenants": {
+    "acme": {
+      "id": "acme",
+      "name": "ACME Corporation",
+      "domain": "acme.inosec.com",
+      "theme": "acme",
+      "features": ["core", "edge", "one"],
+      "settings": {
+        "timezone": "America/New_York",
+        "language": "en",
+        "notifications": true,
+        "dataRetention": "7years"
+      }
+    },
+    "techcorp": {
+      "id": "techcorp",
+      "name": "TechCorp Industries",
+      "domain": "techcorp.inosec.com",
+      "theme": "techcorp",
+      "features": ["core", "edge"],
+      "settings": {
+        "timezone": "Europe/London",
+        "language": "en",
+        "notifications": true,
+        "dataRetention": "5years"
+      }
+    },
+    "healthcare": {
+      "id": "healthcare",
+      "name": "Healthcare Solutions Inc",
+      "domain": "healthcare.inosec.com",
+      "theme": "default",
+      "features": ["core", "edge", "one"],
+      "settings": {
+        "timezone": "America/Chicago",
+        "language": "en",
+        "notifications": true,
+        "dataRetention": "10years",
+        "compliance": ["HIPAA", "SOC2"]
+      }
+    }
+  },
+  "routing": {
+    "rules": [
+      {
+        "pattern": "*.inosec.com",
+        "target": "inosec-app",
+        "middleware": ["tenant-detection", "theme-injection"]
+      },
+      {
+        "pattern": "app.inopsio.com",
+        "target": "platform-app",
+        "middleware": ["auth-required", "feature-flags"]
+      },
+      {
+        "pattern": "admin.inopsio.com",
+        "target": "admin-app",
+        "middleware": ["admin-auth", "audit-logging"]
+      },
+      {
+        "pattern": "inopsio.com",
+        "target": "marketing-app",
+        "middleware": ["seo-optimization", "analytics"]
+      }
+    ]
+  }
+}

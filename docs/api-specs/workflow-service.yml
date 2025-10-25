@@ -1,0 +1,87 @@
+openapi: 3.1.0
+info:
+  title: Inopsio Workflow Service API
+  version: 1.0.0
+  description: Business process automation and workflow management API
+
+servers:
+  - url: https://api.inopsio.com/v1/workflow
+    description: Production Workflow API
+
+tags:
+  - name: Workflows
+    description: Workflow definition management
+  - name: Executions
+    description: Workflow execution management
+  - name: Tasks
+    description: Task management
+
+paths:
+  /workflows:
+    get:
+      summary: List all workflows
+      tags: [Workflows]
+      responses:
+        "200":
+          description: List of workflows
+
+    post:
+      summary: Create new workflow
+      tags: [Workflows]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWorkflowRequest'
+      responses:
+        "201":
+          description: Workflow created successfully
+
+  /workflows/{id}/execute:
+    post:
+      summary: Execute workflow
+      tags: [Executions]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Workflow execution started
+
+  /executions:
+    get:
+      summary: List workflow executions
+      tags: [Executions]
+      responses:
+        "200":
+          description: List of workflow executions
+
+components:
+  schemas:
+    CreateWorkflowRequest:
+      type: object
+      required:
+        - name
+        - definition
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        definition:
+          type: object
+          description: Workflow definition in JSON format
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []

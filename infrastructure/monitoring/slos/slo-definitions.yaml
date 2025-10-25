@@ -1,0 +1,313 @@
+# Service Level Objectives (SLOs) for Inopsio Platform
+# These SLOs define the expected performance and availability targets
+
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: inopsio-slos
+  namespace: monitoring
+  labels:
+    app: inopsio-slos
+    component: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: inopsio-slos
+  endpoints:
+  - port: metrics
+    path: /metrics
+    interval: 30s
+
+---
+# SLO Definitions for Inopsio Services
+
+# Frontend Application SLOs
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-slos
+  namespace: monitoring
+data:
+  slo.yaml: |
+    version: "1.0"
+    service: "inopsio-frontend"
+    slos:
+      - name: "frontend-availability"
+        description: "Frontend application availability"
+        objective: 99.9
+        window: "30d"
+        indicator:
+          type: "availability"
+          metric: "http_requests_total"
+          filter: "job=frontend,code!~'5..'"
+        error_budget: 0.1
+        alerting:
+          burn_rate: 2.0
+          window: "1h"
+      
+      - name: "frontend-latency"
+        description: "Frontend response time"
+        objective: 95.0
+        window: "30d"
+        indicator:
+          type: "latency"
+          metric: "http_request_duration_seconds"
+          filter: "job=frontend,quantile=0.95"
+        error_budget: 5.0
+        alerting:
+          burn_rate: 1.5
+          window: "30m"
+
+# Backend Services SLOs
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-slos
+  namespace: monitoring
+data:
+  slo.yaml: |
+    version: "1.0"
+    service: "inopsio-backend"
+    slos:
+      - name: "auth-service-availability"
+        description: "Authentication service availability"
+        objective: 99.95
+        window: "30d"
+        indicator:
+          type: "availability"
+          metric: "http_requests_total"
+          filter: "job=auth-service,code!~'5..'"
+        error_budget: 0.05
+        alerting:
+          burn_rate: 3.0
+          window: "1h"
+      
+      - name: "user-service-availability"
+        description: "User service availability"
+        objective: 99.9
+        window: "30d"
+        indicator:
+          type: "availability"
+          metric: "http_requests_total"
+          filter: "job=user-service,code!~'5..'"
+        error_budget: 0.1
+        alerting:
+          burn_rate: 2.0
+          window: "1h"
+      
+      - name: "ai-service-availability"
+        description: "AI service availability"
+        objective: 99.5
+        window: "30d"
+        indicator:
+          type: "availability"
+          metric: "http_requests_total"
+          filter: "job=ai-service,code!~'5..'"
+        error_budget: 0.5
+        alerting:
+          burn_rate: 1.5
+          window: "2h"
+      
+      - name: "crm-service-availability"
+        description: "CRM service availability"
+        objective: 99.9
+        window: "30d"
+        indicator:
+          type: "availability"
+          metric: "http_requests_total"
+          filter: "job=crm-service,code!~'5..'"
+        error_budget: 0.1
+        alerting:
+          burn_rate: 2.0
+          window: "1h"
+      
+      - name: "erp-service-availability"
+        description: "ERP service availability"
+        objective: 99.9
+        window: "30d"
+        indicator:
+          type: "availability"
+          metric: "http_requests_total"
+          filter: "job=erp-service,code!~'5..'"
+        error_budget: 0.1
+        alerting:
+          burn_rate: 2.0
+          window: "1h"
+      
+      - name: "email-service-availability"
+        description: "Email service availability"
+        objective: 99.5
+        window: "30d"
+        indicator:
+          type: "availability"
+          metric: "http_requests_total"
+          filter: "job=email-service,code!~'5..'"
+        error_budget: 0.5
+        alerting:
+          burn_rate: 1.5
+          window: "2h"
+      
+      - name: "workflow-service-availability"
+        description: "Workflow service availability"
+        objective: 99.9
+        window: "30d"
+        indicator:
+          type: "availability"
+          metric: "http_requests_total"
+          filter: "job=workflow-service,code!~'5..'"
+        error_budget: 0.1
+        alerting:
+          burn_rate: 2.0
+          window: "1h"
+      
+      - name: "gateway-availability"
+        description: "API Gateway availability"
+        objective: 99.95
+        window: "30d"
+        indicator:
+          type: "availability"
+          metric: "http_requests_total"
+          filter: "job=gateway,code!~'5..'"
+        error_budget: 0.05
+        alerting:
+          burn_rate: 3.0
+          window: "1h"
+      
+      - name: "monitoring-service-availability"
+        description: "Monitoring service availability"
+        objective: 99.9
+        window: "30d"
+        indicator:
+          type: "availability"
+          metric: "http_requests_total"
+          filter: "job=monitoring-service,code!~'5..'"
+        error_budget: 0.1
+        alerting:
+          burn_rate: 2.0
+          window: "1h"
+      
+      - name: "inosec-core-availability"
+        description: "Inosec Core service availability"
+        objective: 99.95
+        window: "30d"
+        indicator:
+          type: "availability"
+          metric: "http_requests_total"
+          filter: "job=inosec-core-service,code!~'5..'"
+        error_budget: 0.05
+        alerting:
+          burn_rate: 3.0
+          window: "1h"
+      
+      - name: "inosec-edge-availability"
+        description: "Inosec Edge service availability"
+        objective: 99.95
+        window: "30d"
+        indicator:
+          type: "availability"
+          metric: "http_requests_total"
+          filter: "job=inosec-edge-service,code!~'5..'"
+        error_budget: 0.05
+        alerting:
+          burn_rate: 3.0
+          window: "1h"
+
+# Database SLOs
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: database-slos
+  namespace: monitoring
+data:
+  slo.yaml: |
+    version: "1.0"
+    service: "inopsio-database"
+    slos:
+      - name: "database-availability"
+        description: "Database availability"
+        objective: 99.99
+        window: "30d"
+        indicator:
+          type: "availability"
+          metric: "database_up"
+          filter: "job=database"
+        error_budget: 0.01
+        alerting:
+          burn_rate: 5.0
+          window: "30m"
+      
+      - name: "database-connection-pool"
+        description: "Database connection pool health"
+        objective: 99.9
+        window: "30d"
+        indicator:
+          type: "availability"
+          metric: "database_connections_active"
+          filter: "job=database,state=idle"
+        error_budget: 0.1
+        alerting:
+          burn_rate: 2.0
+          window: "1h"
+      
+      - name: "database-query-performance"
+        description: "Database query performance"
+        objective: 95.0
+        window: "30d"
+        indicator:
+          type: "latency"
+          metric: "database_query_duration_seconds"
+          filter: "job=database,quantile=0.95"
+        error_budget: 5.0
+        alerting:
+          burn_rate: 1.5
+          window: "30m"
+
+# Infrastructure SLOs
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: infrastructure-slos
+  namespace: monitoring
+data:
+  slo.yaml: |
+    version: "1.0"
+    service: "inopsio-infrastructure"
+    slos:
+      - name: "kubernetes-cluster-health"
+        description: "Kubernetes cluster health"
+        objective: 99.9
+        window: "30d"
+        indicator:
+          type: "availability"
+          metric: "kube_node_status_condition"
+          filter: "job=kubernetes,condition=Ready,status=true"
+        error_budget: 0.1
+        alerting:
+          burn_rate: 2.0
+          window: "1h"
+      
+      - name: "pod-restart-rate"
+        description: "Pod restart rate"
+        objective: 99.5
+        window: "30d"
+        indicator:
+          type: "availability"
+          metric: "kube_pod_container_status_restarts_total"
+          filter: "job=kubernetes"
+        error_budget: 0.5
+        alerting:
+          burn_rate: 1.5
+          window: "2h"
+      
+      - name: "resource-utilization"
+        description: "Resource utilization"
+        objective: 90.0
+        window: "30d"
+        indicator:
+          type: "availability"
+          metric: "node_cpu_seconds_total"
+          filter: "job=node-exporter,mode=idle"
+        error_budget: 10.0
+        alerting:
+          burn_rate: 1.2
+          window: "4h"

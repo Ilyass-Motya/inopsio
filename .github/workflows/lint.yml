@@ -1,0 +1,102 @@
+name: Lint and Format Check
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-frontend:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm ci
+      
+      - name: Run ESLint
+        run: |
+          cd frontend
+          npm run lint
+      
+      - name: Run Prettier check
+        run: |
+          cd frontend
+          npm run format:check
+      
+      - name: Run TypeScript check
+        run: |
+          cd frontend
+          npm run type-check
+  
+  lint-backend:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: |
+          cd backend
+          npm ci
+      
+      - name: Run ESLint
+        run: |
+          cd backend
+          npm run lint
+      
+      - name: Run Prettier check
+        run: |
+          cd backend
+          npm run format:check
+      
+      - name: Run TypeScript check
+        run: |
+          cd backend
+          npm run type-check
+  
+  lint-infrastructure:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: '1.0.0'
+      
+      - name: Run Terraform fmt
+        run: |
+          cd infrastructure/terraform
+          terraform fmt -check -diff
+      
+      - name: Run TFLint
+        run: |
+          cd infrastructure/terraform
+          tflint --init
+          tflint
+      
+      - name: Run Checkov
+        run: |
+          cd infrastructure/terraform
+          checkov -d . --framework terraform

@@ -1,0 +1,18 @@
+# Telemetry output files
+*.log
+*.json
+*.csv
+*.xml
+
+# Analytics data
+analytics/
+metrics/
+reports/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Backup files
+*.bak
+*.backup

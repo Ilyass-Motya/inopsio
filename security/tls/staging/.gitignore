@@ -1,0 +1,29 @@
+# Staging TLS certificates - Use test certificates only
+*.crt
+*.key
+*.pem
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.truststore
+*.cer
+*.der
+
+# Certificate chains
+*.chain
+*.ca
+*.intermediate
+
+# Private keys
+*.private
+*.secret
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Temporary files
+*.tmp
+*.temp

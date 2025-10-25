@@ -1,0 +1,138 @@
+name: Frontend CI
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'frontend/**'
+      - 'package.json'
+      - 'yarn.lock'
+      - 'package-lock.json'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'frontend/**'
+      - 'package.json'
+      - 'yarn.lock'
+      - 'package-lock.json'
+
+jobs:
+  frontend-ci:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
+      
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: frontend/node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+      
+      - name: Cache Next.js build cache
+        uses: actions/cache@v4
+        with:
+          path: frontend/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('frontend/package-lock.json') }}-${{ hashFiles('frontend/**/*.ts', 'frontend/**/*.tsx', 'frontend/**/*.js', 'frontend/**/*.jsx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('frontend/package-lock.json') }}-
+            ${{ runner.os }}-nextjs-
+      
+      - name: Cache TypeScript build info
+        uses: actions/cache@v4
+        with:
+          path: frontend/.next/types
+          key: ${{ runner.os }}-typescript-${{ hashFiles('frontend/tsconfig.json') }}-${{ hashFiles('frontend/**/*.ts', 'frontend/**/*.tsx') }}
+          restore-keys: |
+            ${{ runner.os }}-typescript-${{ hashFiles('frontend/tsconfig.json') }}-
+            ${{ runner.os }}-typescript-
+      
+      - name: Cache ESLint cache
+        uses: actions/cache@v4
+        with:
+          path: frontend/.eslintcache
+          key: ${{ runner.os }}-eslint-${{ hashFiles('frontend/.eslintrc.js', 'frontend/.eslintrc.json') }}-${{ hashFiles('frontend/**/*.ts', 'frontend/**/*.tsx', 'frontend/**/*.js', 'frontend/**/*.jsx') }}
+          restore-keys: |
+            ${{ runner.os }}-eslint-${{ hashFiles('frontend/.eslintrc.js', 'frontend/.eslintrc.json') }}-
+            ${{ runner.os }}-eslint-
+      
+      - name: Cache Prettier cache
+        uses: actions/cache@v4
+        with:
+          path: frontend/.prettiercache
+          key: ${{ runner.os }}-prettier-${{ hashFiles('frontend/.prettierrc', 'frontend/.prettierrc.js', 'frontend/.prettierrc.json') }}-${{ hashFiles('frontend/**/*.ts', 'frontend/**/*.tsx', 'frontend/**/*.js', 'frontend/**/*.jsx', 'frontend/**/*.json', 'frontend/**/*.md') }}
+          restore-keys: |
+            ${{ runner.os }}-prettier-${{ hashFiles('frontend/.prettierrc', 'frontend/.prettierrc.js', 'frontend/.prettierrc.json') }}-
+            ${{ runner.os }}-prettier-
+      
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm ci --prefer-offline --no-audit
+      
+      - name: Run linting
+        run: |
+          cd frontend
+          npm run lint
+      
+      - name: Run type checking
+        run: |
+          cd frontend
+          npm run type-check
+      
+      - name: Run formatting check
+        run: |
+          cd frontend
+          npm run format:check
+      
+      - name: Run unit tests
+        run: |
+          cd frontend
+          npm run test:unit -- --coverage --watchAll=false
+      
+      - name: Run integration tests
+        run: |
+          cd frontend
+          npm run test:integration
+      
+      - name: Build application
+        run: |
+          cd frontend
+          npm run build
+        env:
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL || 'http://localhost:3001' }}
+          NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL || 'http://localhost:3000' }}
+      
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build-${{ github.sha }}
+          path: frontend/.next/
+          retention-days: 7
+      
+      - name: Upload test coverage
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: frontend-coverage-${{ github.sha }}
+          path: frontend/coverage/
+          retention-days: 30
+      
+      - name: Comment PR with coverage
+        uses: codecov/codecov-action@v3
+        if: github.event_name == 'pull_request'
+        with:
+          file: frontend/coverage/lcov.info
+          flags: frontend
+          name: frontend-coverage
+          fail_ci_if_error: false

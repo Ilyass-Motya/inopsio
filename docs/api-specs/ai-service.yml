@@ -1,0 +1,54 @@
+openapi: 3.1.0
+info:
+  title: Inopsio AI & Automation API
+  version: 2.0.0
+  description: AI automation API for ML model management and anomaly detection
+
+servers:
+  - url: https://ai.inopsio.com/v2
+    description: Production AI Service
+
+paths:
+  /models/train:
+    post:
+      summary: Trigger model training job
+      tags: [AI, Training]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                model_name:
+                  type: string
+                dataset:
+                  type: string
+                params:
+                  type: object
+      responses:
+        "202":
+          description: Training job queued
+
+  /models/{model_id}/predict:
+    post:
+      summary: Run inference
+      parameters:
+        - name: model_id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                input:
+                  type: object
+      responses:
+        "200":
+          description: Prediction result
+          content:
+            application/json:
+              schema:
+                properties:
+                  output:
+                    type: object

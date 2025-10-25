@@ -1,0 +1,105 @@
+# Codecov configuration for Inopsio platform
+coverage:
+  status:
+    project:
+      default:
+        target: 80%
+        threshold: 5%
+        informational: true
+    patch:
+      default:
+        target: 80%
+        threshold: 5%
+        informational: true
+
+  precision: 2
+  round: down
+  range: "70...100"
+
+  notify:
+    wait_for_ci: true
+    require_ci_to_pass: true
+
+comment:
+  layout: "header,diff,files,footer"
+  behavior: default
+  require_changes: false
+  require_base: no
+  require_head: yes
+
+github_checks:
+  annotations: true
+
+# Ignore coverage for certain files
+ignore:
+  - "**/*.test.*"
+  - "**/*.spec.*"
+  - "**/*.stories.*"
+  - "**/node_modules/**"
+  - "**/dist/**"
+  - "**/build/**"
+  - "**/.next/**"
+  - "**/coverage/**"
+  - "**/__tests__/**"
+  - "**/test/**"
+  - "**/tests/**"
+  - "**/mocks/**"
+  - "**/fixtures/**"
+  - "**/stories/**"
+  - "**/*.d.ts"
+  - "**/index.ts"
+  - "**/index.js"
+  - "**/index.tsx"
+  - "**/index.jsx"
+
+# Path-based coverage requirements
+paths:
+  - "frontend/src/components/**"
+    target: 90%
+    threshold: 5%
+  - "frontend/src/utils/**"
+    target: 95%
+    threshold: 5%
+  - "frontend/src/hooks/**"
+    target: 90%
+    threshold: 5%
+  - "backend/src/services/**"
+    target: 85%
+    threshold: 5%
+  - "backend/src/controllers/**"
+    target: 80%
+    threshold: 5%
+  - "backend/src/middleware/**"
+    target: 85%
+    threshold: 5%
+  - "backend/src/utils/**"
+    target: 95%
+    threshold: 5%
+  - "backend/ai-service/**"
+    target: 80%
+    threshold: 5%
+
+# Flags for different test types
+flags:
+  unit:
+    paths:
+      - "frontend/src/**"
+      - "backend/src/**"
+  integration:
+    paths:
+      - "frontend/src/**"
+      - "backend/src/**"
+  e2e:
+    paths:
+      - "frontend/src/**"
+      - "backend/src/**"
+
+# Carryforward configuration
+carryforward:
+  paths:
+    - "frontend/src/**"
+    - "backend/src/**"
+  flags:
+    - unit
+    - integration
+    - e2e

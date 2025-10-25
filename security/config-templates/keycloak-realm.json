@@ -1,0 +1,283 @@
+{
+  "realm": "inopsio",
+  "displayName": "Inopsio Platform",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "registrationEmailAsUsername": false,
+  "rememberMe": true,
+  "verifyEmail": true,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "permanentLockout": false,
+  "maxFailureWaitSeconds": 900,
+  "minimumQuickLoginWaitSeconds": 60,
+  "waitIncrementSeconds": 60,
+  "quickLoginCheckMilliSeconds": 1000,
+  "maxDeltaTimeSeconds": 43200,
+  "failureFactor": 30,
+  "defaultRoles": ["user"],
+  "requiredCredentials": ["password"],
+  "passwordPolicy": "length(8) and digits(2) and lowerCase(2) and upperCase(2) and specialChars(1) and notUsername",
+  "otpPolicyType": "totp",
+  "otpPolicyAlgorithm": "HmacSHA1",
+  "otpPolicyInitialCounter": 0,
+  "otpPolicyDigits": 6,
+  "otpPolicyLookAheadWindow": 1,
+  "otpPolicyPeriod": 30,
+  "otpSupportedApplications": ["FreeOTP", "Google Authenticator"],
+  "browserSecurityHeaders": {
+    "contentSecurityPolicyReportOnly": "",
+    "xContentTypeOptions": "nosniff",
+    "xRobotsTag": "none",
+    "xFrameOptions": "SAMEORIGIN",
+    "contentSecurityPolicy": "frame-src 'self'; frame-ancestors 'self'; object-src 'none';",
+    "xXSSProtection": "1; mode=block",
+    "strictTransportSecurity": "max-age=31536000; includeSubDomains"
+  },
+  "smtpServer": {
+    "password": "${vault:secret/inopsio/smtp#password}",
+    "port": "587",
+    "ssl": false,
+    "starttls": true,
+    "envelopeFrom": "noreply@inopsio.local",
+    "from": "Inopsio Platform <noreply@inopsio.local>",
+    "fromDisplayName": "Inopsio Platform",
+    "replyTo": "support@inopsio.local",
+    "replyToDisplayName": "Inopsio Support",
+    "host": "smtp.inopsio.local",
+    "auth": true,
+    "user": "noreply@inopsio.local"
+  },
+  "loginTheme": "inopsio",
+  "accountTheme": "inopsio",
+  "adminTheme": "inopsio",
+  "emailTheme": "inopsio",
+  "internationalizationEnabled": true,
+  "supportedLocales": ["en", "es", "fr", "de"],
+  "defaultLocale": "en",
+  "loginTheme": "inopsio",
+  "accountTheme": "inopsio",
+  "adminTheme": "inopsio",
+  "emailTheme": "inopsio",
+  "eventsEnabled": true,
+  "eventsListeners": ["jboss-logging", "inopsio-audit"],
+  "enabledEventTypes": [
+    "LOGIN",
+    "LOGIN_ERROR",
+    "LOGOUT",
+    "LOGOUT_ERROR",
+    "REGISTER",
+    "REGISTER_ERROR",
+    "UPDATE_PASSWORD",
+    "UPDATE_PASSWORD_ERROR",
+    "UPDATE_PROFILE",
+    "UPDATE_PROFILE_ERROR",
+    "VERIFY_EMAIL",
+    "VERIFY_EMAIL_ERROR",
+    "REMOVE_TOTP",
+    "REMOVE_TOTP_ERROR",
+    "UPDATE_TOTP",
+    "UPDATE_TOTP_ERROR",
+    "SEND_VERIFY_EMAIL",
+    "SEND_VERIFY_EMAIL_ERROR",
+    "SEND_RESET_PASSWORD",
+    "SEND_RESET_PASSWORD_ERROR",
+    "RESET_PASSWORD",
+    "RESET_PASSWORD_ERROR",
+    "INVALID_SIGNATURE",
+    "INVALID_SIGNATURE_ERROR",
+    "REGISTER_NODE",
+    "REGISTER_NODE_ERROR",
+    "UNREGISTER_NODE",
+    "UNREGISTER_NODE_ERROR",
+    "USER_INFO_REQUEST",
+    "USER_INFO_REQUEST_ERROR",
+    "CODE_TO_TOKEN",
+    "CODE_TO_TOKEN_ERROR",
+    "TOKEN_EXCHANGE",
+    "TOKEN_EXCHANGE_ERROR",
+    "CLIENT_INFO",
+    "CLIENT_INFO_ERROR",
+    "REFRESH_TOKEN",
+    "REFRESH_TOKEN_ERROR",
+    "VALIDATE_ACCESS_TOKEN",
+    "VALIDATE_ACCESS_TOKEN_ERROR",
+    "INTROSPECT_TOKEN",
+    "INTROSPECT_TOKEN_ERROR",
+    "FEDERATED_IDENTITY_LINK",
+    "FEDERATED_IDENTITY_LINK_ERROR",
+    "REMOVE_FEDERATED_IDENTITY",
+    "REMOVE_FEDERATED_IDENTITY_ERROR",
+    "SEND_IDENTITY_PROVIDER_LINK",
+    "SEND_IDENTITY_PROVIDER_LINK_ERROR",
+    "SEND_VERIFY_EMAIL",
+    "SEND_VERIFY_EMAIL_ERROR",
+    "VERIFY_EMAIL",
+    "VERIFY_EMAIL_ERROR",
+    "SEND_RESET_PASSWORD",
+    "SEND_RESET_PASSWORD_ERROR",
+    "RESET_PASSWORD",
+    "RESET_PASSWORD_ERROR",
+    "SEND_IDENTITY_PROVIDER_LINK",
+    "SEND_IDENTITY_PROVIDER_LINK_ERROR",
+    "REMOVE_TOTP",
+    "REMOVE_TOTP_ERROR",
+    "UPDATE_TOTP",
+    "UPDATE_TOTP_ERROR",
+    "UPDATE_PASSWORD",
+    "UPDATE_PASSWORD_ERROR",
+    "UPDATE_PROFILE",
+    "UPDATE_PROFILE_ERROR",
+    "UPDATE_EMAIL",
+    "UPDATE_EMAIL_ERROR",
+    "ACCOUNT_DISABLED",
+    "ACCOUNT_ENABLED",
+    "ACCOUNT_LOCKED",
+    "ACCOUNT_UNLOCKED"
+  ],
+  "adminEventsEnabled": true,
+  "adminEventsDetailsEnabled": true,
+  "clients": [
+    {
+      "clientId": "inopsio-frontend",
+      "name": "Inopsio Frontend",
+      "description": "Frontend application client",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "${vault:secret/inopsio/clients/frontend#secret}",
+      "redirectUris": [
+        "https://app.inopsio.local/*",
+        "https://localhost:3000/*"
+      ],
+      "webOrigins": [
+        "https://app.inopsio.local",
+        "https://localhost:3000"
+      ],
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true,
+      "authorizationServicesEnabled": true,
+      "fullScopeAllowed": false,
+      "defaultClientScopes": [
+        "web-origins",
+        "role_list",
+        "profile",
+        "roles",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    },
+    {
+      "clientId": "inopsio-backend",
+      "name": "Inopsio Backend Services",
+      "description": "Backend microservices client",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "${vault:secret/inopsio/clients/backend#secret}",
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "authorizationServicesEnabled": true,
+      "fullScopeAllowed": false,
+      "defaultClientScopes": [
+        "web-origins",
+        "role_list",
+        "profile",
+        "roles",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    }
+  ],
+  "roles": {
+    "realm": [
+      {
+        "name": "admin",
+        "description": "Administrator role with full access",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "user",
+        "description": "Standard user role",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "auditor",
+        "description": "Auditor role with read-only access",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "developer",
+        "description": "Developer role with limited admin access",
+        "composite": false,
+        "clientRole": false
+      }
+    ]
+  },
+  "groups": [
+    {
+      "name": "Administrators",
+      "path": "/Administrators",
+      "subGroups": []
+    },
+    {
+      "name": "Developers",
+      "path": "/Developers",
+      "subGroups": []
+    },
+    {
+      "name": "Auditors",
+      "path": "/Auditors",
+      "subGroups": []
+    },
+    {
+      "name": "Users",
+      "path": "/Users",
+      "subGroups": []
+    }
+  ],
+  "defaultGroups": ["/Users"],
+  "clientScopes": [
+    {
+      "name": "inopsio-admin",
+      "description": "Admin access scope",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.claim": "true",
+        "display.on.consent.screen": "true"
+      }
+    },
+    {
+      "name": "inopsio-user",
+      "description": "User access scope",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.claim": "true",
+        "display.on.consent.screen": "true"
+      }
+    }
+  ]
+}

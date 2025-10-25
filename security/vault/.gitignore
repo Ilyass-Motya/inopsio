@@ -1,0 +1,32 @@
+# Ignore all Vault secret files
+*.json
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.truststore
+
+# Vault data
+data/
+secrets/
+policies/
+tokens/
+unseal-keys/
+
+# Environment files
+.env
+.env.local
+.env.production
+.env.staging
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Temporary files
+*.tmp
+*.temp

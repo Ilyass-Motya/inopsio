@@ -1,0 +1,49 @@
+openapi: 3.1.0
+info:
+  title: Inopsio Tenant Service
+  version: 2.0.0
+  description: API for tenant lifecycle management and configuration
+
+servers:
+  - url: https://tenant.inopsio.com/v2
+    description: Tenant Administration
+
+paths:
+  /tenants:
+    post:
+      summary: Create new tenant
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTenant'
+      responses:
+        "201":
+          description: Tenant created successfully
+  /tenants/{tenant_id}:
+    get:
+      summary: Retrieve tenant details
+      parameters:
+        - name: tenant_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Tenant information
+  /tenants/{tenant_id}/deactivate:
+    post:
+      summary: Deactivate tenant
+      responses:
+        "200":
+          description: Deactivation success
+
+components:
+  schemas:
+    NewTenant:
+      type: object
+      properties:
+        name: { type: string }
+        domain: { type: string }
+        contact_email: { type: string }

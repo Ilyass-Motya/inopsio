@@ -1,0 +1,152 @@
+openapi: 3.1.0
+info:
+  title: Inopsio ERP Service API
+  version: 1.0.0
+  description: Enterprise Resource Planning API for invoices, orders, inventory, and financial management
+
+servers:
+  - url: https://api.inopsio.com/v1/erp
+    description: Production ERP API
+  - url: https://staging.api.inopsio.com/v1/erp
+    description: Staging Environment
+
+tags:
+  - name: Invoices
+    description: Invoice management
+  - name: Orders
+    description: Order processing
+  - name: Inventory
+    description: Inventory management
+  - name: Payments
+    description: Payment processing
+  - name: Financial
+    description: Financial reporting
+
+paths:
+  /invoices:
+    get:
+      summary: List all invoices
+      tags: [Invoices]
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [draft, sent, paid, overdue, cancelled]
+      responses:
+        "200":
+          description: List of invoices
+
+    post:
+      summary: Create new invoice
+      tags: [Invoices]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateInvoiceRequest'
+      responses:
+        "201":
+          description: Invoice created successfully
+
+  /invoices/{id}:
+    get:
+      summary: Get invoice by ID
+      tags: [Invoices]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Invoice details
+
+  /orders:
+    get:
+      summary: List all orders
+      tags: [Orders]
+      responses:
+        "200":
+          description: List of orders
+
+  /inventory:
+    get:
+      summary: List inventory items
+      tags: [Inventory]
+      responses:
+        "200":
+          description: List of inventory items
+
+  /payments:
+    post:
+      summary: Process payment
+      tags: [Payments]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+      responses:
+        "200":
+          description: Payment processed successfully
+
+components:
+  schemas:
+    CreateInvoiceRequest:
+      type: object
+      required:
+        - customerId
+        - items
+      properties:
+        customerId:
+          type: string
+          format: uuid
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceItem'
+        dueDate:
+          type: string
+          format: date
+
+    InvoiceItem:
+      type: object
+      properties:
+        description:
+          type: string
+        quantity:
+          type: number
+        unitPrice:
+          type: number
+        total:
+          type: number
+
+    PaymentRequest:
+      type: object
+      required:
+        - invoiceId
+        - amount
+        - method
+      properties:
+        invoiceId:
+          type: string
+          format: uuid
+        amount:
+          type: number
+        method:
+          type: string
+          enum: [credit_card, bank_transfer, paypal]
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []

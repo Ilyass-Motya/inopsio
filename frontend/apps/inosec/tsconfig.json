@@ -1,0 +1,22 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@inopsio/ui": ["../../packages/ui/src"],
+      "@inopsio/auth": ["../../packages/auth/src"],
+      "@inopsio/api": ["../../packages/api/src"],
+      "@inopsio/utils": ["../../packages/utils/src"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

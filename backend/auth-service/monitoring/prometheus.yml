@@ -1,0 +1,26 @@
+# Prometheus configuration for Auth Service
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "auth-service-rules.yml"
+
+scrape_configs:
+  - job_name: 'auth-service'
+    static_configs:
+      - targets: ['localhost:8081']
+    metrics_path: '/metrics'
+    scrape_interval: 5s
+
+  - job_name: 'auth-service-health'
+    static_configs:
+      - targets: ['localhost:8081']
+    metrics_path: '/health'
+    scrape_interval: 30s
+
+  - job_name: 'keycloak-metrics'
+    static_configs:
+      - targets: ['localhost:8080']
+    metrics_path: '/auth/realms/master/metrics'
+    scrape_interval: 30s

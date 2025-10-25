@@ -1,0 +1,257 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Inopsio SLO Dashboard",
+    "tags": ["inopsio", "slo", "monitoring"],
+    "style": "dark",
+    "timezone": "browser",
+    "refresh": "30s",
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "panels": [
+      {
+        "id": 1,
+        "title": "Frontend Availability SLO",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "rate(http_requests_total{job=\"frontend\",code!~\"5..\"}[5m]) / rate(http_requests_total{job=\"frontend\"}[5m]) * 100",
+            "legendFormat": "Availability %"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "steps": [
+                {"color": "red", "value": 0},
+                {"color": "yellow", "value": 99.5},
+                {"color": "green", "value": 99.9}
+              ]
+            }
+          }
+        },
+        "gridPos": {"h": 8, "w": 6, "x": 0, "y": 0}
+      },
+      {
+        "id": 2,
+        "title": "Frontend Latency SLO",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job=\"frontend\"}[5m]))",
+            "legendFormat": "95th Percentile Latency"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s",
+            "min": 0,
+            "max": 2,
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": 0},
+                {"color": "yellow", "value": 0.5},
+                {"color": "red", "value": 1.0}
+              ]
+            }
+          }
+        },
+        "gridPos": {"h": 8, "w": 6, "x": 6, "y": 0}
+      },
+      {
+        "id": 3,
+        "title": "Backend Services Availability",
+        "type": "table",
+        "targets": [
+          {
+            "expr": "rate(http_requests_total{job=~\"auth-service|user-service|ai-service|crm-service|erp-service|email-service|workflow-service|gateway|monitoring-service|inosec-core-service|inosec-edge-service\",code!~\"5..\"}[5m]) / rate(http_requests_total{job=~\"auth-service|user-service|ai-service|crm-service|erp-service|email-service|workflow-service|gateway|monitoring-service|inosec-core-service|inosec-edge-service\"}[5m]) * 100",
+            "legendFormat": "{{job}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "steps": [
+                {"color": "red", "value": 0},
+                {"color": "yellow", "value": 99.0},
+                {"color": "green", "value": 99.9}
+              ]
+            }
+          }
+        },
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+      },
+      {
+        "id": 4,
+        "title": "Database Health",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "database_up{job=\"database\"} * 100",
+            "legendFormat": "Database Status"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "steps": [
+                {"color": "red", "value": 0},
+                {"color": "green", "value": 1}
+              ]
+            }
+          }
+        },
+        "gridPos": {"h": 8, "w": 6, "x": 0, "y": 8}
+      },
+      {
+        "id": 5,
+        "title": "Database Query Performance",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(database_query_duration_seconds_bucket{job=\"database\"}[5m]))",
+            "legendFormat": "95th Percentile Query Time"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s",
+            "min": 0,
+            "max": 5,
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": 0},
+                {"color": "yellow", "value": 1.0},
+                {"color": "red", "value": 2.0}
+              ]
+            }
+          }
+        },
+        "gridPos": {"h": 8, "w": 6, "x": 6, "y": 8}
+      },
+      {
+        "id": 6,
+        "title": "Kubernetes Cluster Health",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "kube_node_status_condition{job=\"kubernetes\",condition=\"Ready\",status=\"true\"} / kube_node_status_condition{job=\"kubernetes\",condition=\"Ready\"} * 100",
+            "legendFormat": "Cluster Health %"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "steps": [
+                {"color": "red", "value": 0},
+                {"color": "yellow", "value": 95},
+                {"color": "green", "value": 99}
+              ]
+            }
+          }
+        },
+        "gridPos": {"h": 8, "w": 6, "x": 12, "y": 8}
+      },
+      {
+        "id": 7,
+        "title": "Resource Utilization",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "node_cpu_seconds_total{job=\"node-exporter\",mode=\"idle\"} / node_cpu_seconds_total{job=\"node-exporter\"} * 100",
+            "legendFormat": "CPU Utilization %"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": 0},
+                {"color": "yellow", "value": 80},
+                {"color": "red", "value": 90}
+              ]
+            }
+          }
+        },
+        "gridPos": {"h": 8, "w": 6, "x": 18, "y": 8}
+      },
+      {
+        "id": 8,
+        "title": "SLO Error Budget Burn Rate",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(http_requests_total{job=\"frontend\",code=~\"5..\"}[5m]) / rate(http_requests_total{job=\"frontend\"}[5m])",
+            "legendFormat": "Frontend Error Rate"
+          },
+          {
+            "expr": "rate(http_requests_total{job=\"auth-service\",code=~\"5..\"}[5m]) / rate(http_requests_total{job=\"auth-service\"}[5m])",
+            "legendFormat": "Auth Service Error Rate"
+          },
+          {
+            "expr": "rate(http_requests_total{job=\"gateway\",code=~\"5..\"}[5m]) / rate(http_requests_total{job=\"gateway\"}[5m])",
+            "legendFormat": "Gateway Error Rate"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 10,
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": 0},
+                {"color": "yellow", "value": 1},
+                {"color": "red", "value": 5}
+              ]
+            }
+          }
+        },
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16}
+      },
+      {
+        "id": 9,
+        "title": "SLO Compliance Summary",
+        "type": "table",
+        "targets": [
+          {
+            "expr": "rate(http_requests_total{job=~\"frontend|auth-service|user-service|ai-service|crm-service|erp-service|email-service|workflow-service|gateway|monitoring-service|inosec-core-service|inosec-edge-service\",code!~\"5..\"}[5m]) / rate(http_requests_total{job=~\"frontend|auth-service|user-service|ai-service|crm-service|erp-service|email-service|workflow-service|gateway|monitoring-service|inosec-core-service|inosec-edge-service\"}[5m]) * 100",
+            "legendFormat": "{{job}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "steps": [
+                {"color": "red", "value": 0},
+                {"color": "yellow", "value": 99.0},
+                {"color": "green", "value": 99.9}
+              ]
+            }
+          }
+        },
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16}
+      }
+    ]
+  }
+}

@@ -1,0 +1,117 @@
+openapi: 3.1.0
+info:
+  title: Inopsio Unified Backend API
+  version: 2.0.0
+  description: >
+    Central gateway documentation for all Inopsio microservices
+    (CRM, ERP, Email, Workflow, Monitoring, InoSec, Auth).
+
+servers:
+  - url: https://api.inopsio.com/v2
+    description: Production API Gateway
+  - url: https://staging.api.inopsio.com/v2
+    description: Staging Environment
+
+tags:
+  - name: CRM
+  - name: ERP
+  - name: Email
+  - name: Workflow
+  - name: Monitoring
+  - name: Auth
+  - name: InoSec
+
+paths:
+  /auth/login:
+    post:
+      summary: Authenticate user and issue access token
+      tags: [Auth]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        "200":
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+  /crm/customers:
+    get:
+      summary: Retrieve customer list
+      tags: [CRM]
+      responses:
+        "200":
+          description: List of customers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerList'
+  /workflow/jobs:
+    post:
+      summary: Trigger a new business workflow
+      tags: [Workflow]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowJob'
+      responses:
+        "201":
+          description: Workflow accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowResponse'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    LoginResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+    CustomerList:
+      type: array
+      items:
+        properties:
+          id:
+            type: string
+          name:
+            type: string
+          email:
+            type: string
+    WorkflowJob:
+      type: object
+      properties:
+        type:
+          type: string
+        payload:
+          type: object
+    WorkflowResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+
+security:
+  - BearerAuth: []

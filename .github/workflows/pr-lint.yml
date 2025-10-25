@@ -1,0 +1,147 @@
+name: PR Lint and Validation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  pr-validation:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch full history for commit message validation
+      
+      - name: Validate commit messages
+        uses: wagoid/commitlint-github-action@v5
+        with:
+          configFile: '.commitlintrc.js'
+      
+      - name: Validate branch naming
+        run: |
+          # Conventional branch naming patterns
+          BRANCH_PATTERN="^(feature|bugfix|hotfix|release|chore|docs|refactor|test|perf|ci|build|revert)/.*"
+          CURRENT_BRANCH="${{ github.head_ref }}"
+          
+          if [[ ! $CURRENT_BRANCH =~ $BRANCH_PATTERN ]]; then
+            echo "❌ Branch name '$CURRENT_BRANCH' does not follow conventional naming"
+            echo "Expected format: <type>/<description>"
+            echo "Valid types: feature, bugfix, hotfix, release, chore, docs, refactor, test, perf, ci, build, revert"
+            echo "Examples: feature/user-authentication, bugfix/login-error, chore/update-deps"
+            exit 1
+          fi
+          
+          echo "✅ Branch naming follows convention"
+      
+      - name: Check PR title format
+        run: |
+          # Conventional commit format for PR titles
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          TITLE_PATTERN="^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .+"
+          
+          if [[ ! $PR_TITLE =~ $TITLE_PATTERN ]]; then
+            echo "❌ PR title '$PR_TITLE' does not follow conventional commit format"
+            echo "Expected format: <type>(<scope>): <description>"
+            echo "Valid types: feat, fix, docs, style, refactor, test, chore, perf, ci, build, revert"
+            echo "Examples: feat(auth): add OAuth2 integration, fix(api): resolve timeout issue"
+            exit 1
+          fi
+          
+          echo "✅ PR title follows conventional commit format"
+      
+      - name: Validate file changes
+        run: |
+          # Check for sensitive files
+          SENSITIVE_FILES=(
+            "*.env"
+            "*.key"
+            "*.pem"
+            "*.p12"
+            "*.pfx"
+            "secrets/"
+            ".env*"
+            "config/secrets/"
+          )
+          
+          for pattern in "${SENSITIVE_FILES[@]}"; do
+            if git diff --name-only origin/main...HEAD | grep -q "$pattern"; then
+              echo "❌ Sensitive file detected: $pattern"
+              echo "Please ensure no secrets or sensitive data are committed"
+              exit 1
+            fi
+          done
+          
+          echo "✅ No sensitive files detected"
+      
+      - name: Check for large files
+        run: |
+          # Check for files larger than 50MB
+          LARGE_FILES=$(git diff --name-only origin/main...HEAD | xargs -I {} find {} -size +50M 2>/dev/null || true)
+          
+          if [ -n "$LARGE_FILES" ]; then
+            echo "❌ Large files detected (>50MB):"
+            echo "$LARGE_FILES"
+            echo "Please use Git LFS for large files or remove them from the commit"
+            exit 1
+          fi
+          
+          echo "✅ No large files detected"
+      
+      - name: Validate code formatting
+        run: |
+          # Check if code formatting is consistent
+          if [ -f "frontend/package.json" ]; then
+            cd frontend
+            if npm run format:check 2>/dev/null; then
+              echo "✅ Frontend code formatting is consistent"
+            else
+              echo "❌ Frontend code formatting issues detected"
+              echo "Please run 'npm run format' to fix formatting"
+              exit 1
+            fi
+            cd ..
+          fi
+          
+          if [ -f "backend/package.json" ]; then
+            cd backend
+            if npm run format:check 2>/dev/null; then
+              echo "✅ Backend code formatting is consistent"
+            else
+              echo "❌ Backend code formatting issues detected"
+              echo "Please run 'npm run format' to fix formatting"
+              exit 1
+            fi
+            cd ..
+          fi
+      
+      - name: Check documentation updates
+        run: |
+          # Check if documentation is updated for significant changes
+          DOCS_CHANGED=$(git diff --name-only origin/main...HEAD | grep -E "\.(md|rst)$" || true)
+          CODE_CHANGED=$(git diff --name-only origin/main...HEAD | grep -E "\.(ts|tsx|js|jsx|py|go|java)$" || true)
+          
+          if [ -n "$CODE_CHANGED" ] && [ -z "$DOCS_CHANGED" ]; then
+            echo "⚠️  Code changes detected without documentation updates"
+            echo "Consider updating relevant documentation files"
+            echo "Affected code files:"
+            echo "$CODE_CHANGED"
+          else
+            echo "✅ Documentation appears to be updated appropriately"
+          fi
+      
+      - name: Generate PR summary
+        run: |
+          echo "## PR Validation Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ **Branch naming**: Follows conventional format" >> $GITHUB_STEP_SUMMARY
+          echo "✅ **PR title**: Follows conventional commit format" >> $GITHUB_STEP_SUMMARY
+          echo "✅ **Security**: No sensitive files detected" >> $GITHUB_STEP_SUMMARY
+          echo "✅ **File size**: No large files detected" >> $GITHUB_STEP_SUMMARY
+          echo "✅ **Code formatting**: Consistent formatting" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "- Ensure all CI checks pass" >> $GITHUB_STEP_SUMMARY
+          echo "- Request review from appropriate team members" >> $GITHUB_STEP_SUMMARY
+          echo "- Update documentation if needed" >> $GITHUB_STEP_SUMMARY

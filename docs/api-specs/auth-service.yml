@@ -1,0 +1,24 @@
+openapi: 3.1.0
+info:
+  title: Inopsio Auth Service
+  version: 2.0.0
+  description: Authentication & SSO endpoints managed by Keycloak
+
+servers:
+  - url: https://auth.inopsio.com
+    description: Centralized Authentication Service
+
+paths:
+  /oidc/token:
+    post:
+      summary: Issue JWT token via OIDC
+      tags: [Auth]
+      responses:
+        "200":
+          description: Token response
+  /users/me:
+    get:
+      summary: Retrieve current session user
+      responses:
+        "200":
+          description: Authenticated user info

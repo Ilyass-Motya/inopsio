@@ -1,0 +1,236 @@
+openapi: 3.1.0
+info:
+  title: Inopsio CRM Service API
+  version: 1.0.0
+  description: Customer Relationship Management API for leads, contacts, deals, and pipeline management
+
+servers:
+  - url: https://api.inopsio.com/v1/crm
+    description: Production CRM API
+  - url: https://staging.api.inopsio.com/v1/crm
+    description: Staging Environment
+
+tags:
+  - name: Leads
+    description: Lead management operations
+  - name: Contacts
+    description: Contact management
+  - name: Deals
+    description: Deal/opportunity management
+  - name: Pipeline
+    description: Sales pipeline operations
+  - name: Analytics
+    description: CRM analytics and reports
+
+paths:
+  /leads:
+    get:
+      summary: List all leads
+      tags: [Leads]
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [new, qualified, contacted, unqualified]
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of leads
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Lead'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+
+    post:
+      summary: Create new lead
+      tags: [Leads]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLeadRequest'
+      responses:
+        "201":
+          description: Lead created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+
+  /leads/{id}:
+    get:
+      summary: Get lead by ID
+      tags: [Leads]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Lead details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+
+    put:
+      summary: Update lead
+      tags: [Leads]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLeadRequest'
+      responses:
+        "200":
+          description: Lead updated successfully
+
+    delete:
+      summary: Delete lead
+      tags: [Leads]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Lead deleted successfully
+
+  /contacts:
+    get:
+      summary: List all contacts
+      tags: [Contacts]
+      responses:
+        "200":
+          description: List of contacts
+
+  /deals:
+    get:
+      summary: List all deals
+      tags: [Deals]
+      responses:
+        "200":
+          description: List of deals
+
+  /pipeline:
+    get:
+      summary: Get sales pipeline
+      tags: [Pipeline]
+      responses:
+        "200":
+          description: Pipeline data with stages
+
+components:
+  schemas:
+    Lead:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        company:
+          type: string
+        status:
+          type: string
+          enum: [new, qualified, contacted, unqualified]
+        score:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    CreateLeadRequest:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - email
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        company:
+          type: string
+
+    UpdateLeadRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        status:
+          type: string
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+        totalPages:
+          type: integer
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []

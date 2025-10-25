@@ -1,0 +1,310 @@
+# SLO Alert Rules for Inopsio Platform
+# These alerts trigger when SLOs are at risk of being violated
+
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: inopsio-slo-alerts
+  namespace: monitoring
+  labels:
+    app: inopsio-slos
+    component: monitoring
+spec:
+  groups:
+  - name: slo-alerts
+    rules:
+    # Frontend SLO Alerts
+    - alert: FrontendAvailabilitySLO
+      expr: |
+        (
+          rate(http_requests_total{job="frontend",code!~"5.."}[5m]) /
+          rate(http_requests_total{job="frontend"}[5m])
+        ) < 0.999
+      for: 5m
+      labels:
+        severity: warning
+        service: frontend
+        slo: availability
+      annotations:
+        summary: "Frontend availability SLO at risk"
+        description: "Frontend availability is {{ $value | humanizePercentage }} which is below the 99.9% SLO target"
+        runbook_url: "https://docs.inopsio.local/runbooks/frontend-availability"
+    
+    - alert: FrontendLatencySLO
+      expr: |
+        histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="frontend"}[5m])) > 0.5
+      for: 5m
+      labels:
+        severity: warning
+        service: frontend
+        slo: latency
+      annotations:
+        summary: "Frontend latency SLO at risk"
+        description: "Frontend 95th percentile latency is {{ $value }}s which exceeds the 0.5s SLO target"
+        runbook_url: "https://docs.inopsio.local/runbooks/frontend-latency"
+    
+    # Backend Service SLO Alerts
+    - alert: AuthServiceAvailabilitySLO
+      expr: |
+        (
+          rate(http_requests_total{job="auth-service",code!~"5.."}[5m]) /
+          rate(http_requests_total{job="auth-service"}[5m])
+        ) < 0.9995
+      for: 5m
+      labels:
+        severity: critical
+        service: auth-service
+        slo: availability
+      annotations:
+        summary: "Auth service availability SLO at risk"
+        description: "Auth service availability is {{ $value | humanizePercentage }} which is below the 99.95% SLO target"
+        runbook_url: "https://docs.inopsio.local/runbooks/auth-service-availability"
+    
+    - alert: UserServiceAvailabilitySLO
+      expr: |
+        (
+          rate(http_requests_total{job="user-service",code!~"5.."}[5m]) /
+          rate(http_requests_total{job="user-service"}[5m])
+        ) < 0.999
+      for: 5m
+      labels:
+        severity: warning
+        service: user-service
+        slo: availability
+      annotations:
+        summary: "User service availability SLO at risk"
+        description: "User service availability is {{ $value | humanizePercentage }} which is below the 99.9% SLO target"
+        runbook_url: "https://docs.inopsio.local/runbooks/user-service-availability"
+    
+    - alert: AIServiceAvailabilitySLO
+      expr: |
+        (
+          rate(http_requests_total{job="ai-service",code!~"5.."}[5m]) /
+          rate(http_requests_total{job="ai-service"}[5m])
+        ) < 0.995
+      for: 5m
+      labels:
+        severity: warning
+        service: ai-service
+        slo: availability
+      annotations:
+        summary: "AI service availability SLO at risk"
+        description: "AI service availability is {{ $value | humanizePercentage }} which is below the 99.5% SLO target"
+        runbook_url: "https://docs.inopsio.local/runbooks/ai-service-availability"
+    
+    - alert: CRMServiceAvailabilitySLO
+      expr: |
+        (
+          rate(http_requests_total{job="crm-service",code!~"5.."}[5m]) /
+          rate(http_requests_total{job="crm-service"}[5m])
+        ) < 0.999
+      for: 5m
+      labels:
+        severity: warning
+        service: crm-service
+        slo: availability
+      annotations:
+        summary: "CRM service availability SLO at risk"
+        description: "CRM service availability is {{ $value | humanizePercentage }} which is below the 99.9% SLO target"
+        runbook_url: "https://docs.inopsio.local/runbooks/crm-service-availability"
+    
+    - alert: ERPServiceAvailabilitySLO
+      expr: |
+        (
+          rate(http_requests_total{job="erp-service",code!~"5.."}[5m]) /
+          rate(http_requests_total{job="erp-service"}[5m])
+        ) < 0.999
+      for: 5m
+      labels:
+        severity: warning
+        service: erp-service
+        slo: availability
+      annotations:
+        summary: "ERP service availability SLO at risk"
+        description: "ERP service availability is {{ $value | humanizePercentage }} which is below the 99.9% SLO target"
+        runbook_url: "https://docs.inopsio.local/runbooks/erp-service-availability"
+    
+    - alert: EmailServiceAvailabilitySLO
+      expr: |
+        (
+          rate(http_requests_total{job="email-service",code!~"5.."}[5m]) /
+          rate(http_requests_total{job="email-service"}[5m])
+        ) < 0.995
+      for: 5m
+      labels:
+        severity: warning
+        service: email-service
+        slo: availability
+      annotations:
+        summary: "Email service availability SLO at risk"
+        description: "Email service availability is {{ $value | humanizePercentage }} which is below the 99.5% SLO target"
+        runbook_url: "https://docs.inopsio.local/runbooks/email-service-availability"
+    
+    - alert: WorkflowServiceAvailabilitySLO
+      expr: |
+        (
+          rate(http_requests_total{job="workflow-service",code!~"5.."}[5m]) /
+          rate(http_requests_total{job="workflow-service"}[5m])
+        ) < 0.999
+      for: 5m
+      labels:
+        severity: warning
+        service: workflow-service
+        slo: availability
+      annotations:
+        summary: "Workflow service availability SLO at risk"
+        description: "Workflow service availability is {{ $value | humanizePercentage }} which is below the 99.9% SLO target"
+        runbook_url: "https://docs.inopsio.local/runbooks/workflow-service-availability"
+    
+    - alert: GatewayAvailabilitySLO
+      expr: |
+        (
+          rate(http_requests_total{job="gateway",code!~"5.."}[5m]) /
+          rate(http_requests_total{job="gateway"}[5m])
+        ) < 0.9995
+      for: 5m
+      labels:
+        severity: critical
+        service: gateway
+        slo: availability
+      annotations:
+        summary: "Gateway availability SLO at risk"
+        description: "Gateway availability is {{ $value | humanizePercentage }} which is below the 99.95% SLO target"
+        runbook_url: "https://docs.inopsio.local/runbooks/gateway-availability"
+    
+    - alert: MonitoringServiceAvailabilitySLO
+      expr: |
+        (
+          rate(http_requests_total{job="monitoring-service",code!~"5.."}[5m]) /
+          rate(http_requests_total{job="monitoring-service"}[5m])
+        ) < 0.999
+      for: 5m
+      labels:
+        severity: warning
+        service: monitoring-service
+        slo: availability
+      annotations:
+        summary: "Monitoring service availability SLO at risk"
+        description: "Monitoring service availability is {{ $value | humanizePercentage }} which is below the 99.9% SLO target"
+        runbook_url: "https://docs.inopsio.local/runbooks/monitoring-service-availability"
+    
+    - alert: InosecCoreAvailabilitySLO
+      expr: |
+        (
+          rate(http_requests_total{job="inosec-core-service",code!~"5.."}[5m]) /
+          rate(http_requests_total{job="inosec-core-service"}[5m])
+        ) < 0.9995
+      for: 5m
+      labels:
+        severity: critical
+        service: inosec-core-service
+        slo: availability
+      annotations:
+        summary: "Inosec Core service availability SLO at risk"
+        description: "Inosec Core service availability is {{ $value | humanizePercentage }} which is below the 99.95% SLO target"
+        runbook_url: "https://docs.inopsio.local/runbooks/inosec-core-availability"
+    
+    - alert: InosecEdgeAvailabilitySLO
+      expr: |
+        (
+          rate(http_requests_total{job="inosec-edge-service",code!~"5.."}[5m]) /
+          rate(http_requests_total{job="inosec-edge-service"}[5m])
+        ) < 0.9995
+      for: 5m
+      labels:
+        severity: critical
+        service: inosec-edge-service
+        slo: availability
+      annotations:
+        summary: "Inosec Edge service availability SLO at risk"
+        description: "Inosec Edge service availability is {{ $value | humanizePercentage }} which is below the 99.95% SLO target"
+        runbook_url: "https://docs.inopsio.local/runbooks/inosec-edge-availability"
+    
+    # Database SLO Alerts
+    - alert: DatabaseAvailabilitySLO
+      expr: |
+        database_up{job="database"} < 1
+      for: 1m
+      labels:
+        severity: critical
+        service: database
+        slo: availability
+      annotations:
+        summary: "Database availability SLO at risk"
+        description: "Database is down, violating the 99.99% availability SLO"
+        runbook_url: "https://docs.inopsio.local/runbooks/database-availability"
+    
+    - alert: DatabaseConnectionPoolSLO
+      expr: |
+        (
+          database_connections_active{job="database",state="idle"} /
+          database_connections_active{job="database"}
+        ) < 0.999
+      for: 5m
+      labels:
+        severity: warning
+        service: database
+        slo: connection-pool
+      annotations:
+        summary: "Database connection pool SLO at risk"
+        description: "Database connection pool health is {{ $value | humanizePercentage }} which is below the 99.9% SLO target"
+        runbook_url: "https://docs.inopsio.local/runbooks/database-connection-pool"
+    
+    - alert: DatabaseQueryPerformanceSLO
+      expr: |
+        histogram_quantile(0.95, rate(database_query_duration_seconds_bucket{job="database"}[5m])) > 1.0
+      for: 5m
+      labels:
+        severity: warning
+        service: database
+        slo: query-performance
+      annotations:
+        summary: "Database query performance SLO at risk"
+        description: "Database 95th percentile query time is {{ $value }}s which exceeds the 1.0s SLO target"
+        runbook_url: "https://docs.inopsio.local/runbooks/database-query-performance"
+    
+    # Infrastructure SLO Alerts
+    - alert: KubernetesClusterHealthSLO
+      expr: |
+        (
+          kube_node_status_condition{job="kubernetes",condition="Ready",status="true"} /
+          kube_node_status_condition{job="kubernetes",condition="Ready"}
+        ) < 0.999
+      for: 5m
+      labels:
+        severity: warning
+        service: kubernetes
+        slo: cluster-health
+      annotations:
+        summary: "Kubernetes cluster health SLO at risk"
+        description: "Kubernetes cluster health is {{ $value | humanizePercentage }} which is below the 99.9% SLO target"
+        runbook_url: "https://docs.inopsio.local/runbooks/kubernetes-cluster-health"
+    
+    - alert: PodRestartRateSLO
+      expr: |
+        rate(kube_pod_container_status_restarts_total{job="kubernetes"}[5m]) > 0.1
+      for: 5m
+      labels:
+        severity: warning
+        service: kubernetes
+        slo: pod-restart-rate
+      annotations:
+        summary: "Pod restart rate SLO at risk"
+        description: "Pod restart rate is {{ $value }} restarts/second which exceeds the 0.1 restarts/second SLO target"
+        runbook_url: "https://docs.inopsio.local/runbooks/pod-restart-rate"
+    
+    - alert: ResourceUtilizationSLO
+      expr: |
+        (
+          node_cpu_seconds_total{job="node-exporter",mode="idle"} /
+          node_cpu_seconds_total{job="node-exporter"}
+        ) < 0.9
+      for: 5m
+      labels:
+        severity: warning
+        service: infrastructure
+        slo: resource-utilization
+      annotations:
+        summary: "Resource utilization SLO at risk"
+        description: "Resource utilization is {{ $value | humanizePercentage }} which exceeds the 90% SLO target"
+        runbook_url: "https://docs.inopsio.local/runbooks/resource-utilization"

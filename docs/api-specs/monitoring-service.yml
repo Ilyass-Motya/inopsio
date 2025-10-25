@@ -1,0 +1,52 @@
+openapi: 3.1.0
+info:
+  title: Inopsio Monitoring Service API
+  version: 1.0.0
+  description: System monitoring, metrics, and alerting API
+
+servers:
+  - url: https://api.inopsio.com/v1/monitoring
+    description: Production Monitoring API
+
+tags:
+  - name: Metrics
+    description: System metrics
+  - name: Alerts
+    description: Alert management
+  - name: Health
+    description: Health checks
+
+paths:
+  /metrics:
+    get:
+      summary: Get system metrics
+      tags: [Metrics]
+      responses:
+        "200":
+          description: System metrics data
+
+  /alerts:
+    get:
+      summary: List active alerts
+      tags: [Alerts]
+      responses:
+        "200":
+          description: List of alerts
+
+  /health:
+    get:
+      summary: System health check
+      tags: [Health]
+      responses:
+        "200":
+          description: System health status
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
