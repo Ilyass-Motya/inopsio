@@ -33,19 +33,6 @@
       ]
     }
   ],
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "/api/:path*"
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/old-path",
-      "destination": "/new-path",
-      "permanent": true
-    }
-  ],
   "env": {
     "NEXT_PUBLIC_APP_URL": "https://inopsio.com",
     "NEXT_PUBLIC_APP_NAME": "Inopsio"
@@ -55,10 +42,4 @@
       "NODE_ENV": "production"
     }
   },
-  "functions": {
-    "api/**/*.ts": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  }
 }
