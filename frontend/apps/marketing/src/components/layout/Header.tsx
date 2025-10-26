@@ -63,7 +63,7 @@ export default function Header() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const pathname = usePathname()
   const dropdownRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
-  const timeoutRef = useRef<NodeJS.Timeout>()
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   const { theme, toggleTheme } = useTheme()
 
   // Handle scroll effect
