@@ -1,0 +1,47 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript"
+  ],
+  "rules": {
+    // Prevent automatic fixes
+    "react/no-unescaped-entities": "off",
+    "react/display-name": "off",
+
+    // TypeScript rules
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-explicit-any": "warn",
+
+    // React rules
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+
+    // Import rules
+    "no-duplicate-imports": "error",
+
+    // Code style - NO AUTO-FIX
+    "semi": ["warn", "never"],
+    "quotes": "off",
+    "indent": "off",
+    "comma-dangle": "off",
+    "object-curly-spacing": "off",
+    "arrow-parens": "off",
+    "max-len": "off",
+
+    // Disable rules that auto-format
+    "prettier/prettier": "off",
+
+    // Next.js specific
+    "@next/next/no-html-link-for-pages": "off",
+    "@next/next/no-img-element": "warn",
+
+    // Accessibility
+    "jsx-a11y/alt-text": "warn",
+    "jsx-a11y/anchor-is-valid": "warn"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

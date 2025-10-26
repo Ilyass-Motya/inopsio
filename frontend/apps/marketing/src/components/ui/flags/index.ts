@@ -1,0 +1,6 @@
+export { default as USFlag } from './USFlag'
+export { default as ESFlag } from './ESFlag'
+export { default as FRFlag } from './FRFlag'
+export { default as DEFlag } from './DEFlag'
+export { default as ITFlag } from './ITFlag'
+export { default as MAFlag } from './MAFlag'

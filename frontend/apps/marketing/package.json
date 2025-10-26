@@ -1,7 +1,7 @@
 {
   "name": "@inopsio/marketing",
   "version": "1.0.0",
-  "description": "Inopsio Marketing Website - Next.js 14 marketing site",
+  "description": "Inopsio Marketing Website - Next.js 15 marketing site",
   "private": true,
   "scripts": {
     "dev": "next dev --turbo",
@@ -11,17 +11,22 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@next/font": "^14.0.0",
+    "@headlessui/react": "^1.7.0",
+    "@heroicons/react": "^2.0.0",
+    "@next/font": "^14.2.15",
     "@tailwindcss/forms": "^0.5.0",
-    "@tailwindcss/postcss": "^4.1.16",
     "@tailwindcss/typography": "^0.5.0",
     "autoprefixer": "^10.4.0",
+    "clsx": "^2.0.0",
+    "framer-motion": "^10.16.0",
+    "lucide-react": "^0.292.0",
     "next": "^15.1.0",
     "postcss": "^8.4.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "sharp": "^0.32.0",
-    "tailwindcss": "^4.0.0"
+    "tailwind-merge": "^2.0.0",
+    "tailwindcss": "^3.4.0"
   },
   "devDependencies": {
     "@types/node": "^22",
