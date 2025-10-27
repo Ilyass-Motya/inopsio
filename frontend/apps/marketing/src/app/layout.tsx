@@ -4,7 +4,6 @@ import './globals.css'
 import Header from '@/components/layout/Header'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { LanguageProvider } from '@/components/providers/LanguageProvider'
-import Image from 'next/image'
 
 const geistMono = Geist_Mono({ 
   subsets: ['latin'],
@@ -28,7 +27,7 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Inter:wght@300;400;500;600;700&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -48,16 +47,8 @@ export default function RootLayout({
       <body className={geistMono.className}>
         <ThemeProvider>
           <LanguageProvider>
-            {/* Global Background SVG */}
-            <div className="fixed inset-0 z-0">
-              <Image
-                src="/images/bg.svg"
-                alt="Background"
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
+            {/* Global Background */}
+            <div className="fixed inset-0 z-0 bg-background dark:bg-slate-950 transition-colors duration-300"></div>
             <Header />
             <main className="relative z-10">{children}</main>
           </LanguageProvider>

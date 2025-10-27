@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import LanguageSelector from '../ui/LanguageSelector'
 import ThemeSwitcher from '../ui/ThemeSwitcher'
+import ComplianceBadge from '../ui/ComplianceBadge'
 
 const footerLinks = {
   platforms: [
@@ -14,13 +15,18 @@ const footerLinks = {
     { name: 'InoSec Edge', href: '/platforms/inosec-edge' },
     { name: 'InoSec One', href: '/platforms/inosec-one' },
   ],
+  ai: [
+    { name: 'AI Assistant', href: '/ai/assistant' },
+    { name: 'ML Platform', href: '/ai/ml-platform' },
+    { name: 'Intelligent Automation', href: '/ai/automation' },
+    { name: 'Predictive Analytics', href: '/ai/analytics' },
+  ],
   solutions: [
     { name: 'Healthcare', href: '/solutions/healthcare' },
     { name: 'Financial Services', href: '/solutions/financial' },
     { name: 'Manufacturing', href: '/solutions/manufacturing' },
     { name: 'Government', href: '/solutions/government' },
     { name: 'Education', href: '/solutions/education' },
-    { name: 'Retail', href: '/solutions/retail' },
   ],
   resources: [
     { name: 'Blog', href: '/resources/blog' },
@@ -28,7 +34,6 @@ const footerLinks = {
     { name: 'Whitepapers', href: '/resources/whitepapers' },
     { name: 'Case Studies', href: '/resources/case-studies' },
     { name: 'Webinars', href: '/resources/webinars' },
-    { name: 'Events', href: '/resources/events' },
   ],
   company: [
     { name: 'About Us', href: '/company/about' },
@@ -53,137 +58,218 @@ const socialLinks = [
   { name: 'YouTube', href: '#', icon: 'M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.33z' },
 ]
 
+const complianceBadges = [
+  { name: 'M-Law 09-08', status: 'achieved' as const },         // ✅ CNDP Certified
+  { name: 'GDPR', status: 'achieved' as const },                 // ✅ Implemented
+  { name: 'ISO 27001', status: 'achieved' as const },           // ✅ Compliant
+  { name: 'SOC 2 Type II', status: 'in-progress' as const },    // 🟡 Partially Complete
+  { name: 'ISO 27701', status: 'planned' as const },            // ⚪ Privacy Extension
+  { name: 'ISO 22301', status: 'planned' as const }             // ⚪ Business Continuity
+]
+
 export default function Footer() {
   return (
-    <footer 
-      className="pt-16 sm:pt-20 lg:pt-24 pb-4 bg-white rounded-lg shadow-lg border border-slate-200"
-      style={{
-        marginLeft: '50px',
-        marginRight: '50px',
-        marginBottom: '20px'
-      }}
-    >
-      <div className="w-full px-6 sm:px-8 lg:px-12">
+    <footer className="py-8 sm:py-10 lg:py-12 bg-background dark:bg-slate-950">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 mb-16">
-          {/* Company Info */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center mb-8">
-              <div className="h-12 w-12 bg-primary-600 rounded-lg flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-xl">I</span>
-              </div>
-              <span className="ml-4 text-2xl font-bold text-slate-900 font-sansation">
-                Inopsio
-              </span>
-            </Link>
-            <p className="text-slate-600 leading-relaxed mb-8 max-w-lg text-base">
-              Empowering businesses with intelligent, integrated solutions — from Cyber Security and managed Infrastructure to CRM and ERP.
-            </p>
-            <div className="flex space-x-6">
-              {socialLinks.map((social) => (
-                <Link
-                  key={social.name}
-                  href={social.href}
-                  className="text-slate-500 hover:text-primary-600 transition-colors duration-200 p-2 rounded-lg hover:bg-slate-100"
-                  aria-label={social.name}
-                >
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d={social.icon} />
+        <div
+          className="rounded-2xl p-8 sm:p-10 lg:p-12 mb-8"
+          style={{
+            backdropFilter: 'blur(30px) saturate(200%)',
+            WebkitBackdropFilter: 'blur(30px) saturate(200%)',
+            background: 'rgba(255, 255, 255, 0.05)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+          }}
+        >
+          {/* Logo and System Status */}
+          <div className="mb-12 pb-8 border-b border-slate-300/50 dark:border-white/20">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              {/* Logo */}
+              <Link href="/" className="inline-block">
+                <img src="/inopsio-logo.svg" alt="Inopsio Logo" className="h-10 w-auto" />
+              </Link>
+
+              {/* System Status */}
+              <Link
+                href="https://uptime.inopsio.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center px-3 py-2 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg transition-all duration-200 hover:shadow-md"
+              >
+                <div className="flex items-center space-x-2">
+                  <div className="relative">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <div className="absolute inset-0 w-2 h-2 bg-green-500 rounded-full animate-ping opacity-75"></div>
+                  </div>
+                  <span className="text-slate-600 dark:text-slate-300 font-medium text-sm group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors duration-200">
+                    All systems operational
+                  </span>
+                  <svg className="w-4 h-4 text-slate-500 dark:text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
                   </svg>
-                </Link>
+                </div>
+              </Link>
+            </div>
+          </div>
+
+          {/* Links Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-12">
+
+            {/* Platforms */}
+            <div>
+              <h3 className="text-slate-900 dark:text-white font-bold text-sm uppercase tracking-wider mb-4">Platforms</h3>
+              <ul className="space-y-3">
+                {footerLinks.platforms.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 text-sm"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* AI & Automation */}
+            <div>
+              <h3 className="text-slate-900 dark:text-white font-bold text-sm uppercase tracking-wider mb-4">AI & Automation</h3>
+              <ul className="space-y-3">
+                {footerLinks.ai.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 text-sm"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Solutions */}
+            <div>
+              <h3 className="text-slate-900 dark:text-white font-bold text-sm uppercase tracking-wider mb-4">Solutions</h3>
+              <ul className="space-y-3">
+                {footerLinks.solutions.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 text-sm"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Resources */}
+            <div>
+              <h3 className="text-slate-900 dark:text-white font-bold text-sm uppercase tracking-wider mb-4">Resources</h3>
+              <ul className="space-y-3">
+                {footerLinks.resources.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 text-sm"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Company */}
+            <div>
+              <h3 className="text-slate-900 dark:text-white font-bold text-sm uppercase tracking-wider mb-4">Company</h3>
+              <ul className="space-y-3">
+                {footerLinks.company.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 text-sm"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Legal */}
+            <div>
+              <h3 className="text-slate-900 dark:text-white font-bold text-sm uppercase tracking-wider mb-4">Legal</h3>
+              <ul className="space-y-3">
+                {footerLinks.legal.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 text-sm"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Compliance Badges Section */}
+          <div className="border-t border-slate-300/50 dark:border-white/20 pt-8 pb-8 mb-8">
+            <div className="flex flex-wrap gap-4 justify-center items-center">
+              {complianceBadges.map((badge) => (
+                <ComplianceBadge
+                  key={badge.name}
+                  type={badge.name}
+                  status={badge.status}
+                />
               ))}
             </div>
           </div>
 
-          {/* Platforms */}
-          <div>
-            <h3 className="text-slate-900 font-semibold text-lg mb-6">Platforms</h3>
-            <ul className="space-y-4">
-              {footerLinks.platforms.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-slate-600 hover:text-primary-600 transition-colors duration-200 text-sm font-medium"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Social & Controls Bar */}
+          <div className="border-t border-slate-300/50 dark:border-white/20 pt-6">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+              {/* Social Media Icons */}
+              <div className="flex items-center gap-6">
+                <div className="flex gap-3">
+                  {socialLinks.map((social) => (
+                    <Link
+                      key={social.name}
+                      href={social.href}
+                      className="text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-200 p-2 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20"
+                      aria-label={social.name}
+                    >
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d={social.icon} />
+                      </svg>
+                    </Link>
+                  ))}
+                </div>
+              </div>
 
-          {/* Solutions */}
-          <div>
-            <h3 className="text-slate-900 font-semibold text-lg mb-6">Solutions</h3>
-            <ul className="space-y-4">
-              {footerLinks.solutions.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-slate-600 hover:text-primary-600 transition-colors duration-200 text-sm font-medium"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Resources & Company */}
-          <div>
-            <h3 className="text-slate-900 font-semibold text-lg mb-6">Resources</h3>
-            <ul className="space-y-4 mb-8">
-              {footerLinks.resources.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-slate-600 hover:text-primary-600 transition-colors duration-200 text-sm font-medium"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <h3 className="text-slate-900 font-semibold text-lg mb-6">Company</h3>
-            <ul className="space-y-4">
-              {footerLinks.company.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-slate-600 hover:text-primary-600 transition-colors duration-200 text-sm font-medium"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-
-        {/* Bottom Bar */}
-        <div className="border-t border-slate-200 pt-6">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="text-slate-500 text-sm mb-4 md:mb-0 font-medium">
-              © 2024 Inopsio. All rights reserved.
-            </div>
-            <div className="flex flex-wrap gap-8 items-center">
-              {footerLinks.legal.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="text-slate-500 hover:text-primary-600 transition-colors duration-200 text-sm font-medium"
-                >
-                  {link.name}
-                </Link>
-              ))}
-              <div className="flex items-center gap-4">
+              {/* Theme & Language Switchers */}
+              <div className="flex items-center gap-3">
                 <ThemeSwitcher />
                 <LanguageSelector />
               </div>
             </div>
           </div>
         </div>
+
+        {/* Bottom Copyright Bar */}
+        <div className="text-center">
+          <p className="text-slate-600 dark:text-slate-400 text-sm">
+            © {new Date().getFullYear()} Inopsio. All rights reserved. Built with enterprise-grade security and compliance.
+          </p>
+        </div>
+
       </div>
     </footer>
   )

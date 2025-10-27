@@ -28,6 +28,7 @@ This document outlines the **aligned tech stack** implementation based on your s
 - ✅ **App Router** for better performance
 - ✅ **shadcn/ui components** for consistent design
 - ✅ **Tailwind CSS** for utility-first styling
+- ✅ **Heroicons React** for consistent icon system (NO custom SVG icons)
 - ✅ **SEO optimization** with Next.js metadata API
 - ✅ **Blog system** with CMS integration
 - ✅ **Multi-page structure** with complex navigation
@@ -40,7 +41,7 @@ This document outlines the **aligned tech stack** implementation based on your s
   "@radix-ui/react-*": "Latest",
   "class-variance-authority": "^0.7.0",
   "tailwind-merge": "^2.0.0",
-  "lucide-react": "^0.292.0"
+  "@heroicons/react": "^2.0.0"
 }
 ```
 

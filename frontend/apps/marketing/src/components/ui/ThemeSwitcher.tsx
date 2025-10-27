@@ -8,67 +8,24 @@ export default function ThemeSwitcher() {
   return (
     <button
       onClick={toggleTheme}
-      className="relative inline-flex items-center justify-center p-1 rounded-full transition-all duration-300 ease-in-out"
+      className="group inline-flex items-center px-3 py-2 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg transition-all duration-200 hover:shadow-md"
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
     >
-      <div className="relative w-16 h-8 rounded-full overflow-hidden transition-all duration-500 ease-in-out">
-        {/* Background with sky theme */}
-        <div className={`absolute inset-0 transition-all duration-500 ease-in-out ${
-          theme === 'light' 
-            ? 'bg-gradient-to-r from-blue-300 to-blue-400' 
-            : 'bg-gradient-to-r from-purple-900 to-indigo-900'
-        }`}>
-          {/* Day sky clouds */}
-          {theme === 'light' && (
-            <>
-              <div className="absolute top-1 left-2 w-3 h-2 bg-white/80 rounded-full blur-sm"></div>
-              <div className="absolute top-2 left-4 w-2 h-1.5 bg-white/60 rounded-full blur-sm"></div>
-              <div className="absolute top-1.5 right-3 w-2.5 h-1.5 bg-white/70 rounded-full blur-sm"></div>
-              <div className="absolute top-2.5 right-1 w-2 h-1 bg-white/50 rounded-full blur-sm"></div>
-            </>
-          )}
-          
-          {/* Night sky stars */}
-          {theme === 'dark' && (
-            <>
-              <div className="absolute top-1 left-3 w-0.5 h-0.5 bg-white rounded-full"></div>
-              <div className="absolute top-2 left-6 w-0.5 h-0.5 bg-white rounded-full"></div>
-              <div className="absolute top-1.5 right-4 w-0.5 h-0.5 bg-white rounded-full"></div>
-              <div className="absolute top-3 right-2 w-0.5 h-0.5 bg-white rounded-full"></div>
-              <div className="absolute top-2.5 left-8 w-0.5 h-0.5 bg-white rounded-full"></div>
-              <div className="absolute top-1 right-6 w-0.5 h-0.5 bg-white rounded-full"></div>
-            </>
-          )}
-        </div>
-        
-        {/* Toggle handle */}
-        <div className={`absolute top-1 transition-all duration-500 ease-in-out transform ${
-          theme === 'light' ? 'translate-x-8' : 'translate-x-1'
-        } w-6 h-6 rounded-full shadow-lg`}>
-          {/* Sun/Moon icon */}
-          <div className="w-full h-full rounded-full flex items-center justify-center">
-            {theme === 'light' ? (
-              // Sun
-              <div className="w-4 h-4 bg-yellow-400 rounded-full relative">
-                <div className="absolute -top-1 -left-1 w-1 h-1 bg-yellow-300 rounded-full"></div>
-                <div className="absolute -top-1 left-1 w-1 h-1 bg-yellow-300 rounded-full"></div>
-                <div className="absolute -top-1 right-1 w-1 h-1 bg-yellow-300 rounded-full"></div>
-                <div className="absolute -top-1 -right-1 w-1 h-1 bg-yellow-300 rounded-full"></div>
-                <div className="absolute top-1 -left-1 w-1 h-1 bg-yellow-300 rounded-full"></div>
-                <div className="absolute top-1 -right-1 w-1 h-1 bg-yellow-300 rounded-full"></div>
-                <div className="absolute -bottom-1 -left-1 w-1 h-1 bg-yellow-300 rounded-full"></div>
-                <div className="absolute -bottom-1 left-1 w-1 h-1 bg-yellow-300 rounded-full"></div>
-                <div className="absolute -bottom-1 right-1 w-1 h-1 bg-yellow-300 rounded-full"></div>
-                <div className="absolute -bottom-1 -right-1 w-1 h-1 bg-yellow-300 rounded-full"></div>
-              </div>
-            ) : (
-              // Moon
-              <div className="w-4 h-4 bg-gray-200 rounded-full relative">
-                <div className="absolute top-0.5 left-0.5 w-2 h-2 bg-purple-900 rounded-full"></div>
-              </div>
-            )}
-          </div>
-        </div>
+      <div className="flex items-center space-x-2">
+        {theme === 'light' ? (
+          // Sun icon for light mode
+          <svg className="w-4 h-4 text-yellow-500 group-hover:text-yellow-600 transition-colors duration-200" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
+          </svg>
+        ) : (
+          // Moon icon for dark mode
+          <svg className="w-4 h-4 text-blue-400 group-hover:text-blue-300 transition-colors duration-200" fill="currentColor" viewBox="0 0 24 24">
+            <path fillRule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" clipRule="evenodd" />
+          </svg>
+        )}
+        <span className="text-slate-600 dark:text-slate-300 font-medium text-sm group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors duration-200">
+          {theme === 'light' ? 'Light' : 'Dark'}
+        </span>
       </div>
     </button>
   )

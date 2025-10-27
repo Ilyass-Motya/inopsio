@@ -2,20 +2,19 @@
 
 export default function PlatformOverview() {
   return (
-    <section 
-      className="py-16 sm:py-20 lg:py-24 bg-white rounded-xl shadow-lg border border-slate-200"
-      style={{
-        marginLeft: '50px',
-        marginRight: '50px',
-        marginBottom: '20px',
-        backdropFilter: 'blur(20px) saturate(150%)',
-        WebkitBackdropFilter: 'blur(20px) saturate(150%)',
-        background: 'rgba(255, 255, 255, 0.05)',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-      }}
-    >
-      <div className="w-full">
+    <section className="py-16 sm:py-20 lg:py-24">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div
+          className="bg-white rounded-xl shadow-lg border border-slate-200"
+          style={{
+            backdropFilter: 'blur(20px) saturate(150%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+            background: 'rgba(255, 255, 255, 0.05)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+          }}
+        >
+          <div className="p-6 sm:p-8 lg:p-12">
         <div className="text-center mb-12">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 mb-4 sm:mb-6">
             Advanced Security Platform
@@ -57,6 +56,8 @@ export default function PlatformOverview() {
             </div>
             <h3 className="text-xl font-semibold text-slate-900 mb-2">Real-time Monitoring</h3>
             <p className="text-slate-600">24/7 surveillance with instant threat detection and response</p>
+          </div>
+        </div>
           </div>
         </div>
       </div>

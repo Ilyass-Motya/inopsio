@@ -10,7 +10,7 @@
   }
 
   body {
-    background-color: #ebf0fe;
+    background-color: #edf1f5;
     color: #1a1b2e;
     font-smooth: antialiased;
     -webkit-font-smoothing: antialiased;
@@ -21,7 +21,7 @@
 
   /* Dark mode styles */
   .dark body {
-    background-color: #050b1f;
+    background-color: #0a0f1c;
     color: #f1f5f9;
   }
 

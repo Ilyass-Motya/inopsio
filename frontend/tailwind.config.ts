@@ -24,6 +24,10 @@ const config: Config = {
           600: '#475569',
           700: '#334155',
         },
+        background: {
+          DEFAULT: '#edf1f5',
+          dark: '#0a0f1c',
+        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],

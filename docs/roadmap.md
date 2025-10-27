@@ -53,7 +53,7 @@ Continuous  ░░░░░░░░░░░░░░░░░░░░ CI/CD, 
 
 **Deliverables**:
 - **Core Pages**
-  - Homepage with hero, features, testimonials, CTA
+  - Homepage with complete 9-section layout (Header, Hero, Features, Problem/Solution, Industry Solutions, Stats/Metrics, Resources Teaser, Final CTA, Footer)
   - About Us, Vision, Mission, Team pages
   - Product overview page
   - Contact and Demo Request forms
@@ -73,7 +73,7 @@ Continuous  ░░░░░░░░░░░░░░░░░░░░ CI/CD, 
   - Resource center (whitepapers, guides)
 
 **Technical Stack**:
-- **Framework**: Next.js 14 (App Router, SSR/SSG)
+- **Framework**: Next.js 15 (App Router, SSR/SSG)
 - **Styling**: Tailwind CSS + shadcn/ui
 - **CMS**: Strapi or Payload CMS (headless)
 - **Analytics**: Google Analytics 4 + Plausible
@@ -1012,7 +1012,7 @@ frontend/config/               # Design tokens (JSON)
 ## 🚧 Dependencies & Technology Stack
 
 ### Frontend Stack
-- **Framework**: Next.js 14 (App Router) + React 18
+- **Framework**: Next.js 15 (App Router) + React 18
 - **Styling**: Tailwind CSS + shadcn/ui components
 - **State**: TanStack Query + Zustand
 - **Forms**: React Hook Form + Zod validation

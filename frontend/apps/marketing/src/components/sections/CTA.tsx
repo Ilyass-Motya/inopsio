@@ -4,41 +4,42 @@ import Link from 'next/link'
 
 export default function CTA() {
   return (
-    <section 
-      className="py-16 sm:py-20 lg:py-24 bg-white rounded-xl shadow-lg border border-slate-200"
-      style={{
-        marginLeft: '50px',
-        marginRight: '50px',
-        marginBottom: '20px'
-      }}
-    >
-      <div className="w-full px-6 sm:px-8 lg:px-12">
-        <div className="text-center max-w-4xl mx-auto">
-          {/* Main Heading */}
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 mb-6">
-            Ready to Strengthen Your Security Posture?
+    <section className="py-16 sm:py-20 lg:py-24">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div
+          className="relative rounded-xl shadow-lg overflow-hidden py-16 sm:py-20"
+          style={{
+            backgroundImage: 'url(/images/cta-bg.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
+          <div className="relative z-10 px-6 sm:px-8">
+        <div className="text-center max-w-6xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4 sm:mb-6 leading-tight sm:leading-tight md:leading-normal">
+            Managed Security Meets Intelligent Operations
           </h2>
           
-          {/* Description */}
-          <p className="text-lg sm:text-xl text-slate-600 leading-relaxed mb-12 max-w-3xl mx-auto">
-            Get enterprise-grade protection tailored to your infrastructure. 
-            Start with a personalized demo today.
+          <p className="text-base sm:text-lg md:text-xl lg:text-xl text-blue-100 leading-relaxed mb-8 sm:mb-10 md:mb-12 max-w-3xl mx-auto font-medium drop-shadow-md px-4">
+            Inopsio combines proactive cybersecurity, infrastructure management, and automation to keep your organization secure, visible, and always operational.
           </p>
           
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4">
             <Link 
               href="/demo" 
-              className="px-8 py-4 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors duration-200 shadow-lg hover:shadow-xl text-lg"
+              className="w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition-all duration-200 shadow-2xl hover:shadow-3xl hover:scale-105 text-sm sm:text-base"
             >
               Request a Demo
             </Link>
             <Link 
-              href="/contact-sales" 
-              className="px-8 py-4 bg-white text-primary-600 border-2 border-primary-600 rounded-lg font-semibold hover:bg-primary-50 transition-colors duration-200 shadow-lg hover:shadow-xl text-lg"
+              href="/managed-services" 
+              className="w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 bg-white/10 backdrop-blur-sm text-white border-2 border-white/30 rounded-lg font-semibold hover:bg-white/20 transition-all duration-200 shadow-xl hover:shadow-2xl hover:scale-105 text-sm sm:text-base"
             >
-              Contact Sales
+              Book Consultation
             </Link>
+          </div>
+        </div>
           </div>
         </div>
       </div>

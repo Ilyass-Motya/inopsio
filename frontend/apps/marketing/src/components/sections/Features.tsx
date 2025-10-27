@@ -102,17 +102,22 @@ export default function Features() {
   return (
     <section
       id="features"
-      className="py-12 sm:py-16 lg:py-20 xl:py-24"
+      className="py-16 sm:py-20 lg:py-24"
       style={{
-        paddingTop: '120px',
-        background: 'rgba(255, 255, 255, 0.05)',
-        backdropFilter: 'blur(20px) saturate(150%)',
-        WebkitBackdropFilter: 'blur(20px) saturate(150%)',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+        paddingTop: '120px'
       }}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div
+          style={{
+            background: 'rgba(255, 255, 255, 0.05)',
+            backdropFilter: 'blur(20px) saturate(150%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+          }}
+          className="rounded-xl p-6 sm:p-8 lg:p-12"
+        >
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-balance text-slate-900">
@@ -173,7 +178,7 @@ export default function Features() {
 
         {/* Bottom CTA */}
         <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-8">
+          <div className="bg-white rounded-lg p-8 border border-slate-200">
             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-4">
               Ready to Experience the Power?
             </h3>
@@ -189,6 +194,7 @@ export default function Features() {
               </a>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </section>

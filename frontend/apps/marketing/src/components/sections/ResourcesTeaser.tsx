@@ -11,8 +11,8 @@ const resources = [
     image: '/images/resources/blog-1.jpg',
     contentType: 'Blog',
     status: 'Trending',
-    contentTypeColor: 'bg-blue-100 text-blue-800',
-    statusColor: 'bg-red-100 text-red-800',
+    contentTypeColor: 'bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-200',
+    statusColor: 'bg-red-100 dark:bg-red-900/40 text-red-800 dark:text-red-200',
     description: 'Discover how AI is revolutionizing enterprise security with advanced threat detection capabilities.'
   },
   {
@@ -22,7 +22,7 @@ const resources = [
     image: '/images/resources/blog-2.jpg',
     contentType: 'Blog',
     status: '',
-    contentTypeColor: 'bg-blue-100 text-blue-800',
+    contentTypeColor: 'bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-200',
     statusColor: '',
     description: 'Learn the fundamentals of zero trust security and how to implement it in your organization.'
   },
@@ -33,30 +33,23 @@ const resources = [
     image: '/images/resources/whitepaper-1.jpg',
     contentType: 'Whitepaper',
     status: 'New',
-    contentTypeColor: 'bg-purple-100 text-purple-800',
-    statusColor: 'bg-green-100 text-green-800',
+    contentTypeColor: 'bg-purple-100 dark:bg-purple-900/40 text-purple-800 dark:text-purple-200',
+    statusColor: 'bg-green-100 dark:bg-green-900/40 text-green-800 dark:text-green-200',
     description: 'Comprehensive guide to enterprise security compliance frameworks and best practices.'
   }
 ]
 
 export default function ResourcesTeaser() {
   return (
-    <section 
-      className="py-16 sm:py-20 lg:py-24"
-      style={{
-        marginLeft: '50px',
-        marginRight: '50px',
-        marginBottom: '20px'
-      }}
-    >
-      <div className="w-full px-6 sm:px-8 lg:px-12">
+    <section className="py-16 sm:py-20 lg:py-24">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 mb-4 sm:mb-6">
-            Latest Resources
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white mb-4 sm:mb-6">
+            Insights That Matter
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto px-4">
-            Stay ahead with our latest insights and best practices.
+          <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-3xl mx-auto px-4" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
+            Discover expert perspectives, industry trends, and actionable strategies designed to help you secure, manage, and scale your digital operations.
           </p>
         </div>
 
@@ -65,15 +58,18 @@ export default function ResourcesTeaser() {
           {resources.map((resource) => (
             <div
               key={resource.id}
-              className="relative rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group"
+              className="relative rounded-2xl overflow-hidden group transition-all duration-300"
               style={{
-                background: 'linear-gradient(135deg, #6366f1, #0048e7)',
-                padding: '1px'
+                backdropFilter: 'blur(30px) saturate(200%)',
+                WebkitBackdropFilter: 'blur(30px) saturate(200%)',
+                background: 'rgba(255, 255, 255, 0.1)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
               }}
             >
-              <div className="bg-white rounded-lg h-full">
+              <div className="h-full flex flex-col">
                 {/* Image */}
-                <div className="relative h-64 w-full overflow-hidden rounded-t-lg">
+                <div className="relative h-64 w-full overflow-hidden rounded-t-2xl bg-slate-200 dark:bg-slate-800 flex-shrink-0">
                   <Image
                     src={resource.image}
                     alt={resource.title}
@@ -81,7 +77,7 @@ export default function ResourcesTeaser() {
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
-                  <div className="absolute inset-0 bg-black/20"></div>
+                  <div className="absolute inset-0 bg-black/20 dark:bg-black/40 transition-colors duration-300"></div>
                   {/* Tags */}
                   <div className="absolute top-4 left-4 flex flex-col gap-2">
                     <span className={`px-3 py-1 rounded-full text-xs font-semibold ${resource.contentTypeColor}`}>
@@ -96,18 +92,18 @@ export default function ResourcesTeaser() {
                 </div>
 
                 {/* Content */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-primary-600 transition-colors duration-200 line-clamp-2">
+                <div className="p-6 bg-white/80 dark:bg-slate-900/50 backdrop-blur-md flex-1 flex flex-col">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-200 line-clamp-2">
                     {resource.title}
                   </h3>
                   
-                  <p className="text-sm text-slate-600 mb-4 line-clamp-3">
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
                     {resource.description}
                   </p>
 
                   <Link
                     href={`/resources/${resource.type}/${resource.id}`}
-                    className="inline-flex items-center text-primary-600 hover:text-primary-700 font-semibold text-sm transition-colors duration-200"
+                    className="inline-flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-semibold text-sm transition-colors duration-200"
                   >
                     Read More
                     <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
