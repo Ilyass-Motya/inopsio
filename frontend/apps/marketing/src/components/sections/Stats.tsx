@@ -90,15 +90,16 @@ export default function Stats() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center max-w-3xl mx-auto mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            Inopsio by the Numbers
-          </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-            Powered by modern architecture, intelligent automation, and enterprise-grade security.
-            Every component of Inopsio is engineered for scale, speed, and resilience.
-          </p>
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+              Inopsio by the Numbers
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+              Powered by modern architecture, intelligent automation, and enterprise-grade security.
+              Every component of Inopsio is engineered for scale, speed, and resilience.
+            </p>
+          </div>
         </motion.div>
 
         {/* Interactive Stats Cards - Desktop Only (1400px+) */}
@@ -107,21 +108,23 @@ export default function Stats() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="hidden 2xl:flex w-full items-center justify-center gap-2"
         >
+          <div className="hidden 2xl:flex w-full items-center justify-center gap-2">
           {stats.map((stat, index) => (
             <motion.div
               key={index}
-              className="relative cursor-pointer overflow-hidden rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
               initial={{ width: '5rem', height: '28rem' }}
               animate={{
                 width: activeCard === index ? '28rem' : '6rem',
                 height: '28rem',
               }}
               transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-              onClick={() => setActiveCard(index)}
-              onMouseEnter={() => setActiveCard(index)}
             >
+              <div 
+                className="relative cursor-pointer overflow-hidden rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+                onClick={() => setActiveCard(index)}
+                onMouseEnter={() => setActiveCard(index)}
+              >
               {/* Gradient Overlay - Only show when expanded */}
               <AnimatePresence>
                 {activeCard === index && (
@@ -130,8 +133,9 @@ export default function Stats() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
-                    className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} z-0`}
-                  />
+                  >
+                    <div className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} z-0`} />
+                  </motion.div>
                 )}
               </AnimatePresence>
 
@@ -145,11 +149,11 @@ export default function Stats() {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.2 }}
-                      className="flex flex-col items-center justify-center h-full"
                     >
-                      <div className="text-3xl font-bold text-[#0066CC] dark:text-[#3B82F6] mb-4 writing-mode-vertical transform rotate-180">
-                        {stat.metric}
-                      </div>
+                      <div className="flex flex-col items-center justify-center h-full">
+                        <div className="text-3xl font-bold text-[#0066CC] dark:text-[#3B82F6] mb-4 writing-mode-vertical transform rotate-180">
+                          {stat.metric}
+                        </div>
                       <div
                         className="text-sm font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap"
                         style={{
@@ -157,7 +161,8 @@ export default function Stats() {
                           textOrientation: 'mixed',
                         }}
                       >
-                        {stat.label}
+                          {stat.label}
+                        </div>
                       </div>
                     </motion.div>
                   )}
@@ -171,23 +176,26 @@ export default function Stats() {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.3, delay: 0.1 }}
-                      className="flex flex-col items-start justify-end h-full w-full"
                     >
-                      <div className="text-6xl font-bold text-[#0066CC] dark:text-[#3B82F6] mb-4">
+                      <div className="flex flex-col items-start justify-end h-full w-full">
+                        <div className="text-6xl font-bold text-[#0066CC] dark:text-[#3B82F6] mb-4">
                         {stat.metric}
                       </div>
                       <div className="text-xl font-bold text-gray-900 dark:text-white mb-3">
                         {stat.label}
                       </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                        {stat.description}
-                      </p>
+                        <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                          {stat.description}
+                        </p>
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
+              </div>
             </motion.div>
           ))}
+          </div>
         </motion.div>
 
         {/* Mobile/Tablet/Desktop Grid (below 1400px) */}
@@ -199,9 +207,9 @@ export default function Stats() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`relative overflow-hidden bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow duration-300`}
             >
-              <div className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} opacity-50 z-0`} />
+              <div className={`relative overflow-hidden bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow duration-300`}>
+                <div className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} opacity-50 z-0`} />
               <div className="relative z-10">
                 <div className="text-5xl font-bold text-[#0066CC] dark:text-[#3B82F6] mb-3">
                   {stat.metric}
@@ -209,9 +217,10 @@ export default function Stats() {
                 <div className="text-lg font-bold text-gray-900 dark:text-white mb-2">
                   {stat.label}
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                  {stat.description}
-                </p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                    {stat.description}
+                  </p>
+                </div>
               </div>
             </motion.div>
           ))}
