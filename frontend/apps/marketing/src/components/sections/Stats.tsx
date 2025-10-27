@@ -110,91 +110,121 @@ export default function Stats() {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <div className="hidden 2xl:flex w-full items-center justify-center gap-2">
-          {stats.map((stat, index) => (
-            <motion.div
-              key={index}
-              initial={{ width: '5rem', height: '28rem' }}
-              animate={{
-                width: activeCard === index ? '28rem' : '6rem',
-                height: '28rem',
-              }}
-              transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-            >
-              <div 
-                className="relative cursor-pointer overflow-hidden rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
-                onClick={() => setActiveCard(index)}
-                onMouseEnter={() => setActiveCard(index)}
+          {stats.map((stat, index) => {
+            const isActive = activeCard === index
+            
+            return (
+              <motion.div
+                key={index}
+                initial={{ width: '5rem', height: '28rem' }}
+                animate={{
+                  width: isActive ? '28rem' : '6rem',
+                  height: '28rem',
+                }}
+                transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                style={{ 
+                  display: 'flex',
+                  position: 'relative',
+                  cursor: 'pointer',
+                  overflow: 'hidden',
+                  borderRadius: '1rem'
+                }}
               >
-              {/* Gradient Overlay - Only show when expanded */}
-              <AnimatePresence>
-                {activeCard === index && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} z-0`} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                <div 
+                  className="h-full w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+                  onClick={() => setActiveCard(index)}
+                  onMouseEnter={() => setActiveCard(index)}
+                >
+                  {/* Gradient Overlay - Only show when expanded */}
+                  <AnimatePresence>
+                    {activeCard === index && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        style={{
+                          position: 'absolute',
+                          top: 0,
+                          right: 0,
+                          bottom: 0,
+                          left: 0,
+                          zIndex: 0
+                        }}
+                      >
+                        <div className={`bg-gradient-to-br ${stat.gradient} absolute inset-0`} />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
 
-              {/* Content */}
-              <div className="relative z-10 h-full w-full flex flex-col items-center justify-center p-6">
-                {/* Collapsed State - Vertical Text */}
-                <AnimatePresence>
-                  {activeCard !== index && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <div className="flex flex-col items-center justify-center h-full">
+                  {/* Content */}
+                  <div className="relative z-10 h-full w-full flex flex-col items-center justify-center p-6">
+                    {/* Collapsed State - Vertical Text */}
+                    <AnimatePresence>
+                      {activeCard !== index && (
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height: '100%'
+                          }}
+                        >
                         <div className="text-3xl font-bold text-[#0066CC] dark:text-[#3B82F6] mb-4 writing-mode-vertical transform rotate-180">
                           {stat.metric}
                         </div>
-                      <div
-                        className="text-sm font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap"
-                        style={{
-                          writingMode: 'vertical-rl',
-                          textOrientation: 'mixed',
-                        }}
-                      >
+                        <div
+                          className="text-sm font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap"
+                          style={{
+                            writingMode: 'vertical-rl',
+                            textOrientation: 'mixed',
+                          }}
+                        >
                           {stat.label}
                         </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
 
-                {/* Expanded State - Full Details */}
-                <AnimatePresence>
-                  {activeCard === index && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3, delay: 0.1 }}
-                    >
-                      <div className="flex flex-col items-start justify-end h-full w-full">
+                    {/* Expanded State - Full Details */}
+                    <AnimatePresence>
+                      {activeCard === index && (
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.3, delay: 0.1 }}
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'flex-start',
+                            justifyContent: 'flex-end',
+                            height: '100%',
+                            width: '100%'
+                          }}
+                        >
                         <div className="text-6xl font-bold text-[#0066CC] dark:text-[#3B82F6] mb-4">
-                        {stat.metric}
-                      </div>
-                      <div className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                        {stat.label}
-                      </div>
+                          {stat.metric}
+                        </div>
+                        <div className="text-xl font-bold text-gray-900 dark:text-white mb-3">
+                          {stat.label}
+                        </div>
                         <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
                           {stat.description}
                         </p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-              </div>
-            </motion.div>
-          ))}
+                      </motion.div>
+                    )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+              </motion.div>
+            )
+          })}
           </div>
         </motion.div>
 
