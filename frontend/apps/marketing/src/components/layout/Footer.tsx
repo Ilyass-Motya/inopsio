@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import LanguageSelector from '../ui/LanguageSelector'
-import ThemeToggle from '../ui/ThemeToggle'
+import ThemeSwitcher from '../ui/ThemeSwitcher'
 import ComplianceBadge from '../ui/ComplianceBadge'
 
 const footerLinks = {
@@ -256,7 +256,7 @@ export default function Footer() {
 
               {/* Theme & Language Switchers */}
               <div className="flex items-center gap-3">
-                <ThemeToggle />
+                <ThemeSwitcher />
                 <LanguageSelector />
               </div>
             </div>
