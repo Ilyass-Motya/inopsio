@@ -1,7 +1,8 @@
 'use client'
 
+import React from 'react'
 import { cn } from '@/lib/utils'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 
 const BentoGrid = ({
   className,
@@ -38,16 +39,18 @@ const BentoGridItem = ({
   index: number
 }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      viewport={{ once: true }}
+    <div
       className={cn(
         "group relative rounded-xl border border-slate-200/50 bg-white p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:border-slate-300/50 overflow-hidden",
         className
       )}
     >
+      <m.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: index * 0.1 }}
+        viewport={{ once: true }}
+      >
       <div className="absolute inset-0 bg-gradient-to-br from-primary-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
       <div className="relative z-10">
@@ -67,22 +70,26 @@ const BentoGridItem = ({
 
         <div className="space-y-2">
           {outcomes?.map((outcome, outcomeIndex) => (
-            <motion.div
+            <div
               key={outcomeIndex}
-              initial={{ opacity: 0, x: -10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: (index * 0.1) + (outcomeIndex * 0.05) }}
-              viewport={{ once: true }}
               className="flex items-start group-hover:translate-x-1 transition-transform duration-300"
               style={{ transitionDelay: `${outcomeIndex * 50}ms` }}
             >
-              <div className="w-1.5 h-1.5 bg-primary-600 rounded-full mr-3 mt-2 flex-shrink-0 group-hover:bg-primary-700 transition-colors duration-300"></div>
-              <span className="text-slate-700 text-sm leading-relaxed">{outcome}</span>
-            </motion.div>
+              <m.div
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: (index * 0.1) + (outcomeIndex * 0.05) }}
+                viewport={{ once: true }}
+              >
+                <div className="w-1.5 h-1.5 bg-primary-600 rounded-full mr-3 mt-2 flex-shrink-0 group-hover:bg-primary-700 transition-colors duration-300"></div>
+                <span className="text-slate-700 text-sm leading-relaxed">{outcome}</span>
+              </m.div>
+            </div>
           ))}
         </div>
       </div>
-    </motion.div>
+      </m.div>
+    </div>
   )
 }
 
@@ -129,20 +136,21 @@ export default function IndustrySolutions() {
   return (
     <section className="py-16 sm:py-20 lg:py-24">
       <div className="max-w-8xl mx-auto px-6 sm:px-8 lg:px-12">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-6">
-            Industry Solutions — Powered by Inopsio
-          </h2>
-          <p className="text-lg sm:text-xl text-slate-600 max-w-4xl mx-auto italic">
-            Unlock measurable business value in every industry. Inopsio delivers unified IT, OT, security, and automation to drive resilience, efficiency, and competitive advantage.
-          </p>
-        </motion.div>
+        <div className="text-center mb-16">
+          <m.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-6">
+              Industry Solutions — Powered by Inopsio
+            </h2>
+            <p className="text-lg sm:text-xl text-slate-600 max-w-4xl mx-auto italic">
+              Unlock measurable business value in every industry. Inopsio delivers unified IT, OT, security, and automation to drive resilience, efficiency, and competitive advantage.
+            </p>
+          </m.div>
+        </div>
 
         <BentoGrid className="mb-16">
           {industries.map((industry, index) => (
@@ -161,17 +169,18 @@ export default function IndustrySolutions() {
           ))}
         </BentoGrid>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="text-center"
-        >
-          <button className="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105">
-            See Industry Success Stories
-          </button>
-        </motion.div>
+        <div className="text-center">
+          <m.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            viewport={{ once: true }}
+          >
+            <button className="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105">
+              See Industry Success Stories
+            </button>
+          </m.div>
+        </div>
       </div>
     </section>
   )
