@@ -5,7 +5,7 @@ import Link from 'next/link'
 export default function CTA() {
   return (
     <section className="py-16 sm:py-20 lg:py-24">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="max-w-8xl mx-auto px-6 sm:px-8 lg:px-12">
         <div
           className="relative rounded-xl shadow-lg overflow-hidden py-16 sm:py-20"
           style={{

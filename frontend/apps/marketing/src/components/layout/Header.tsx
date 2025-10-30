@@ -147,7 +147,7 @@ export default function Header() {
 
   return (
     <header className="fixed z-50 top-4 sm:top-5 lg:top-6 left-0 right-0">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="max-w-8xl mx-auto px-6 sm:px-8 lg:px-12">
         <nav
           className={`
             relative rounded-2xl transition-all duration-500
@@ -172,7 +172,7 @@ export default function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex lg:items-center lg:gap-1 xl:gap-2 flex-1 justify-center max-w-3xl mx-4 xl:mx-8">
+          <div className="hidden lg:flex lg:items-center lg:gap-2 xl:gap-3 flex-1 justify-center max-w-4xl mx-6 xl:mx-10">
 
             {/* Platforms Dropdown */}
             <div
@@ -184,7 +184,7 @@ export default function Header() {
               <button
                 onClick={() => handleDropdownToggle('platforms')}
                 className={`
-                  flex items-center px-3 py-2.5 text-sm font-semibold rounded-lg
+                  flex items-center px-2.5 lg:px-3 xl:px-4 py-2.5 text-sm font-semibold rounded-lg
                   transition-all duration-200 whitespace-nowrap
                   ${isActiveSection('platforms')
                     ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
@@ -242,7 +242,7 @@ export default function Header() {
               <button
                 onClick={() => handleDropdownToggle('ai')}
                 className={`
-                  flex items-center px-3 py-2.5 text-sm font-semibold rounded-lg
+                  flex items-center px-2.5 lg:px-3 xl:px-4 py-2.5 text-sm font-semibold rounded-lg
                   transition-all duration-200 whitespace-nowrap
                   ${isActiveSection('ai')
                     ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
@@ -301,7 +301,7 @@ export default function Header() {
               <button
                 onClick={() => handleDropdownToggle('solutions')}
                 className={`
-                  flex items-center px-3 py-2.5 text-sm font-semibold rounded-lg
+                  flex items-center px-2.5 lg:px-3 xl:px-4 py-2.5 text-sm font-semibold rounded-lg
                   transition-all duration-200 whitespace-nowrap
                   ${isActiveSection('solutions')
                     ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
@@ -359,7 +359,7 @@ export default function Header() {
               <button
                 onClick={() => handleDropdownToggle('resources')}
                 className={`
-                  flex items-center px-3 py-2.5 text-sm font-semibold rounded-lg
+                  flex items-center px-2.5 lg:px-3 xl:px-4 py-2.5 text-sm font-semibold rounded-lg
                   transition-all duration-200 whitespace-nowrap
                   ${isActiveSection('resources')
                     ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
@@ -417,7 +417,7 @@ export default function Header() {
               <button
                 onClick={() => handleDropdownToggle('company')}
                 className={`
-                  flex items-center px-3 py-2.5 text-sm font-semibold rounded-lg
+                  flex items-center px-2.5 lg:px-3 xl:px-4 py-2.5 text-sm font-semibold rounded-lg
                   transition-all duration-200 whitespace-nowrap
                   ${isActiveSection('company')
                     ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
@@ -467,7 +467,7 @@ export default function Header() {
           </div>
 
           {/* Desktop Actions */}
-          <div className="hidden lg:flex lg:items-center lg:gap-2 xl:gap-3 flex-shrink-0">
+          <div className="hidden lg:flex lg:items-center lg:gap-1.5 xl:gap-2.5 flex-shrink-0">
 
             {/* Search Button */}
             <button
@@ -489,8 +489,8 @@ export default function Header() {
             <Link
               href="/demo"
               className="
-                inline-flex items-center gap-2
-                px-4 xl:px-5 py-2.5
+                inline-flex items-center gap-1.5 lg:gap-2
+                px-3 lg:px-4 xl:px-5 py-2.5
                 bg-primary-600 hover:bg-primary-700
                 dark:bg-primary-500 dark:hover:bg-primary-600
                 text-white font-semibold text-sm
@@ -500,7 +500,8 @@ export default function Header() {
                 hover:scale-105
               "
             >
-              <span>Request Demo</span>
+              <span className="hidden xl:inline">Request Demo</span>
+              <span className="xl:hidden">Demo</span>
               <ArrowRightIcon className="w-4 h-4" />
             </Link>
           </div>

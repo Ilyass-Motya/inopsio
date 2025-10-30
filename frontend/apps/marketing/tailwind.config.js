@@ -9,6 +9,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      maxWidth: {
+        '8xl': '1440px',
+      },
       fontFamily: {
         sans: ['Geist Mono', 'Sansation', 'system-ui', 'sans-serif'],
         'geist-mono': ['Geist Mono', 'system-ui', 'monospace'],

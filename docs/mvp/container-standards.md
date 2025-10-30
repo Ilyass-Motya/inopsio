@@ -4,23 +4,25 @@
 
 This document defines the standardized container pattern used across all main sections of the Inopsio marketing website to ensure visual consistency, proper responsive behavior, and optimal user experience across all screen sizes.
 
+**Update (January 2025)**: Migrated from `max-w-7xl` (1280px) to `max-w-8xl` (1440px) to better support modern high-resolution displays like MacBook Pro Retina (1440px-1728px effective pixels) and 2K+ monitors. The previous 1280px constraint left excessive side margins on these displays, making content feel unnecessarily narrow.
+
 ---
 
 ## 🧱 TL;DR - Container Pattern by Section Type
 
 | Section | Container | Background | Notes |
 |---------|-----------|------------|-------|
-| **Header** | `max-w-7xl mx-auto px-6 sm:px-8 lg:px-12` | Can be full-width | Keeps nav aligned with content |
-| **Hero** | Full-width wrapper + `max-w-7xl` inner | Usually full-width | For maximum visual impact |
-| **Content Sections** | `max-w-7xl mx-auto px-6 sm:px-8 lg:px-12` | Usually white/neutral | Standardize all content here |
+| **Header** | `max-w-8xl mx-auto px-6 sm:px-8 lg:px-12` | Can be full-width | Keeps nav aligned with content |
+| **Hero** | Full-width wrapper + `max-w-8xl` inner | Usually full-width | For maximum visual impact |
+| **Content Sections** | `max-w-8xl mx-auto px-6 sm:px-8 lg:px-12` | Usually white/neutral | Standardize all content here |
 | **CTA** | Same container if inline; full-bleed wrapper if standalone | Often colored | Maintain content alignment |
-| **Footer** | `max-w-7xl mx-auto px-6 sm:px-8 lg:px-12` | Usually full-width | Keep structured and aligned |
+| **Footer** | `max-w-8xl mx-auto px-6 sm:px-8 lg:px-12` | Usually full-width | Keep structured and aligned |
 
 ### Core Values:
 
 | Setting | Value | Purpose |
 |---------|-------|---------|
-| **Max width** | `max-w-7xl` (1280px) | Prevents content from stretching too wide on large screens |
+| **Max width** | `max-w-8xl` (1440px) | Optimized for modern high-resolution displays (MacBook Retina, 2K+) while maintaining readability |
 | **Centering** | `mx-auto` | Centers content horizontally |
 | **Padding** | `px-6 sm:px-8 lg:px-12` | Responsive horizontal padding (24px → 32px → 48px) |
 | **Vertical Spacing** | `py-16 sm:py-20 lg:py-24` | Consistent section spacing |
@@ -36,7 +38,7 @@ For most sections without special backgrounds:
 
 ```tsx
 <section className="py-16 sm:py-20 lg:py-24">
-  <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+  <div className="max-w-8xl mx-auto px-6 sm:px-8 lg:px-12">
     {/* Section content here */}
   </div>
 </section>
@@ -48,7 +50,7 @@ For sections with full-width backgrounds, shadows, or special effects:
 
 ```tsx
 <section className="py-16 sm:py-20 lg:py-24">
-  <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+  <div className="max-w-8xl mx-auto px-6 sm:px-8 lg:px-12">
     <div className="bg-white rounded-xl shadow-lg border border-slate-200">
       <div className="p-6 sm:p-8 lg:px-12">
         {/* Section content here */}
@@ -88,7 +90,7 @@ For sections with full-width backgrounds, shadows, or special effects:
 export default function Header() {
   return (
     <header className="fixed z-50 top-4 sm:top-5 lg:top-6 left-0 right-0">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="max-w-8xl mx-auto px-6 sm:px-8 lg:px-12">
         <nav
           className="relative rounded-2xl"
           style={{
@@ -114,7 +116,7 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Full-width background */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-8 sm:py-12 lg:py-16">
+      <div className="relative z-10 max-w-8xl mx-auto px-6 sm:px-8 lg:px-12 py-8 sm:py-12 lg:py-16">
         <div className="text-center">
           <h1 className="text-5xl font-bold">Your Hero Title</h1>
           {/* Hero content */}
@@ -131,7 +133,7 @@ export default function Hero() {
 export default function Footer() {
   return (
     <footer className="py-8 sm:py-10 lg:py-12">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="max-w-8xl mx-auto px-6 sm:px-8 lg:px-12">
         <div
           className="rounded-2xl"
           style={{
@@ -155,7 +157,7 @@ export default function Footer() {
 export default function Stats() {
   return (
     <section className="py-20 bg-gradient-to-b from-white to-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold">
             Inopsio by the Numbers
@@ -174,7 +176,7 @@ export default function Stats() {
 export default function CTA() {
   return (
     <section className="py-16 sm:py-20 lg:py-24">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="max-w-8xl mx-auto px-6 sm:px-8 lg:px-12">
         <div
           className="relative rounded-xl shadow-lg overflow-hidden py-16 sm:py-20"
           style={{
@@ -199,7 +201,7 @@ export default function CTA() {
 export default function PlatformOverview() {
   return (
     <section className="py-16 sm:py-20 lg:py-24">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="max-w-8xl mx-auto px-6 sm:px-8 lg:px-12">
         <div
           className="bg-white rounded-xl shadow-lg border border-slate-200"
           style={{
@@ -242,12 +244,13 @@ All components now follow the consistent container pattern:
 
 ## Design Principles
 
-### Why max-w-7xl (1280px)?
+### Why max-w-8xl (1440px)?
 
-- **Readability**: Prevents text lines from becoming too long (optimal 60-80 characters per line)
-- **Visual Balance**: Content doesn't feel lost on ultra-wide screens (2K, 4K, 8K displays)
-- **Consistency**: Matches industry standards (Tailwind, Vercel, Stripe, etc.)
-- **Flexibility**: Large enough for complex layouts, small enough for focus
+- **Modern Display Optimization**: Matches effective resolution of MacBook Pro Retina (1440px-1728px) and modern 2K+ displays
+- **Reduced Side Margins**: Eliminates the "small content" feeling on high-resolution displays where 1280px left large gaps
+- **Still Readable**: Maintains comfortable line lengths when combined with proper content column constraints
+- **Better Content Utilization**: Uses screen real estate effectively without stretching content too thin
+- **Industry Evolution**: Reflects modern web standards adapting to higher resolution displays becoming the norm
 
 ### Why Responsive Padding?
 
@@ -260,7 +263,7 @@ All components now follow the consistent container pattern:
 
 ```
 section (full-width, sets vertical rhythm)
-  └─ .max-w-7xl.mx-auto.px-* (constrains width, centers, adds horizontal padding)
+  └─ .max-w-8xl.mx-auto.px-* (constrains width, centers, adds horizontal padding)
       └─ [optional] styled wrapper (backgrounds, borders, shadows)
           └─ [optional] inner padding (for card-like sections)
               └─ content (text, grids, etc.)
@@ -292,7 +295,7 @@ section (full-width, sets vertical rhythm)
 ```tsx
 ✅ Use this:
 <section className="py-16 sm:py-20 lg:py-24">
-  <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+  <div className="max-w-8xl mx-auto px-6 sm:px-8 lg:px-12">
     {/* content */}
   </div>
 </section>
@@ -304,14 +307,15 @@ section (full-width, sets vertical rhythm)
 
 When implementing or reviewing sections, verify:
 
-- [ ] Section uses `max-w-7xl mx-auto`
+- [ ] Section uses `max-w-8xl mx-auto`
 - [ ] Responsive padding `px-6 sm:px-8 lg:px-12` is applied
 - [ ] Vertical spacing follows `py-16 sm:py-20 lg:py-24` pattern
 - [ ] Content is centered on all screen sizes
 - [ ] No fixed margins (like `marginLeft: '50px'`)
 - [ ] Sections align consistently across the page
-- [ ] Content doesn't stretch beyond 1280px on wide screens
+- [ ] Content doesn't stretch beyond 1440px on wide screens
 - [ ] Mobile spacing is comfortable (min 24px sides)
+- [ ] Layout looks well-balanced on MacBook Retina and 2K+ displays
 
 ---
 
