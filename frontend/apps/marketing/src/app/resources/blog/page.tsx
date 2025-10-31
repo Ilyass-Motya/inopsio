@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 
 // Sample blog data - replace with your actual data source
 const blogPosts = [

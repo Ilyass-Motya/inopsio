@@ -2,11 +2,24 @@
 
 import { use } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import Header from '@/components/layout/Header'
 
 // Sample blog post data - in production, fetch from API/CMS
-const blogPostsData: Record<string, any> = {
+interface BlogPost {
+  id: number
+  title: string
+  excerpt: string
+  content: string
+  category: string
+  author: string
+  authorRole: string
+  date: string
+  image: string
+  readTime: string
+  tags?: string[]
+}
+
+const blogPostsData: Record<string, BlogPost> = {
   '1': {
     id: 1,
     title: 'The Future of Enterprise Security: Zero Trust Architecture',
