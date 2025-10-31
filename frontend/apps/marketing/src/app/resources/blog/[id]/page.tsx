@@ -13,6 +13,7 @@ interface BlogPost {
   category: string
   author: string
   authorRole: string
+  authorBio?: string
   date: string
   image: string
   readTime: string
