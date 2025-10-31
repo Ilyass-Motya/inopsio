@@ -27,8 +27,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       setThemeState('dark')
       document.documentElement.classList.add('dark')
     }
-
-    setMounted(true)
   }, [])
 
   // Update theme

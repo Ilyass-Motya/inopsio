@@ -34,8 +34,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     } else if (languages.some(lang => lang.code === browserLanguage)) {
       setLanguageState(browserLanguage)
     }
-
-    setMounted(true)
   }, [])
 
   // Update language
