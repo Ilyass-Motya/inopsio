@@ -7,7 +7,7 @@ export default function CTA() {
     <section className="py-16 sm:py-20 lg:py-24">
       <div className="max-w-8xl mx-auto px-6 sm:px-8 lg:px-12">
         <div
-          className="relative rounded-xl shadow-lg overflow-hidden py-16 sm:py-20"
+          className="relative rounded-3xl shadow-2xl overflow-hidden py-16 sm:py-20"
           style={{
             backgroundImage: 'url(/images/cta-bg.png)',
             backgroundSize: 'cover',
@@ -15,6 +15,16 @@ export default function CTA() {
             backgroundRepeat: 'no-repeat'
           }}
         >
+          {/* Glass morphism overlay */}
+          <div className="absolute inset-0 bg-black/30 dark:bg-black/50"></div>
+          <div
+            className="absolute inset-0"
+            style={{
+              backdropFilter: 'blur(8px) saturate(150%)',
+              WebkitBackdropFilter: 'blur(8px) saturate(150%)',
+            }}
+          ></div>
+
           <div className="relative z-10 px-6 sm:px-8">
         <div className="text-center max-w-6xl mx-auto">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4 sm:mb-6 leading-tight sm:leading-tight md:leading-normal">

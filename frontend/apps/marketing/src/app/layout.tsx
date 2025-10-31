@@ -1,20 +1,69 @@
 import type { Metadata } from 'next'
-import { Geist_Mono } from 'next/font/google'
+import { Roboto } from 'next/font/google'
 import './globals.css'
-import Header from '@/components/layout/Header'
+import MainLayout from '@/components/layout/MainLayout'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { LanguageProvider } from '@/components/providers/LanguageProvider'
 
-const geistMono = Geist_Mono({ 
+const roboto = Roboto({
   subsets: ['latin'],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-  variable: '--font-geist-mono'
+  weight: ['100', '300', '400', '500', '700', '900'],
+  variable: '--font-roboto'
 })
 
 export const metadata: Metadata = {
-  title: 'Inopsio - All-in-One Business Platform',
-  description: 'Transform your business with our integrated CRM, ERP, Email Marketing, and Security Platform.',
-  keywords: ['CRM', 'ERP', 'Business Platform', 'Email Marketing', 'Cybersecurity'],
+  metadataBase: new URL('https://www.inopsio.com'),
+  title: {
+    default: 'Inopsio — Unify, Automate, and Secure Your Business Operations',
+    template: '%s | Inopsio'
+  },
+  description: 'Make technology your competitive edge. Inopsio empowers enterprises with intelligent systems that connect data, teams, and security for sustainable growth.',
+  keywords: ['enterprise security', 'CRM', 'ERP', 'AI automation', 'multi-tenant SaaS', 'cybersecurity', 'business intelligence', 'cloud-native platform', 'IT/OT security', 'workflow automation'],
+  authors: [{ name: 'Inopsio' }],
+  creator: 'Inopsio',
+  publisher: 'Inopsio',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://www.inopsio.com/',
+    title: 'Inopsio — Unify, Automate, and Secure Your Business Operations',
+    description: 'Empower your enterprise with intelligent systems that connect data, teams, and security for sustainable growth.',
+    siteName: 'Inopsio',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Inopsio Platform - Unified Business Operations',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@inopsio',
+    creator: '@inopsio',
+    title: 'Inopsio — Unify, Automate, and Secure Your Business Operations',
+    description: 'Empower your enterprise with intelligent systems that connect data, teams, and security.',
+    images: ['/twitter-card.png'],
+  },
+  alternates: {
+    canonical: 'https://www.inopsio.com/',
+  },
+  verification: {
+    google: 'your-google-site-verification-code',
+    // Add other verification codes as needed
+  },
 }
 
 export default function RootLayout({
@@ -27,7 +76,59 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Inter:wght@300;400;500;600;700&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet" />
+
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'SoftwareApplication',
+              name: 'Inopsio',
+              applicationCategory: 'BusinessApplication',
+              operatingSystem: 'Web, iOS, Android',
+              offers: {
+                '@type': 'Offer',
+                price: '0',
+                priceCurrency: 'USD',
+                priceSpecification: {
+                  '@type': 'UnitPriceSpecification',
+                  price: '0',
+                  priceCurrency: 'USD',
+                  referenceQuantity: {
+                    '@type': 'QuantitativeValue',
+                    value: '1',
+                    unitText: 'TRIAL'
+                  }
+                }
+              },
+              aggregateRating: {
+                '@type': 'AggregateRating',
+                ratingValue: '4.8',
+                ratingCount: '150',
+                bestRating: '5',
+                worstRating: '1'
+              },
+              provider: {
+                '@type': 'Organization',
+                name: 'Inopsio',
+                url: 'https://www.inopsio.com',
+                logo: 'https://www.inopsio.com/inopsio-logo.svg',
+                sameAs: [
+                  'https://twitter.com/inopsio',
+                  'https://linkedin.com/company/inopsio',
+                  'https://github.com/inopsio'
+                ]
+              },
+              description: 'Inopsio is a cloud-native, multi-tenant SaaS platform that unifies enterprise operations, security, and automation. Designed for scale and agility, it powers CRM, ERP, IT/OT security, and AI-driven intelligence.',
+              screenshot: 'https://www.inopsio.com/og-image.png',
+              softwareVersion: '1.0',
+              releaseNotes: 'Initial release with full enterprise feature set'
+            })
+          }}
+        />
+
+        {/* Theme Script */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -44,13 +145,12 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={geistMono.className}>
+      <body className={roboto.className}>
         <ThemeProvider>
           <LanguageProvider>
             {/* Global Background */}
             <div className="fixed inset-0 z-0 bg-background dark:bg-slate-950 transition-colors duration-300"></div>
-            <Header />
-            <main className="relative z-10">{children}</main>
+            <MainLayout>{children}</MainLayout>
           </LanguageProvider>
         </ThemeProvider>
       </body>

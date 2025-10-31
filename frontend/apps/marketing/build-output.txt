@@ -1,0 +1,37 @@
+
+> @inopsio/marketing@1.0.0 build
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\IronMan\Desktop\Inopsio\frontend\pnpm-lock.yaml as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * C:\Users\IronMan\Desktop\Inopsio\frontend\apps\marketing\pnpm-lock.yaml
+
+   ▲ Next.js 15.5.6
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 3.0s
+   Linting and checking validity of types ...
+ ⨯ ESLint: Plugin "react-hooks" was conflicted between ".eslintrc.json » eslint-config-next/core-web-vitals » C:\Users\IronMan\Desktop\Inopsio\frontend\apps\marketing\node_modules\.pnpm\eslint-config-next@15.5.6_e_2a0918af66e0dc881ccc6670a3f897e5\node_modules\eslint-config-next\index.js » plugin:react-hooks/recommended" and "..\..\.eslintrc".
+   Collecting page data ...
+   Generating static pages (0/4) ...
+   Generating static pages (1/4) 
+   Generating static pages (2/4) 
+   Generating static pages (3/4) 
+ ✓ Generating static pages (4/4)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    58.3 kB         166 kB
+└ ○ /_not-found                            995 B         103 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/52354350-b97add9366503fa8.js  54.2 kB
+  ├ chunks/996-2352729ed311ba2a.js       45.8 kB
+  └ other shared chunks (total)          1.99 kB
+
+
+○  (Static)  prerendered as static content
+

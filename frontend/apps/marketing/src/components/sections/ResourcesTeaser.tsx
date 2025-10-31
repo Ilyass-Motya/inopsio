@@ -74,7 +74,7 @@ export default function ResourcesTeaser() {
                     src={resource.image}
                     alt={resource.title}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-black/20 dark:bg-black/40 transition-colors duration-300"></div>

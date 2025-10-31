@@ -52,30 +52,6 @@ const stats = [
     description: 'GitHub Actions pipelines with approval gates and compliance checks',
     gradient: 'from-teal-500/20 to-green-500/20',
   },
-  {
-    metric: 'Multi-Region',
-    label: 'Global Deployment',
-    description: 'Available across AWS, Azure, and OVH with geo-redundant infrastructure',
-    gradient: 'from-violet-500/20 to-purple-500/20',
-  },
-  {
-    metric: '<60min',
-    label: 'Disaster Recovery RTO',
-    description: 'Automated backup and recovery with quarterly DR testing and validation',
-    gradient: 'from-amber-500/20 to-orange-500/20',
-  },
-  {
-    metric: '3',
-    label: 'Compliance Frameworks',
-    description: 'ISO 27001, SOC 2 Type II, and CNDP Law 09-08 certification ready',
-    gradient: 'from-emerald-500/20 to-teal-500/20',
-  },
-  {
-    metric: '1000+',
-    label: 'Tenant Scale Support',
-    description: 'Multi-tenant architecture with domain-based isolation and schema separation',
-    gradient: 'from-fuchsia-500/20 to-pink-500/20',
-  },
 ]
 
 export default function Stats() {

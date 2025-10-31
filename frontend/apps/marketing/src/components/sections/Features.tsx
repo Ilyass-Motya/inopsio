@@ -88,22 +88,13 @@ export default function Features() {
       }}
     >
       <div className="max-w-8xl mx-auto px-6 sm:px-8 lg:px-12">
-        <div
-          style={{
-            background: 'rgba(255, 255, 255, 0.05)',
-            backdropFilter: 'blur(20px) saturate(150%)',
-            WebkitBackdropFilter: 'blur(20px) saturate(150%)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-          }}
-          className="rounded-xl p-6 sm:p-8 lg:p-12"
-        >
+        <div className="rounded-xl p-6 sm:p-8 lg:p-12">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-balance text-slate-900">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-balance text-slate-900 dark:text-white">
             Features — Key Capabilities at a Glance
           </h2>
-          <p className="text-lg sm:text-xl lg:text-2xl text-slate-600 leading-relaxed max-w-3xl mx-auto text-balance">
+          <p className="text-lg sm:text-xl lg:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl mx-auto text-balance">
             A unified suite for security, automation, and modern enterprise operations.
           </p>
         </div>
@@ -113,27 +104,27 @@ export default function Features() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`bg-white rounded-lg shadow-sm border border-slate-200 p-6 hover:shadow-lg hover:border-blue-200 transition-all duration-200 group ${
+              className={`bg-white dark:bg-gray-800/80 rounded-xl shadow-sm border border-slate-200 dark:border-gray-700 p-6 hover:shadow-lg hover:border-primary-200 dark:hover:border-gray-600 transition-all duration-200 group ${
                 visibleFeatures.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
               {/* Icon */}
-              <div className="w-12 h-12 bg-primary-100 text-primary-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary-600 group-hover:text-white transition-colors duration-200">
+              <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary-600 group-hover:text-white transition-all duration-200 group-hover:scale-110">
                 {feature.icon}
               </div>
 
               {/* Content */}
-              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight mb-3 group-hover:text-primary-600 transition-colors">
+              <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white group-hover:translate-x-1 transition-transform duration-200">
                 {feature.title}
               </h3>
-              <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                 {feature.description}
               </p>
 
               {/* Hover Effect */}
-              <div className="mt-4 pt-4 border-t border-slate-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <p className="text-sm text-slate-600">
+              <div className="mt-4 pt-4 border-t border-slate-100 dark:border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <p className="text-sm text-slate-600 dark:text-slate-400">
                   {feature.hover}
                 </p>
               </div>
@@ -143,9 +134,9 @@ export default function Features() {
 
         {/* Additional Feature Highlights */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white rounded-lg p-6 border border-slate-200">
-            <h4 className="text-xl font-semibold mb-4">Additional Feature Highlights</h4>
-            <ul className="space-y-3 text-slate-700">
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-slate-200 dark:border-gray-700">
+            <h4 className="text-xl font-semibold mb-4 text-slate-900 dark:text-white">Additional Feature Highlights</h4>
+            <ul className="space-y-3 text-slate-700 dark:text-slate-300">
               <li>
                 <span className="font-semibold">Developer Experience</span> — Fast onboarding, robust CI/CD, one-click deployments.
               </li>
@@ -163,7 +154,7 @@ export default function Features() {
               </li>
             </ul>
           </div>
-          <div className="bg-white rounded-lg p-6 border border-slate-200 flex items-center justify-center">
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-slate-200 dark:border-gray-700 flex items-center justify-center">
             <a href="/features" className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200 rounded-lg shadow-lg hover:shadow-xl">
               Explore All Features
             </a>
@@ -172,11 +163,11 @@ export default function Features() {
 
         {/* Bottom CTA */}
         <div className="text-center mt-16">
-          <div className="bg-white rounded-lg p-8 border border-slate-200">
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-4">
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-8 border border-slate-200 dark:border-gray-700">
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-4 text-slate-900 dark:text-white">
               See the full platform in action
             </h3>
-            <p className="text-base sm:text-lg text-slate-600 leading-relaxed mb-6">
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
               Explore technical details or try interactive module showcases.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

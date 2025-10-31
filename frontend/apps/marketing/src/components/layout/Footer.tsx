@@ -41,7 +41,7 @@ const footerLinks = {
     { name: 'Careers', href: '/company/careers' },
     { name: 'News & Press', href: '/company/news' },
     { name: 'Partners', href: '/company/partners' },
-    { name: 'Contact', href: '/company/contact' },
+    { name: 'Contact', href: '/contact' },
   ],
   legal: [
     { name: 'Privacy Policy', href: '/legal/privacy' },
@@ -69,20 +69,11 @@ const complianceBadges = [
 
 export default function Footer() {
   return (
-    <footer className="py-8 sm:py-10 lg:py-12 bg-background dark:bg-slate-950">
+    <footer className="py-8 sm:py-10 lg:py-12">
       <div className="max-w-8xl mx-auto px-6 sm:px-8 lg:px-12">
 
         {/* Main Footer Content */}
-        <div
-          className="rounded-2xl p-8 sm:p-10 lg:p-12 mb-8"
-          style={{
-            backdropFilter: 'blur(30px) saturate(200%)',
-            WebkitBackdropFilter: 'blur(30px) saturate(200%)',
-            background: 'rgba(255, 255, 255, 0.05)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-          }}
-        >
+        <div className="relative bg-white dark:bg-gray-900 rounded-2xl p-8 sm:p-10 lg:p-12 mb-8 shadow-xl border-2 border-gray-200 dark:border-gray-700">
           {/* Logo and System Status */}
           <div className="mb-12 pb-8 border-b border-slate-300/50 dark:border-white/20">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">

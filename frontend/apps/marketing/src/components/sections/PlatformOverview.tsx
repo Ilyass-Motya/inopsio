@@ -5,22 +5,13 @@ export default function PlatformOverview() {
   return (
     <section className="py-16 sm:py-20 lg:py-24">
       <div className="max-w-8xl mx-auto px-6 sm:px-8 lg:px-12">
-        <div
-          className="rounded-xl"
-          style={{
-            background: 'rgba(255, 255, 255, 0.05)',
-            backdropFilter: 'blur(20px) saturate(150%)',
-            WebkitBackdropFilter: 'blur(20px) saturate(150%)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-          }}
-        >
+        <div className="rounded-xl">
           <div className="p-6 sm:p-8 lg:p-12">
             <div className="text-center mb-12 sm:mb-14 lg:mb-16">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 mb-4 sm:mb-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white mb-4 sm:mb-6">
                 Platform Overview — The Inopsio Advantage
               </h2>
-              <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">
+              <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
                 Inopsio is a cloud-native, multi-tenant SaaS platform that unifies enterprise operations, security, and automation. Designed for scale and agility, it powers CRM, ERP, IT/OT security, and AI-driven intelligence — all in one seamless environment.
               </p>
             </div>
