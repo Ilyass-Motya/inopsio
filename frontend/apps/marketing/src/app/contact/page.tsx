@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import ReCAPTCHA from 'react-google-recaptcha'
+import Image from 'next/image'
 import Header from '@/components/layout/Header'
 import { contactFormSchema, type ContactFormData } from '@/lib/validations/contact'
 import { countries, getCountryByName } from '@/data/countries'
@@ -665,10 +666,11 @@ export default function ContactPage() {
                   <div className="absolute bottom-0 left-0 w-10 h-10 border-b-2 border-l-2 border-primary-500 dark:border-primary-400 rounded-bl-2xl z-20"></div>
                   <div className="absolute bottom-0 right-0 w-10 h-10 border-b-2 border-r-2 border-primary-500 dark:border-primary-400 rounded-br-2xl z-20"></div>
                   
-                  <img
+                  <Image
                     src={imageSrc}
                     alt="Contact us"
-                    className="absolute inset-0 w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                   
                   {/* Social Links Overlay */}

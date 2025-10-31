@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import MegaMenu from './HeaderMegaMenu'
 import HeaderSearchModal from './HeaderSearchModal'
@@ -223,7 +224,7 @@ export default function Header() {
                   className="flex items-center group"
                   aria-label="Inopsio home"
                 >
-                  <img src="/inopsio-logo.svg" alt="Inopsio Logo" className="h-8 w-auto sm:h-9 lg:h-10 group-hover:scale-105 transition-transform duration-300" />
+                  <Image src="/inopsio-logo.svg" alt="Inopsio Logo" width={120} height={40} className="h-8 w-auto sm:h-9 lg:h-10 group-hover:scale-105 transition-transform duration-300" />
                 </Link>
               </div>
 

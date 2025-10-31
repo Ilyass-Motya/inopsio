@@ -79,7 +79,7 @@ export default function Footer() {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               {/* Logo */}
               <Link href="/" className="inline-block">
-                <img src="/inopsio-logo.svg" alt="Inopsio Logo" className="h-10 w-auto" />
+                <Image src="/inopsio-logo.svg" alt="Inopsio Logo" width={120} height={40} className="h-10 w-auto" />
               </Link>
 
               {/* System Status */}
