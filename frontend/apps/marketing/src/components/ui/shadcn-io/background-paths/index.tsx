@@ -51,15 +51,15 @@ function FloatingPaths({ position, colorClass }: { position: number; colorClass:
 }
 
 export interface BackgroundPathsProps {
-  title?: string;
+  title?: string
   /** Tailwind text color classes applied to the SVG paths via currentColor */
-  colorClass?: string;
+  colorClass?: string
   /** Tailwind from-* class for the title gradient (light mode). You can also include dark: variants. */
-  titleFromClass?: string;
+  titleFromClass?: string
   /** Tailwind to-* class for the title gradient (light mode). You can also include dark: variants. */
-  titleToClass?: string;
+  titleToClass?: string
   /** If true, render only the animated paths as a transparent background layer. */
-  backgroundOnly?: boolean;
+  backgroundOnly?: boolean
 }
 
 export function BackgroundPaths({
