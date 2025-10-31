@@ -69,6 +69,7 @@ async function verifyRecaptcha(token: string): Promise<boolean> {
 async function sendToEmailService(formData: ContactFormData): Promise<void> {
   const emailServiceUrl = process.env.EMAIL_SERVICE_URL || process.env.NEXT_PUBLIC_API_URL
   if (!emailServiceUrl) {
+    // eslint-disable-next-line no-console
     console.warn('Email service URL not configured')
     return
   }
