@@ -131,6 +131,7 @@ const HeaderSearchModal: React.FC<HeaderSearchModalProps> = ({ isOpen, onClose }
     }
     document.addEventListener('keydown', handleKey)
     return () => document.removeEventListener('keydown', handleKey)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, activeIndex, totalItems, onClose])
 
   useEffect(() => {

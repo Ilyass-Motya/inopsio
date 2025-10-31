@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useTheme } from '@/components/providers/ThemeProvider'
 import MegaMenu from './HeaderMegaMenu'
 import HeaderSearchModal from './HeaderSearchModal'
 import {
