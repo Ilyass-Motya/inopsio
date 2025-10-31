@@ -1,7 +1,7 @@
-'use client';
+'use client'
 
-import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion'
+import { cn } from '@/lib/utils'
 
 function FloatingPaths({ position, colorClass }: { position: number; colorClass: string }) {
   const paths = Array.from({ length: 36 }, (_, i) => ({
@@ -15,7 +15,7 @@ function FloatingPaths({ position, colorClass }: { position: number; colorClass:
     } ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`,
     color: `rgba(15,23,42,${0.1 + i * 0.03})`,
     width: 0.5 + i * 0.03,
-  }));
+  }))
 
   return (
     <div className="absolute inset-0 pointer-events-none">
@@ -47,7 +47,7 @@ function FloatingPaths({ position, colorClass }: { position: number; colorClass:
         ))}
       </svg>
     </div>
-  );
+  )
 }
 
 export interface BackgroundPathsProps {
@@ -69,7 +69,7 @@ export function BackgroundPaths({
   titleToClass = '',
   backgroundOnly = false,
 }: BackgroundPathsProps) {
-  const words = title.split(' ');
+  const words = title.split(' ')
 
   if (backgroundOnly) {
     return (
@@ -77,7 +77,7 @@ export function BackgroundPaths({
         <FloatingPaths position={1} colorClass={colorClass} />
         <FloatingPaths position={-1} colorClass={colorClass} />
       </div>
-    );
+    )
   }
 
   return (
@@ -154,5 +154,5 @@ export function BackgroundPaths({
         </motion.div>
       </div>
     </div>
-  );
+  )
 }
