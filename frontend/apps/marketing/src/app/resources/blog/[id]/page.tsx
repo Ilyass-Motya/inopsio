@@ -11,12 +11,13 @@ interface BlogPost {
   excerpt: string
   content: string
   category: string
-  author: string
-  authorRole: string
+  author?: string
+  authorRole?: string
   authorBio?: string
   date: string
-  image: string
+  image?: string
   readTime: string
+  featured?: boolean
   tags?: string[]
 }
 

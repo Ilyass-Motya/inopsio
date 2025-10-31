@@ -54,7 +54,7 @@ export default function LanguageSelector() {
               <button
                 key={lang.code}
                 onClick={() => {
-                  setLanguage(lang.code as any)
+                  setLanguage(lang.code as 'en' | 'fr' | 'es' | 'de' | 'it' | 'ar')
                   setIsOpen(false)
                 }}
                 className={`w-full flex items-center space-x-3 px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors duration-200 ${

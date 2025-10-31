@@ -60,6 +60,7 @@ async function verifyRecaptcha(token: string): Promise<boolean> {
     const data = await response.json()
     return data.success === true
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('reCAPTCHA verification error:', error)
     return false
   }
@@ -87,6 +88,7 @@ async function sendToEmailService(formData: ContactFormData): Promise<void> {
       })
     })
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Email service error:', error)
     // Don't fail the request if email fails
   }
@@ -95,6 +97,7 @@ async function sendToEmailService(formData: ContactFormData): Promise<void> {
 async function sendToCRMService(formData: ContactFormData): Promise<void> {
   const crmServiceUrl = process.env.CRM_SERVICE_URL || process.env.NEXT_PUBLIC_API_URL
   if (!crmServiceUrl) {
+    // eslint-disable-next-line no-console
     console.warn('CRM service URL not configured')
     return
   }
@@ -123,6 +126,7 @@ async function sendToCRMService(formData: ContactFormData): Promise<void> {
       })
     })
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('CRM service error:', error)
     // Don't fail the request if CRM fails
   }
@@ -182,6 +186,7 @@ export async function POST(request: NextRequest) {
       sendToEmailService(body),
       sendToCRMService(body)
     ]).catch(err => {
+      // eslint-disable-next-line no-console
       console.error('Background service errors:', err)
     })
 
@@ -194,6 +199,7 @@ export async function POST(request: NextRequest) {
     )
 
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Contact form submission error:', error)
     return NextResponse.json(
       { error: 'An error occurred while processing your request. Please try again later.' },

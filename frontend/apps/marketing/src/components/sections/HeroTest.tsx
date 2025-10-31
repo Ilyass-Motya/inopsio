@@ -3,12 +3,9 @@
 import { useState, useEffect } from 'react'
 
 export default function HeroTest() {
-  const [isDark, setIsDark] = useState(false)
-
   useEffect(() => {
-    setIsDark(document.documentElement.classList.contains('dark'))
     const observer = new MutationObserver(() => {
-      setIsDark(document.documentElement.classList.contains('dark'))
+      // Monitor dark mode changes if needed in the future
     })
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
     return () => observer.disconnect()

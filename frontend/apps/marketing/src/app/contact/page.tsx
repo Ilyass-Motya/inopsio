@@ -25,7 +25,7 @@ export default function ContactPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty },
+    formState: { errors },
     setValue,
     watch,
     reset

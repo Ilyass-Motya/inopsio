@@ -1,4 +1,4 @@
-import { BackgroundPaths } from "@/components/ui/shadcn-io/background-paths";
+import { BackgroundPaths } from "@/components/ui/shadcn-io/background-paths"
 
 export default function ArtisticLanding() {
 	return (

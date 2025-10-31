@@ -23,7 +23,6 @@ const languages = [
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguageState] = useState<Language>('en')
-  const [mounted, setMounted] = useState(false)
 
   // Load language from localStorage on mount
   useEffect(() => {

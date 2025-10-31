@@ -11,7 +11,6 @@ import {
   ChatBubbleLeftRightIcon,
   Cog6ToothIcon,
   ChartBarIcon,
-  BellIcon,
   ArrowRightIcon,
   XMarkIcon
 } from '@heroicons/react/24/outline'
@@ -105,6 +104,7 @@ const HeaderSearchModal: React.FC<HeaderSearchModalProps> = ({ isOpen, onClose }
   const handleOpen = (index: number) => {
     const item = allItems[index]
     if (!item) return
+    // eslint-disable-next-line no-console
     console.log('Navigate to:', item.action || item.label)
     onClose()
   }
@@ -138,6 +138,7 @@ const HeaderSearchModal: React.FC<HeaderSearchModalProps> = ({ isOpen, onClose }
     if (el && 'scrollIntoView' in el) {
       (el as HTMLElement).scrollIntoView({ block: 'nearest', behavior: 'smooth' })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeIndex])
 
   if (!isOpen) return null

@@ -106,9 +106,7 @@ export default function Header() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false)
   const pathname = usePathname()
-  const dropdownRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
-  const { theme, toggleTheme } = useTheme()
   const [isDark, setIsDark] = useState(false)
 
   // Detect dark mode
