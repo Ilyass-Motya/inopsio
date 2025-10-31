@@ -220,7 +220,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ id: string 
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/30 border-2 border-primary-200 dark:border-primary-800 flex items-center justify-center">
                   <span className="text-sm font-semibold text-primary-700 dark:text-primary-300">
-                    {post.author.split(' ').map(n => n[0]).join('')}
+                    {post.author.split(' ').map((n: string) => n[0]).join('')}
                   </span>
                 </div>
                 <div>
