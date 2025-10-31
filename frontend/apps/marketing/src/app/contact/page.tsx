@@ -666,12 +666,14 @@ export default function ContactPage() {
                   <div className="absolute bottom-0 left-0 w-10 h-10 border-b-2 border-l-2 border-primary-500 dark:border-primary-400 rounded-bl-2xl z-20"></div>
                   <div className="absolute bottom-0 right-0 w-10 h-10 border-b-2 border-r-2 border-primary-500 dark:border-primary-400 rounded-br-2xl z-20"></div>
                   
-                  <Image
-                    src={imageSrc}
-                    alt="Contact us"
-                    fill
-                    className="object-cover"
-                  />
+                  <div className="absolute inset-0">
+                    <Image
+                      src={imageSrc}
+                      alt="Contact us"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                   
                   {/* Social Links Overlay */}
                   <div className="absolute top-6 left-6 right-6 z-30">
