@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import LanguageSelector from '../ui/LanguageSelector'
 import ThemeSwitcher from '../ui/ThemeSwitcher'
 import ComplianceBadge from '../ui/ComplianceBadge'
