@@ -231,23 +231,32 @@ export default function BlogPostPage({ params }: { params: Promise<{ id: string 
             </p>
 
             {/* Author and Date */}
-            <div className="flex flex-wrap items-center gap-4 pt-6 border-t border-gray-200 dark:border-gray-700">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/30 border-2 border-primary-200 dark:border-primary-800 flex items-center justify-center">
-                  <span className="text-sm font-semibold text-primary-700 dark:text-primary-300">
-                    {post.author?.split(' ').map((n: string) => n[0]).join('') || '??'}
+            {(post.author || post.date) && (
+              <div className="flex flex-wrap items-center gap-4 pt-6 border-t border-gray-200 dark:border-gray-700">
+                {post.author && (
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/30 border-2 border-primary-200 dark:border-primary-800 flex items-center justify-center">
+                      <span className="text-sm font-semibold text-primary-700 dark:text-primary-300">
+                        {post.author.split(' ').map((n: string) => n[0]).join('')}
+                      </span>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900 dark:text-white">{post.author}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{post.authorRole || ''}</p>
+                    </div>
+                  </div>
+                )}
+                {post.author && post.date && (
+                  <span className="hidden sm:inline text-gray-400 dark:text-gray-600">•</span>
+                )}
+                {post.date && (
+                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                    {new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                   </span>
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900 dark:text-white">{post.author || 'Unknown Author'}</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">{post.authorRole || ''}</p>
-                </div>
+                )}
               </div>
-              <span className="hidden sm:inline text-gray-400 dark:text-gray-600">•</span>
-              <span className="text-sm text-gray-600 dark:text-gray-400">
-                {new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-              </span>
-            </div>
+            )}
+          </div>
           </div>
 
           {/* Main Article Content */}
