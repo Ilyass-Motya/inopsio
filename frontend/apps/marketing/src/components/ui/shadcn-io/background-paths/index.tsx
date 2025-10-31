@@ -92,8 +92,8 @@ export function BackgroundPaths({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 2 }}
-          className="max-w-4xl mx-auto"
         >
+          <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold mb-8 tracking-tighter">
             {words.map((word, wordIndex) => (
               <span
@@ -150,6 +150,7 @@ export function BackgroundPaths({
                 →
               </span>
             </button>
+          </div>
           </div>
         </motion.div>
       </div>
