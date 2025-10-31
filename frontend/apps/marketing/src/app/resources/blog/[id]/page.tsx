@@ -257,7 +257,6 @@ export default function BlogPostPage({ params }: { params: Promise<{ id: string 
               </div>
             )}
           </div>
-          </div>
 
           {/* Main Article Content */}
           <div className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-8 sm:p-10 mb-12 border-2 border-gray-200 dark:border-gray-700">
