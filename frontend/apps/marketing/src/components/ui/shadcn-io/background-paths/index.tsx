@@ -111,16 +111,19 @@ export function BackgroundPaths({
                       stiffness: 150,
                       damping: 25,
                     }}
-                    className={cn(
-                      'inline-block text-transparent bg-clip-text bg-gradient-to-r',
-                      // defaults
-                      'from-neutral-900 to-neutral-700/80 dark:from-white dark:to-white/80',
-                      // overrides (props come last to win specificity/order)
-                      titleFromClass,
-                      titleToClass
-                    )}
                   >
-                    {letter}
+                    <span
+                      className={cn(
+                        'inline-block text-transparent bg-clip-text bg-gradient-to-r',
+                        // defaults
+                        'from-neutral-900 to-neutral-700/80 dark:from-white dark:to-white/80',
+                        // overrides (props come last to win specificity/order)
+                        titleFromClass,
+                        titleToClass
+                      )}
+                    >
+                      {letter}
+                    </span>
                   </motion.span>
                 ))}
               </span>
