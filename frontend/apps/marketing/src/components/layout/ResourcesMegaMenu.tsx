@@ -17,7 +17,7 @@ interface ResourcesMegaMenuProps {
   offset?: number
 }
 
-export default function ResourcesMegaMenu({ isActivePath, isDark, offset = 0 }: ResourcesMegaMenuProps) {
+export default function ResourcesMegaMenu({ isActivePath, isDark, offset: _offset = 0 }: ResourcesMegaMenuProps) {
   const learn = [
     { 
       name: 'Blog', 

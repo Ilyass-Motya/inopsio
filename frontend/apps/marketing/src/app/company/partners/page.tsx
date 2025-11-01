@@ -14,7 +14,6 @@ import {
   DocumentTextIcon,
   Cog6ToothIcon,
   PresentationChartBarIcon,
-  BuildingOffice2Icon,
   PhoneIcon,
   EnvelopeIcon,
   MapPinIcon,

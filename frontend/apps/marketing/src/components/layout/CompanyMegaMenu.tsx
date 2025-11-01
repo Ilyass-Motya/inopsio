@@ -18,7 +18,7 @@ interface CompanyMegaMenuProps {
   offset?: number
 }
 
-export default function CompanyMegaMenu({ isActivePath, isDark, offset = 0 }: CompanyMegaMenuProps) {
+export default function CompanyMegaMenu({ isActivePath, isDark, offset: _offset = 0 }: CompanyMegaMenuProps) {
   const about = [
     { 
       name: 'About Us', 

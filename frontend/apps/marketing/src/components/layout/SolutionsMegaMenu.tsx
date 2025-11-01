@@ -17,7 +17,7 @@ interface SolutionsMegaMenuProps {
   offset?: number
 }
 
-export default function SolutionsMegaMenu({ isActivePath, isDark, offset = 0 }: SolutionsMegaMenuProps) {
+export default function SolutionsMegaMenu({ isActivePath, isDark, offset: _offset = 0 }: SolutionsMegaMenuProps) {
   const healthcareEducation = [
     { 
       name: 'Healthcare', 

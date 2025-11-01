@@ -16,7 +16,7 @@ interface AIMegaMenuProps {
   offset?: number
 }
 
-export default function AIMegaMenu({ isActivePath, isDark, offset = 0 }: AIMegaMenuProps) {
+export default function AIMegaMenu({ isActivePath, isDark, offset: _offset = 0 }: AIMegaMenuProps) {
   const aiSolutions = [
     { 
       name: 'AI Assistant', 
