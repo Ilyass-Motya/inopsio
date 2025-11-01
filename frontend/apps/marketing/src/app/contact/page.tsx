@@ -6,13 +6,14 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import ReCAPTCHA from 'react-google-recaptcha'
 import Image from 'next/image'
 import PhoneInput, { getCountryCallingCode, type Value } from 'react-phone-number-input'
+import type { CountryCode } from 'libphonenumber-js'
 import en from 'react-phone-number-input/locale/en.json'
 import 'react-phone-number-input/style.css'
 import HeaderPill from '@/components/layout/HeaderPill'
 import { contactFormSchema, type ContactFormData } from '@/lib/validations/contact'
 import { contactConfig, industries } from '@/config/contact'
 
-type Country = string | undefined
+type Country = CountryCode | undefined
 
 export default function ContactPage() {
   const [phoneValue, setPhoneValue] = useState<Value>()
