@@ -87,7 +87,7 @@ export default function ContactPage() {
     }
   }, [formData, submitStatus, phoneValue, countryCode, agreeToTerms])
 
-  const handlePhoneChange = (value: Value) => {
+  const handlePhoneChange = (value: Value | undefined) => {
     setPhoneValue(value)
     setValue('phone', value || '', { shouldValidate: true })
   }
