@@ -15,8 +15,8 @@ import { contactConfig, industries } from '@/config/contact'
 type Country = string | undefined
 
 export default function ContactPage() {
-  const [phoneValue, setPhoneValue] = useState<Value>('')
-  const [countryCode, setCountryCode] = useState<Country>('')
+  const [phoneValue, setPhoneValue] = useState<Value>()
+  const [countryCode, setCountryCode] = useState<Country>()
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
@@ -138,8 +138,8 @@ export default function ContactPage() {
 
       setSubmitStatus('success')
       reset()
-      setPhoneValue('')
-      setCountryCode('')
+      setPhoneValue(undefined)
+      setCountryCode(undefined)
       setRecaptchaToken(null)
       recaptchaRef.current?.reset()
 
