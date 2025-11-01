@@ -51,9 +51,27 @@ export const contactFormSchema = z.object({
   
   phone: z.string()
     .min(1, 'Phone number is required')
-    .regex(/^[\d\s\-()]+$/, 'Phone number can only contain digits, spaces, hyphens, and parentheses')
-    .refine((phone) => phone.length >= 7, {
-      message: 'Phone number must be at least 7 digits'
+    .refine((phone) => {
+      // Accept E.164 format (e.g., +1234567890) or formatted phone
+      const cleanPhone = phone.replace(/\s|-|\(|\)/g, '')
+      // E.164 format: + followed by 1-15 digits
+      const e164Regex = /^\+?[1-9]\d{1,14}$/
+      return e164Regex.test(cleanPhone) || phone.length >= 7
+    }, {
+      message: 'Please enter a valid phone number'
+    })
+    .refine((phone) => {
+      // Use libphonenumber-js for validation if phone is in E.164 format
+      try {
+        if (phone.startsWith('+')) {
+          return isValidPhoneNumber(phone)
+        }
+        return true // Allow formatted numbers, will validate on submit
+      } catch {
+        return true
+      }
+    }, {
+      message: 'Invalid phone number format'
     }),
   
   phoneCode: z.string()
@@ -72,19 +90,31 @@ export const contactFormSchema = z.object({
   recaptchaToken: z.string()
     .optional()
 }).superRefine((data, ctx) => {
-  // Enhanced phone validation with country code
-  if (data.phone && data.phoneCode) {
+  // Enhanced phone validation - react-phone-number-input provides E.164 format
+  if (data.phone) {
     try {
-      const fullNumber = `${data.phoneCode}${data.phone.replace(/\s|-|\(|\)/g, '')}`
-      if (!isValidPhoneNumber(fullNumber)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'Invalid phone number format for selected country',
-          path: ['phone']
-        })
+      // If phone is in E.164 format (starts with +), validate directly
+      if (data.phone.startsWith('+')) {
+        if (!isValidPhoneNumber(data.phone)) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: 'Invalid phone number format',
+            path: ['phone']
+          })
+        }
+      } else if (data.phoneCode) {
+        // Legacy support: combine code + number if not E.164
+        const fullNumber = `${data.phoneCode}${data.phone.replace(/\s|-|\(|\)/g, '')}`
+        if (!isValidPhoneNumber(fullNumber)) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: 'Invalid phone number format for selected country',
+            path: ['phone']
+          })
+        }
       }
     } catch {
-      // If validation fails, just allow it (basic format already validated)
+      // If validation fails, allow it (basic format already validated)
     }
   }
 })

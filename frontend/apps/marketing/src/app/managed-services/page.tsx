@@ -1,9 +1,9 @@
-import Header from '@/components/layout/Header'
+import HeaderPill from '@/components/layout/HeaderPill'
 
 export default function ManagedServicesPage() {
   return (
     <div className="min-h-screen bg-background dark:bg-slate-950">
-      <Header />
+      <HeaderPill />
 
       <main className="pt-20">
         <div className="max-w-8xl mx-auto px-6 sm:px-8 lg:px-12 py-16">

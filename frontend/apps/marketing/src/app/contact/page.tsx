@@ -1,18 +1,21 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import ReCAPTCHA from 'react-google-recaptcha'
 import Image from 'next/image'
-import Header from '@/components/layout/Header'
+import PhoneInput, { getCountryCallingCode } from 'react-phone-number-input'
+import en from 'react-phone-number-input/locale/en.json'
+import type { E164Number, Country } from 'react-phone-number-input'
+import 'react-phone-number-input/style.css'
+import HeaderPill from '@/components/layout/HeaderPill'
 import { contactFormSchema, type ContactFormData } from '@/lib/validations/contact'
-import { countries, getCountryByName } from '@/data/countries'
 import { contactConfig, industries } from '@/config/contact'
 
 export default function ContactPage() {
-  const [selectedCountry, setSelectedCountry] = useState('')
-  const [phoneCode, setPhoneCode] = useState('')
+  const [phoneValue, setPhoneValue] = useState<E164Number | undefined>('')
+  const [countryCode, setCountryCode] = useState<string | undefined>('')
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
@@ -26,6 +29,7 @@ export default function ContactPage() {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
     setValue,
     watch,
@@ -79,23 +83,22 @@ export default function ContactPage() {
       }
       window.removeEventListener('resize', updateImageHeight)
     }
-  }, [formData, submitStatus, selectedCountry, phoneCode, agreeToTerms])
+  }, [formData, submitStatus, phoneValue, countryCode, agreeToTerms])
 
-  const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const countryName = e.target.value
-    setSelectedCountry(countryName)
-    
-    const selectedCountryData = getCountryByName(countryName)
-    if (selectedCountryData) {
-      setPhoneCode(selectedCountryData.code)
-      setValue('phoneCode', selectedCountryData.code)
-    } else {
-      setPhoneCode('')
-      setValue('phoneCode', '')
+  const handlePhoneChange = (value: E164Number | undefined) => {
+    setPhoneValue(value)
+    setValue('phone', value || '', { shouldValidate: true })
+  }
+
+  const handleCountryChange = (country: Country | undefined) => {
+    setCountryCode(country)
+    if (country) {
+      const countryCallingCode = getCountryCallingCode(country)
+      setValue('phoneCode', `+${countryCallingCode}`, { shouldValidate: false })
+      // Get country name from locale or fallback to code
+      const countryName = (en as Record<string, string>)[country] || country
+      setValue('countryRegion', countryName, { shouldValidate: true })
     }
-
-    setValue('countryRegion', countryName, { shouldValidate: true })
-    setSubmitStatus('idle')
   }
 
   const onRecaptchaChange = (token: string | null) => {
@@ -114,14 +117,14 @@ export default function ContactPage() {
     setSubmitError('')
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch('/api/v1/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           ...data,
-          phoneCode,
+          phoneCode: countryCode ? `+${getCountryCallingCode(countryCode)}` : undefined,
           recaptchaToken: recaptchaToken || undefined
         })
       })
@@ -134,8 +137,8 @@ export default function ContactPage() {
 
       setSubmitStatus('success')
       reset()
-      setSelectedCountry('')
-      setPhoneCode('')
+      setPhoneValue('')
+      setCountryCode('')
       setRecaptchaToken(null)
       recaptchaRef.current?.reset()
 
@@ -182,7 +185,7 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen">
-      <Header />
+      <HeaderPill />
 
       <main className="pt-20">
         {/* Two Column Layout - 75% Form, 25% Image */}
@@ -435,77 +438,7 @@ export default function ContactPage() {
                       </div>
                     </div>
 
-                    {/* Country & City */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label 
-                          htmlFor="countryRegion" 
-                          className="block text-sm font-medium text-gray-900 dark:text-white mb-1.5"
-                        >
-                          Location *
-                        </label>
-                        <select
-                          id="countryRegion"
-                          value={selectedCountry}
-                          onChange={handleCountryChange}
-                          aria-invalid={errors.countryRegion ? 'true' : 'false'}
-                          aria-describedby={errors.countryRegion ? 'countryRegion-error' : undefined}
-                          className={`w-full px-4 py-2.5 bg-white dark:bg-gray-800 border rounded-lg focus:ring-1 focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-primary-500 dark:focus:border-primary-400 text-gray-900 dark:text-white transition-colors appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')] bg-no-repeat bg-[length:20px] bg-[right_0.75rem_center] pr-10 ${
-                            errors.countryRegion 
-                              ? 'border-red-500 dark:border-red-500' 
-                              : 'border-gray-300 dark:border-gray-600'
-                          }`}
-                        >
-                          <option value="">Select a country</option>
-                          {countries.map((country) => (
-                            <option key={country.name} value={country.name}>
-                              {country.flag} {country.name}
-                            </option>
-                          ))}
-                        </select>
-                        {errors.countryRegion && (
-                          <p 
-                            id="countryRegion-error" 
-                            className="mt-1 text-sm text-red-600 dark:text-red-400"
-                            role="alert"
-                          >
-                            {errors.countryRegion.message}
-                          </p>
-                        )}
-                      </div>
-                      <div>
-                        <label 
-                          htmlFor="city" 
-                          className="block text-sm font-medium text-gray-900 dark:text-white mb-1.5"
-                        >
-                          City *
-                        </label>
-                        <input
-                          type="text"
-                          id="city"
-                          {...register('city')}
-                          aria-invalid={errors.city ? 'true' : 'false'}
-                          aria-describedby={errors.city ? 'city-error' : undefined}
-                          className={`w-full px-4 py-2.5 bg-white dark:bg-gray-800 border rounded-lg focus:ring-1 focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-primary-500 dark:focus:border-primary-400 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-400 transition-colors ${
-                            errors.city 
-                              ? 'border-red-500 dark:border-red-500' 
-                              : 'border-gray-300 dark:border-gray-600'
-                          }`}
-                          placeholder="City"
-                        />
-                        {errors.city && (
-                          <p 
-                            id="city-error" 
-                            className="mt-1 text-sm text-red-600 dark:text-red-400"
-                            role="alert"
-                          >
-                            {errors.city.message}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Phone Number */}
+                    {/* Phone Number with Country Selector */}
                     <div>
                       <label 
                         htmlFor="phone" 
@@ -513,35 +446,84 @@ export default function ContactPage() {
                       >
                         Phone Number *
                       </label>
-                      <div className="flex">
-                        {phoneCode && (
-                          <span className="inline-flex items-center px-3 py-2.5 bg-gray-50 dark:bg-gray-800 border border-r-0 border-gray-300 dark:border-gray-600 rounded-l-lg text-gray-600 dark:text-gray-300 text-sm font-medium">
-                            {phoneCode}
-                          </span>
+                      <Controller
+                        name="phone"
+                        control={control}
+                        rules={{ required: 'Phone number is required' }}
+                        render={({ field }) => (
+                          <div>
+                            <PhoneInput
+                              {...field}
+                              international
+                              defaultCountry="US"
+                              value={phoneValue}
+                              onChange={(value) => {
+                                handlePhoneChange(value)
+                                field.onChange(value || '')
+                              }}
+                              onCountryChange={handleCountryChange}
+                              countrySelectProps={{
+                                className: 'PhoneInputCountrySelect',
+                                'aria-label': 'Select country'
+                              }}
+                              numberInputProps={{
+                                className: `PhoneInputInput ${
+                                  errors.phone ? '!border-red-500 dark:!border-red-500' : ''
+                                }`,
+                                id: 'phone',
+                                'aria-invalid': errors.phone ? 'true' : 'false',
+                                'aria-describedby': errors.phone ? 'phone-error' : undefined,
+                                placeholder: 'Enter phone number'
+                              }}
+                              className={`w-full ${errors.phone ? 'PhoneInput--error' : ''}`}
+                            />
+                            {/* Hidden field for countryRegion */}
+                            <input
+                              type="hidden"
+                              {...register('countryRegion')}
+                            />
+                            {errors.phone && (
+                              <p 
+                                id="phone-error" 
+                                className="mt-1 text-sm text-red-600 dark:text-red-400"
+                                role="alert"
+                              >
+                                {errors.phone.message}
+                              </p>
+                            )}
+                          </div>
                         )}
-                        <input
-                          type="tel"
-                          id="phone"
-                          {...register('phone')}
-                          aria-invalid={errors.phone ? 'true' : 'false'}
-                          aria-describedby={errors.phone ? 'phone-error' : undefined}
-                          className={`flex-1 px-4 py-2.5 bg-white dark:bg-gray-800 border rounded-lg focus:ring-1 focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-primary-500 dark:focus:border-primary-400 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-400 transition-colors ${
-                            phoneCode ? 'rounded-l-none' : ''
-                          } ${
-                            errors.phone 
-                              ? 'border-red-500 dark:border-red-500' 
-                              : 'border-gray-300 dark:border-gray-600'
-                          }`}
-                          placeholder={phoneCode ? "(555) 000-0000" : "Phone number"}
-                        />
-                      </div>
-                      {errors.phone && (
+                      />
+                    </div>
+
+                    {/* City */}
+                    <div>
+                      <label 
+                        htmlFor="city" 
+                        className="block text-sm font-medium text-gray-900 dark:text-white mb-1.5"
+                      >
+                        City *
+                      </label>
+                      <input
+                        type="text"
+                        id="city"
+                        {...register('city')}
+                        aria-invalid={errors.city ? 'true' : 'false'}
+                        aria-describedby={errors.city ? 'city-error' : undefined}
+                        className={`w-full px-4 py-2.5 bg-white dark:bg-gray-800 border rounded-lg focus:ring-1 focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-primary-500 dark:focus:border-primary-400 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-400 transition-colors ${
+                          errors.city 
+                            ? 'border-red-500 dark:border-red-500' 
+                            : 'border-gray-300 dark:border-gray-600'
+                        }`}
+                        placeholder="City"
+                      />
+                      {errors.city && (
                         <p 
-                          id="phone-error" 
+                          id="city-error" 
                           className="mt-1 text-sm text-red-600 dark:text-red-400"
                           role="alert"
                         >
-                          {errors.phone.message}
+                          {errors.city.message}
                         </p>
                       )}
                     </div>

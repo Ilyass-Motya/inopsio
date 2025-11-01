@@ -1,5 +1,7 @@
 'use client'
 
+import { useMemo } from 'react'
+
 interface HeroDefaultProps {
   title: string
   description: string
@@ -11,19 +13,19 @@ export default function HeroDefault({
   description,
   backgroundImage = '/images/main-hero-bg.svg'
 }: HeroDefaultProps) {
-  // Function to apply gradient to specific words
-  const renderTitleWithGradient = (titleText: string) => {
+  // Function to apply gradient to specific words - memoized for hydration consistency
+  const renderedTitle = useMemo(() => {
     // Check for common words that should have gradient effect
     const gradientWords = ['Innovation', 'Security', 'Automation', 'Platform', 'Solutions', 'Intelligence']
 
-    return titleText.split(' ').map((word, index) => {
+    return title.split(' ').map((word, index) => {
       const shouldHaveGradient = gradientWords.some(gradientWord =>
         word.includes(gradientWord) || gradientWord.includes(word)
       )
 
       if (shouldHaveGradient) {
         return (
-          <span key={index}>
+          <span key={`${word}-${index}`}>
             <span className="bg-gradient-to-r from-blue-400 via-teal-300 to-blue-400 bg-clip-text text-transparent">
               {word}
             </span>
@@ -31,9 +33,13 @@ export default function HeroDefault({
           </span>
         )
       }
-      return word + ' '
+      return (
+        <span key={`${word}-${index}`}>
+          {word}{' '}
+        </span>
+      )
     })
-  }
+  }, [title])
 
   return (
     <section
@@ -46,16 +52,19 @@ export default function HeroDefault({
       }}
     >
       <div className="relative max-w-8xl mx-auto px-6 sm:px-8 lg:px-12">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
-          {/* Title - Left Side */}
-          <div className="flex-shrink-0">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white whitespace-nowrap">
-              {renderTitleWithGradient(title)}
+        <div className="flex flex-col items-center text-center gap-5">
+          {/* Title - Centered */}
+          <div>
+            <h1 
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white"
+              suppressHydrationWarning
+            >
+              {renderedTitle}
             </h1>
           </div>
 
-          {/* Description - Right Side */}
-          <div className="flex-1 lg:mt-36">
+          {/* Description - Centered */}
+          <div>
             <p className="text-slate-300 leading-relaxed" style={{ fontSize: '14px' }}>
               {description}
             </p>

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import LanguageSelector from '../ui/LanguageSelector'
 import ThemeSwitcher from '../ui/ThemeSwitcher'
 import ComplianceBadge from '../ui/ComplianceBadge'
+import FooterCTA from '../sections/FooterCTA'
 
 const footerLinks = {
   platforms: [
@@ -75,6 +76,17 @@ export default function Footer() {
 
         {/* Main Footer Content */}
         <div className="relative bg-white dark:bg-gray-900 rounded-2xl p-8 sm:p-10 lg:p-12 mb-8 shadow-xl border-2 border-gray-200 dark:border-gray-700">
+          
+          {/* CTA Section inside Footer */}
+          <div className="mb-12 pb-12 border-b border-slate-300/50 dark:border-white/20">
+            <FooterCTA />
+          </div>
+
+          {/* L-shaped corner brackets */}
+          <div className="absolute top-0 left-0 w-10 h-10 border-t-2 border-l-2 border-primary-500 dark:border-primary-400 rounded-tl-2xl z-10"></div>
+          <div className="absolute top-0 right-0 w-10 h-10 border-t-2 border-r-2 border-primary-500 dark:border-primary-400 rounded-tr-2xl z-10"></div>
+          <div className="absolute bottom-0 left-0 w-10 h-10 border-b-2 border-l-2 border-primary-500 dark:border-primary-400 rounded-bl-2xl z-10"></div>
+          <div className="absolute bottom-0 right-0 w-10 h-10 border-b-2 border-r-2 border-primary-500 dark:border-primary-400 rounded-br-2xl z-10"></div>
           {/* Logo and System Status */}
           <div className="mb-12 pb-8 border-b border-slate-300/50 dark:border-white/20">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
