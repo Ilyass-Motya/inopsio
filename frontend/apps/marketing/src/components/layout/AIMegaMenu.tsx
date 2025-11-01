@@ -13,10 +13,9 @@ import {
 interface AIMegaMenuProps {
   isActivePath: (href: string) => boolean
   isDark: boolean
-  offset?: number
 }
 
-export default function AIMegaMenu({ isActivePath, isDark, offset: _offset = 0 }: AIMegaMenuProps) {
+export default function AIMegaMenu({ isActivePath, isDark }: AIMegaMenuProps) {
   const aiSolutions = [
     { 
       name: 'AI Assistant', 

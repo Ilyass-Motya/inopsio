@@ -14,10 +14,9 @@ import {
 interface ResourcesMegaMenuProps {
   isActivePath: (href: string) => boolean
   isDark: boolean
-  offset?: number
 }
 
-export default function ResourcesMegaMenu({ isActivePath, isDark, offset: _offset = 0 }: ResourcesMegaMenuProps) {
+export default function ResourcesMegaMenu({ isActivePath, isDark }: ResourcesMegaMenuProps) {
   const learn = [
     { 
       name: 'Blog', 

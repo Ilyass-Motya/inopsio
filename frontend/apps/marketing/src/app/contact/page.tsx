@@ -5,16 +5,18 @@ import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import ReCAPTCHA from 'react-google-recaptcha'
 import Image from 'next/image'
-import PhoneInput, { getCountryCallingCode, type E164Number, type Country } from 'react-phone-number-input'
+import PhoneInput, { getCountryCallingCode, type Value } from 'react-phone-number-input'
 import en from 'react-phone-number-input/locale/en.json'
 import 'react-phone-number-input/style.css'
 import HeaderPill from '@/components/layout/HeaderPill'
 import { contactFormSchema, type ContactFormData } from '@/lib/validations/contact'
 import { contactConfig, industries } from '@/config/contact'
 
+type Country = string | undefined
+
 export default function ContactPage() {
-  const [phoneValue, setPhoneValue] = useState<E164Number | undefined>('')
-  const [countryCode, setCountryCode] = useState<string | undefined>('')
+  const [phoneValue, setPhoneValue] = useState<Value>('')
+  const [countryCode, setCountryCode] = useState<Country>('')
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
@@ -84,12 +86,12 @@ export default function ContactPage() {
     }
   }, [formData, submitStatus, phoneValue, countryCode, agreeToTerms])
 
-  const handlePhoneChange = (value: E164Number | undefined) => {
+  const handlePhoneChange = (value: Value) => {
     setPhoneValue(value)
     setValue('phone', value || '', { shouldValidate: true })
   }
 
-  const handleCountryChange = (country: Country | undefined) => {
+  const handleCountryChange = (country: Country) => {
     setCountryCode(country)
     if (country) {
       const countryCallingCode = getCountryCallingCode(country)

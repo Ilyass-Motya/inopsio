@@ -15,10 +15,9 @@ import {
 interface CompanyMegaMenuProps {
   isActivePath: (href: string) => boolean
   isDark: boolean
-  offset?: number
 }
 
-export default function CompanyMegaMenu({ isActivePath, isDark, offset: _offset = 0 }: CompanyMegaMenuProps) {
+export default function CompanyMegaMenu({ isActivePath, isDark }: CompanyMegaMenuProps) {
   const about = [
     { 
       name: 'About Us', 

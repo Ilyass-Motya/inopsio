@@ -14,10 +14,9 @@ import {
 interface SolutionsMegaMenuProps {
   isActivePath: (href: string) => boolean
   isDark: boolean
-  offset?: number
 }
 
-export default function SolutionsMegaMenu({ isActivePath, isDark, offset: _offset = 0 }: SolutionsMegaMenuProps) {
+export default function SolutionsMegaMenu({ isActivePath, isDark }: SolutionsMegaMenuProps) {
   const healthcareEducation = [
     { 
       name: 'Healthcare', 
