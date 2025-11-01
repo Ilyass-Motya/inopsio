@@ -189,8 +189,10 @@ export default function HeroTest() {
 
   return (
     <>
-      {/* Main Hero Section */}
-      <section className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950">
+      {/* Hero Container with Border - Matches Header Pill */}
+      <div className="fixed inset-0 top-4 z-0">
+        <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 h-full">
+          <div className="relative h-full rounded-lg overflow-hidden border border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950">
         {/* Animated background blobs */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -left-40 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-blob"></div>
@@ -305,29 +307,10 @@ export default function HeroTest() {
             </svg>
           </div>
         </div>
-      </section>
-
-      {/* Customer logos section */}
-      <section className="relative bg-slate-900 border-t border-slate-800 py-16">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <p className="text-sm font-semibold text-slate-400 uppercase tracking-wider">
-              Trusted by Global Leaders in Security
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 items-center justify-items-center opacity-50 hover:opacity-100 transition-opacity">
-            {['Evolved', 'Wolves Partners', 'SAUTER', 'Bayern International', 'acrevis'].map((company, i) => (
-              <div
-                key={i}
-                className="h-12 px-8 flex items-center justify-center text-slate-400 font-bold text-lg hover:text-white transition-colors"
-              >
-                {company}
-              </div>
-            ))}
           </div>
         </div>
-      </section>
+      </div>
+
 
       {/* Add custom animations */}
       <style jsx>{`

@@ -140,7 +140,7 @@ export default function HeaderPill() {
 
   return (
     <header className="fixed z-50 top-8 left-0 right-0">
-      <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+      <div className="max-w-[1750px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-16">
         <nav
           className={`
             relative overflow-visible h-[60px] rounded-lg

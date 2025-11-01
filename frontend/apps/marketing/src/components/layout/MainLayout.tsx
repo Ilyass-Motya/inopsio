@@ -16,6 +16,8 @@ export default function MainLayout({ children }: MainLayoutProps) {
   const isBlogPost = pathname?.match(/^\/resources\/blog\/[^/]+$/)
   // Skip HeroDefault for /company/about - it has its own custom hero
   const isAboutPage = pathname === '/company/about'
+  // Skip HeroDefault for /hero-test - it has its own custom hero
+  const isHeroTestPage = pathname === '/hero-test'
 
   // Hero content mapping for different page sections
   const getHeroContent = (path: string) => {
@@ -288,7 +290,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   return (
     <>
       {!isBlogPost && <HeaderPill />}
-      {!isHomePage && !isBlogPost && !isAboutPage && (
+      {!isHomePage && !isBlogPost && !isAboutPage && !isHeroTestPage && (
         <HeroDefault
           title={heroContent.title}
           description={heroContent.description}
