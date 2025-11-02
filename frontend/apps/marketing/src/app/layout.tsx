@@ -145,7 +145,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={roboto.className}>
+      <body className={roboto.className} suppressHydrationWarning>
         <ThemeProvider>
           <LanguageProvider>
             {/* Global Background */}

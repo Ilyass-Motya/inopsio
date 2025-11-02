@@ -1,23 +1,208 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+
+// Grid characters overlay component
+function GridCharacters() {
+  const [characters, setCharacters] = useState<Array<{ x: number; y: number; text: string; id: string }>>([])
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    let isUpdating = false
+    
+    const updateCharacters = () => {
+      // Prevent overlapping updates
+      if (isUpdating) return
+      isUpdating = true
+      
+      // Wait for container to be ready
+      const container = containerRef.current
+      if (!container) {
+        isUpdating = false
+        // Retry after a short delay if container isn't ready
+        setTimeout(updateCharacters, 100)
+        return
+      }
+      
+      // Generate random characters for grid squares
+      const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+      const numbers = '0123456789'
+      
+      const gridSize = 128 // Match the grid size - bigger grids
+      const width = container.offsetWidth || window.innerWidth
+      const height = container.offsetHeight || window.innerHeight
+      
+      const cols = Math.ceil(width / gridSize)
+      const rows = Math.ceil(height / gridSize)
+      
+      const chars: Array<{ x: number; y: number; text: string; id: string }> = []
+      const usedPositions = new Set<string>() // Track used positions to prevent duplicates
+      
+      // Generate exactly one character for each grid position
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+          // Create unique ID for each grid position (row-col combination is unique)
+          const gridId = `grid-r${row}-c${col}`
+          const positionKey = `${row}-${col}`
+          
+          // Skip if this position already has a character
+          if (usedPositions.has(positionKey)) {
+            continue
+          }
+          
+          usedPositions.add(positionKey)
+          
+          // Generate character for this specific grid position
+          const letter = letters[Math.floor(Math.random() * letters.length)]
+          const number = numbers[Math.floor(Math.random() * numbers.length)]
+          
+          chars.push({
+            x: col * gridSize + 4, // Top-left corner with 4px padding
+            y: row * gridSize + 4, // Top-left corner with 4px padding
+            text: `${letter}${number}`,
+            id: gridId
+          })
+        }
+      }
+      
+      // Only set if we have valid characters
+      if (chars.length > 0) {
+        setCharacters(chars)
+      }
+      
+      isUpdating = false
+    }
+
+    // Initial update with a small delay to ensure DOM is ready
+    const timer = setTimeout(updateCharacters, 50)
+    
+    // Update on resize with debounce
+    let resizeTimer: NodeJS.Timeout
+    const handleResize = () => {
+      clearTimeout(resizeTimer)
+      resizeTimer = setTimeout(updateCharacters, 150)
+    }
+    
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', handleResize)
+      return () => {
+        clearTimeout(timer)
+        clearTimeout(resizeTimer)
+        window.removeEventListener('resize', handleResize)
+      }
+    }
+  }, [])
+
+  return (
+    <div 
+      ref={containerRef}
+      className="absolute inset-0 pointer-events-none overflow-hidden"
+    >
+      {characters.map((char, index) => (
+        <div
+          key={`${char.id}-${index}`}
+          className="absolute text-[10px] text-slate-400/40 font-mono font-bold select-none"
+          style={{
+            left: `${char.x}px`,
+            top: `${char.y}px`,
+            transform: 'none' // No transform needed for top-left positioning
+          }}
+        >
+          {char.text}
+        </div>
+      ))}
+    </div>
+  )
+}
 
 export default function Hero() {
   const [isVisible, setIsVisible] = useState(false)
+  const [typedText, setTypedText] = useState('')
+  const [showCursor, setShowCursor] = useState(true)
+  const fullText = 'INOPSIO'
 
   useEffect(() => {
     setIsVisible(true)
   }, [])
 
+  // INOPSIO typing effect
+  useEffect(() => {
+    if (typedText.length < fullText.length) {
+      const timeout = setTimeout(() => {
+        setTypedText(fullText.slice(0, typedText.length + 1))
+      }, 250) // Slower typing speed
+      return () => clearTimeout(timeout)
+    }
+  }, [typedText])
+
+  // INOPSIO cursor blink
+  useEffect(() => {
+    const cursorInterval = setInterval(() => {
+      setShowCursor(prev => !prev)
+    }, 500) // Cursor blink speed
+    return () => clearInterval(cursorInterval)
+  }, [])
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900/30">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white">
+      {/* Grid pattern overlay */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(100,116,139,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(100,116,139,.08)_1px,transparent_1px)] bg-[size:128px_128px]"></div>
+
+      {/* Grid characters overlay */}
+      <GridCharacters />
+
       {/* Content - Centered */}
       <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 py-16 sm:py-20 lg:py-24">
         <div className="flex flex-col items-center text-center">
+          {/* INOPSIO Text with Typing Animation */}
+          <div className={`opacity-0 translate-y-8 transition-all duration-700 ease-out mb-8 ${isVisible ? 'opacity-100 translate-y-0' : ''}`}>
+            <h1
+              className="text-9xl sm:text-[10rem] lg:text-[12rem] xl:text-[14rem] font-black flex items-baseline justify-center"
+              style={{
+                fontFamily: "'Modern Sport', sans-serif",
+                letterSpacing: '0.3em'
+              }}
+            >
+              <span
+                style={{
+                  background: 'linear-gradient(135deg, #030208 0%, #1e1b4b 20%, #1e40af 40%, #2563eb 60%, #3b82f6 80%, #030208 100%)',
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  color: 'transparent',
+                  backgroundSize: '200% 200%',
+                  animation: 'gradient-shift 5s ease-in-out infinite',
+                  display: 'inline-block'
+                }}
+              >
+                {typedText}
+              </span>
+              <span
+                style={{
+                  opacity: showCursor ? 1 : 0,
+                  transition: 'opacity 0.1s',
+                  marginLeft: '-0.3em',
+                  letterSpacing: '0',
+                  display: 'inline-block',
+                  verticalAlign: 'baseline',
+                  background: 'linear-gradient(135deg, #030208 0%, #1e1b4b 20%, #1e40af 40%, #2563eb 60%, #3b82f6 80%, #030208 100%)',
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  color: 'transparent',
+                  backgroundSize: '200% 200%',
+                  animation: 'gradient-shift 5s ease-in-out infinite'
+                }}
+              >
+                _
+              </span>
+            </h1>
+          </div>
+
           {/* Main Headline */}
-          <div className={`opacity-0 translate-y-8 transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : ''}`}>
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-bold tracking-tight mb-6 text-balance">
+          <div className={`opacity-0 translate-y-8 transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : ''}`} style={{ transitionDelay: '200ms' }}>
+            <h2 className="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-bold tracking-tight mb-6 text-balance">
               <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent">
                 Unify, Automate, and Secure
               </span>
@@ -25,7 +210,7 @@ export default function Hero() {
               <span className="text-slate-900 dark:text-white">
                 Your Business Operations
               </span>
-            </h1>
+            </h2>
           </div>
 
           {/* Subheading */}

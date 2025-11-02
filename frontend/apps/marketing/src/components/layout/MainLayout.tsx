@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import HeaderPill from '@/components/layout/HeaderPill'
 import Footer from '@/components/layout/Footer'
 import HeroDefault from '@/components/sections/HeroDefault'
+import FloatingControls from '@/components/ui/FloatingControls'
 
 interface MainLayoutProps {
   children: React.ReactNode
@@ -289,6 +290,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
 
   return (
     <>
+      <FloatingControls />
       {!isBlogPost && <HeaderPill />}
       {!isHomePage && !isBlogPost && !isAboutPage && !isHeroTestPage && (
         <HeroDefault
