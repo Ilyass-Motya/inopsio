@@ -153,45 +153,44 @@ export default function Hero() {
       <GridCharacters />
 
       {/* Content - Centered */}
-      <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 py-16 sm:py-20 lg:py-24">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-16 sm:py-20 lg:py-24">
         <div className="flex flex-col items-center text-center">
           {/* INOPSIO Text with Typing Animation */}
-          <div className={`opacity-0 translate-y-8 transition-all duration-700 ease-out mb-8 ${isVisible ? 'opacity-100 translate-y-0' : ''}`}>
+          <div className={`opacity-0 translate-y-8 transition-all duration-700 ease-out mb-6 sm:mb-8 ${isVisible ? 'opacity-100 translate-y-0' : ''}`}>
             <h1
-              className="text-9xl sm:text-[10rem] lg:text-[12rem] xl:text-[14rem] font-black flex items-baseline justify-center"
+              className="text-6xl sm:text-8xl md:text-9xl lg:text-[10rem] xl:text-[12rem] 2xl:text-[14rem] font-black flex items-baseline justify-center tracking-[0.15em] sm:tracking-[0.2em] md:tracking-[0.25em] lg:tracking-[0.3em] xl:tracking-[0.3em]"
               style={{
-                fontFamily: "'Modern Sport', sans-serif",
-                letterSpacing: '0.3em'
+                fontFamily: "'Modern Sport', sans-serif"
               }}
             >
               <span
+                className="inline-block"
                 style={{
                   background: 'linear-gradient(135deg, #030208 0%, #1e1b4b 20%, #1e40af 40%, #2563eb 60%, #3b82f6 80%, #030208 100%)',
                   WebkitBackgroundClip: 'text',
                   backgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   color: 'transparent',
-                  backgroundSize: '200% 200%',
-                  animation: 'gradient-shift 5s ease-in-out infinite',
-                  display: 'inline-block'
+                  backgroundSize: '300% 300%',
+                  backgroundPosition: 'center center',
+                  animation: 'gradient-shift 5s ease-in-out infinite'
                 }}
               >
                 {typedText}
               </span>
               <span
+                className="-ml-[0.15em] sm:-ml-[0.2em] md:-ml-[0.25em] lg:-ml-[0.3em] xl:-ml-[0.3em] tracking-[0] inline-block"
                 style={{
                   opacity: showCursor ? 1 : 0,
                   transition: 'opacity 0.1s',
-                  marginLeft: '-0.3em',
-                  letterSpacing: '0',
-                  display: 'inline-block',
                   verticalAlign: 'baseline',
                   background: 'linear-gradient(135deg, #030208 0%, #1e1b4b 20%, #1e40af 40%, #2563eb 60%, #3b82f6 80%, #030208 100%)',
                   WebkitBackgroundClip: 'text',
                   backgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   color: 'transparent',
-                  backgroundSize: '200% 200%',
+                  backgroundSize: '300% 300%',
+                  backgroundPosition: 'center center',
                   animation: 'gradient-shift 5s ease-in-out infinite'
                 }}
               >
@@ -202,7 +201,7 @@ export default function Hero() {
 
           {/* Main Headline */}
           <div className={`opacity-0 translate-y-8 transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : ''}`} style={{ transitionDelay: '200ms' }}>
-            <h2 className="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-bold tracking-tight mb-6 text-balance">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold tracking-tight mb-6 text-balance break-words">
               <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent">
                 Unify, Automate, and Secure
               </span>
