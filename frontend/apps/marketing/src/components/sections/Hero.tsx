@@ -274,37 +274,19 @@ function GridCharacters() {
 
 export default function Hero() {
   const [isVisible, setIsVisible] = useState(false)
-  const [typedText, setTypedText] = useState('')
-  const [showCursor, setShowCursor] = useState(true)
-  const fullText = 'INOPSIO'
+  
+  // Cache-busting version for image updates - increment this when image changes
+  const imageVersion = '2.0'
 
   useEffect(() => {
     setIsVisible(true)
   }, [])
 
-  // INOPSIO typing effect
-  useEffect(() => {
-    if (typedText.length < fullText.length) {
-      const timeout = setTimeout(() => {
-        setTypedText(fullText.slice(0, typedText.length + 1))
-      }, 250) // Slower typing speed
-      return () => clearTimeout(timeout)
-    }
-  }, [typedText])
-
-  // INOPSIO cursor blink
-  useEffect(() => {
-    const cursorInterval = setInterval(() => {
-      setShowCursor(prev => !prev)
-    }, 500) // Cursor blink speed
-    return () => clearInterval(cursorInterval)
-  }, [])
-
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-slate-900">
-      {/* 44% Primary Color Background from Top with Enhanced Smoke Effect */}
+      {/* 44% Primary Color Background from Top with Enhanced Smoke Effect - Light Mode */}
       <div 
-        className="absolute top-0 left-0 right-0 z-[2]"
+        className="absolute top-0 left-0 right-0 z-[2] dark:hidden"
         style={{
           width: '100%',
           height: '44vh',
@@ -325,12 +307,50 @@ export default function Hero() {
           }}
         ></div>
         
-        {/* Blur layer for soft smoke diffusion */}
+        {/* Blur layer for soft smoke diffusion - Light mode */}
         <div 
           className="absolute bottom-0 left-0 right-0"
           style={{
             height: '12%',
-            background: 'linear-gradient(to bottom, transparent 0%, rgba(0, 72, 231, 0.1) 50%, rgba(0, 72, 231, 0.2) 100%)',
+            background: 'linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0.1) 40%, rgba(255, 255, 255, 0.15) 60%, rgba(255, 255, 255, 0.2) 80%, rgba(255, 255, 255, 0.25) 100%)',
+            filter: 'blur(20px)',
+            transform: 'translateY(50%)',
+            pointerEvents: 'none'
+          }}
+        ></div>
+      </div>
+
+      {/* 44% Primary Color Background from Top with Enhanced Smoke Effect - Dark Mode */}
+      <div 
+        className="absolute top-0 left-0 right-0 z-[2] hidden dark:block"
+        style={{
+          width: '100%',
+          height: '44vh',
+          background: 'linear-gradient(to bottom, #0048e7 0%, #0048e7 88%, rgba(0, 72, 231, 0.95) 90%, rgba(0, 72, 231, 0.85) 91.5%, rgba(0, 72, 231, 0.7) 93%, rgba(0, 72, 231, 0.55) 94.5%, rgba(0, 72, 231, 0.4) 96%, rgba(0, 72, 231, 0.25) 97.5%, rgba(0, 72, 231, 0.12) 99%, transparent 100%)',
+          pointerEvents: 'none',
+          // Enhanced fade with mask for smoother transition - same as light mode
+          maskImage: 'linear-gradient(to bottom, black 0%, black 88%, rgba(0,0,0,0.95) 90%, rgba(0,0,0,0.85) 91.5%, rgba(0,0,0,0.7) 93%, rgba(0,0,0,0.55) 94.5%, rgba(0,0,0,0.4) 96%, rgba(0,0,0,0.25) 97.5%, rgba(0,0,0,0.12) 99%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 88%, rgba(0,0,0,0.95) 90%, rgba(0,0,0,0.85) 91.5%, rgba(0,0,0,0.7) 93%, rgba(0,0,0,0.55) 94.5%, rgba(0,0,0,0.4) 96%, rgba(0,0,0,0.25) 97.5%, rgba(0,0,0,0.12) 99%, transparent 100%)'
+        }}
+      >
+        {/* Subtle noise texture for organic smoke effect */}
+        <div 
+          className="absolute inset-0 opacity-[0.03] mix-blend-overlay"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            maskImage: 'linear-gradient(to bottom, transparent 88%, rgba(0,0,0,0.3) 95%, rgba(0,0,0,0.6) 98%, black 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 88%, rgba(0,0,0,0.3) 95%, rgba(0,0,0,0.6) 98%, black 100%)'
+          }}
+        ></div>
+        
+        {/* Blur layer for soft smoke diffusion - Dark mode - matching light mode structure */}
+        {/* Using exact slate-900 color: #0f172a = rgb(15, 23, 42) */}
+        {/* Slightly higher opacity for dark mode to match visual intensity of light mode */}
+        <div 
+          className="absolute bottom-0 left-0 right-0"
+          style={{
+            height: '12%',
+            background: 'linear-gradient(to bottom, transparent 0%, rgba(15, 23, 42, 0.08) 20%, rgba(15, 23, 42, 0.15) 40%, rgba(15, 23, 42, 0.22) 60%, rgba(15, 23, 42, 0.3) 80%, rgba(15, 23, 42, 0.35) 100%)',
             filter: 'blur(20px)',
             transform: 'translateY(50%)',
             pointerEvents: 'none'
@@ -363,70 +383,93 @@ export default function Hero() {
       {/* Grid characters overlay */}
       <GridCharacters />
 
-      {/* Content - 2 Column Layout */}
+      {/* AI Image Container - Positioned at hero section level, from top to bottom */}
+      <div 
+        className="absolute top-0 right-0 overflow-visible hidden lg:block pointer-events-none z-[5]"
+        style={{ 
+          bottom: 0, 
+          height: '100vh', 
+          maxHeight: '100vh',
+          width: '55%',
+          right: 0
+        }}
+      >
+        <div 
+          className="absolute right-0 top-0 bottom-0 w-full h-full" 
+          style={{ 
+            margin: 0, 
+            padding: 0, 
+            lineHeight: 0,
+            maxHeight: '100vh',
+            overflow: 'visible',
+            display: 'flex',
+            alignItems: 'flex-end',
+            justifyContent: 'flex-end'
+          }}
+        >
+          <div 
+            style={{
+              margin: 0,
+              padding: 0,
+              lineHeight: 0,
+              display: 'flex',
+              alignItems: 'flex-end',
+              justifyContent: 'flex-end',
+              marginRight: '6rem',
+              marginTop: '-20px',
+              transform: 'scale(1.2)',
+              transformOrigin: 'right center'
+            }}
+          >
+            <Image
+              src={`/images/head-img.png?v=${imageVersion}`}
+              alt="AI Technology"
+              width={1200}
+              height={1200}
+              priority
+              unoptimized
+              style={{
+                width: 'auto',
+                height: 'auto',
+                maxWidth: '100%',
+                maxHeight: '100%',
+                display: 'block',
+                margin: 0,
+                padding: 0,
+                lineHeight: 0,
+                objectFit: 'contain',
+                objectPosition: 'right center',
+                verticalAlign: 'bottom'
+              }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Content - Container with Header, Grid, and Image */}
       <div className="relative z-[10] max-w-[1750px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-16 py-16 sm:py-20 lg:py-24">
         <div className="flex flex-col items-start text-left">
-          {/* INOPSIO Text with Typing Animation - Center Aligned */}
-          <div className={`w-full opacity-0 translate-y-8 transition-all duration-700 ease-out mb-6 sm:mb-8 ${isVisible ? 'opacity-100 translate-y-0' : ''}`}>
-            <h1
-              className="text-6xl sm:text-8xl md:text-9xl lg:text-[10rem] xl:text-[12rem] 2xl:text-[14rem] font-black flex items-baseline justify-center tracking-[0.15em] sm:tracking-[0.2em] md:tracking-[0.25em] lg:tracking-[0.3em] xl:tracking-[0.3em]"
-              style={{
-                fontFamily: "'Modern Sport', sans-serif"
-              }}
-            >
-              <span
-                className="inline-block drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-                style={{
-                  background: 'linear-gradient(135deg, #ffffff 0%, #f0f9ff 15%, #e0f2fe 30%, #bae6fd 50%, #7dd3fc 70%, #38bdf8 85%, #0ea5e9 100%)',
-                  WebkitBackgroundClip: 'text',
-                  backgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  color: 'transparent',
-                  backgroundSize: '200% 200%',
-                  backgroundPosition: 'center center',
-                  animation: 'gradient-shift 5s ease-in-out infinite',
-                  filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 16px rgba(147, 197, 253, 0.3))',
-                  textShadow: '0 0 20px rgba(255, 255, 255, 0.5)'
-                }}
-              >
-                {typedText}
-              </span>
-              <span
-                className="-ml-[0.15em] sm:-ml-[0.2em] md:-ml-[0.25em] lg:-ml-[0.3em] xl:-ml-[0.3em] tracking-[0] inline-block drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-                style={{
-                  opacity: showCursor ? 1 : 0,
-                  transition: 'opacity 0.1s',
-                  verticalAlign: 'baseline',
-                  background: 'linear-gradient(135deg, #ffffff 0%, #f0f9ff 15%, #e0f2fe 30%, #bae6fd 50%, #7dd3fc 70%, #38bdf8 85%, #0ea5e9 100%)',
-                  WebkitBackgroundClip: 'text',
-                  backgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  color: 'transparent',
-                  backgroundSize: '200% 200%',
-                  backgroundPosition: 'center center',
-                  animation: 'gradient-shift 5s ease-in-out infinite',
-                  filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 16px rgba(147, 197, 253, 0.3))',
-                  textShadow: '0 0 20px rgba(255, 255, 255, 0.5)'
-                }}
-              >
-                _
-              </span>
-            </h1>
-          </div>
-
-          {/* 2 Column Grid Layout */}
-          <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
+          {/* 2 Column Grid Layout - Text (left) and Status Cards (right) */}
+          <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-start">
             {/* Left Column - Title, Description, CTA Buttons */}
-            <div className="flex flex-col items-start text-left space-y-4 sm:space-y-6">
+            <div className="flex flex-col items-start text-left space-y-4 sm:space-y-6 relative z-[12]">
               {/* Main Headline */}
               <div className={`opacity-0 translate-y-8 transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : ''}`} style={{ transitionDelay: '200ms' }}>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold tracking-tight mb-6 text-balance break-words text-left m-0 p-0">
                   <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent">
-                    Unify, Automate, and Secure
+                    Automate
+                  </span>
+                  <br />
+                  <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent text-[2em] leading-none">
+                    Secure
                   </span>
                   <br />
                   <span className="text-slate-900 dark:text-white">
-                    Your Business Operations
+                    and Unify
+                  </span>
+                  <br />
+                  <span className="text-slate-900 dark:text-white">
+                    your Business Operations
                   </span>
                 </h2>
               </div>
@@ -463,23 +506,132 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Right Column - AI Head Image */}
-            <div className={`relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] 2xl:h-[800px] opacity-0 translate-y-8 transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : ''}`} style={{ transitionDelay: '300ms' }}>
-              <div className="relative w-full h-full overflow-visible flex items-center justify-center">
-                <Image
-                  src="/images/ai-head.png"
-                  alt="AI Technology"
-                  width={800}
-                  height={800}
-                  className="w-full h-full object-contain object-center max-w-full"
-                  priority
-                  style={{
-                    display: 'block',
-                    margin: 0,
-                    padding: 0,
-                    lineHeight: 0
-                  }}
-                />
+            {/* Right Column - Status Cards with Glassmorphism */}
+            <div className="relative w-full z-[12]">
+              {/* 3 Glassmorphism Status Cards - In front of image */}
+              <div className="flex flex-col gap-3 sm:gap-4 w-full relative z-[12]">
+              {/* Status Card 1 */}
+              <div 
+                className={`
+                  backdrop-blur-xl bg-white/10 dark:bg-slate-900/40
+                  border border-white/20 dark:border-slate-700/50
+                  rounded-xl p-3 shadow-xl
+                  transform transition-all duration-300 ease-out
+                  hover:scale-[1.02] hover:bg-white/15 dark:hover:bg-slate-900/50
+                  hover:shadow-blue-500/20 hover:border-white/30 dark:hover:border-slate-600/70
+                  ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
+                `}
+                style={{ 
+                  transitionDelay: '300ms',
+                  backdropFilter: 'blur(16px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+                  width: '140px',
+                  height: '140px'
+                }}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <div className="p-1.5 bg-blue-500/20 rounded-lg backdrop-blur-sm">
+                    <svg className="w-3.5 h-3.5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <span className="px-1.5 py-0.5 text-[9px] font-semibold bg-green-500/20 text-green-400 rounded-full border border-green-500/30">
+                    Active
+                  </span>
+                </div>
+                <div className="space-y-0.5">
+                  <p className="text-[10px] text-slate-300 dark:text-slate-400 font-medium leading-tight">Real-time Processing</p>
+                  <p className="text-lg font-bold text-white leading-none">99.9%</p>
+                  <p className="text-[9px] text-green-400 flex items-center gap-0.5 leading-tight">
+                    <svg className="w-2 h-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clipRule="evenodd" />
+                    </svg>
+                    +2.3% from last month
+                  </p>
+                </div>
+              </div>
+
+              {/* Status Card 2 */}
+              <div 
+                className={`
+                  backdrop-blur-xl bg-white/10 dark:bg-slate-900/40
+                  border border-white/20 dark:border-slate-700/50
+                  rounded-xl p-3 shadow-xl
+                  transform transition-all duration-300 ease-out
+                  hover:scale-[1.02] hover:bg-white/15 dark:hover:bg-slate-900/50
+                  hover:shadow-purple-500/20 hover:border-white/30 dark:hover:border-slate-600/70
+                  ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
+                `}
+                style={{ 
+                  transitionDelay: '400ms',
+                  backdropFilter: 'blur(16px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+                  width: '140px',
+                  height: '140px'
+                }}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <div className="p-1.5 bg-purple-500/20 rounded-lg backdrop-blur-sm">
+                    <svg className="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                  </div>
+                  <span className="px-1.5 py-0.5 text-[9px] font-semibold bg-blue-500/20 text-blue-400 rounded-full border border-blue-500/30">
+                    Secure
+                  </span>
+                </div>
+                <div className="space-y-0.5">
+                  <p className="text-[10px] text-slate-300 dark:text-slate-400 font-medium leading-tight">Security Compliance</p>
+                  <p className="text-lg font-bold text-white leading-none">ISO 27001</p>
+                  <p className="text-[9px] text-blue-400 flex items-center gap-0.5 leading-tight">
+                    <svg className="w-2 h-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    Certified & Compliant
+                  </p>
+                </div>
+              </div>
+
+              {/* Status Card 3 */}
+              <div 
+                className={`
+                  backdrop-blur-xl bg-white/10 dark:bg-slate-900/40
+                  border border-white/20 dark:border-slate-700/50
+                  rounded-xl p-3 shadow-xl
+                  transform transition-all duration-300 ease-out
+                  hover:scale-[1.02] hover:bg-white/15 dark:hover:bg-slate-900/50
+                  hover:shadow-teal-500/20 hover:border-white/30 dark:hover:border-slate-600/70
+                  ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
+                `}
+                style={{ 
+                  transitionDelay: '500ms',
+                  backdropFilter: 'blur(16px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+                  width: '140px',
+                  height: '140px'
+                }}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <div className="p-1.5 bg-teal-500/20 rounded-lg backdrop-blur-sm">
+                    <svg className="w-3.5 h-3.5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <span className="px-1.5 py-0.5 text-[9px] font-semibold bg-teal-500/20 text-teal-400 rounded-full border border-teal-500/30">
+                    Growing
+                  </span>
+                </div>
+                <div className="space-y-0.5">
+                  <p className="text-[10px] text-slate-300 dark:text-slate-400 font-medium leading-tight">Enterprise Clients</p>
+                  <p className="text-lg font-bold text-white leading-none">500+</p>
+                  <p className="text-[9px] text-teal-400 flex items-center gap-0.5 leading-tight">
+                    <svg className="w-2 h-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clipRule="evenodd" />
+                    </svg>
+                    +15 this month
+                  </p>
+                </div>
+              </div>
               </div>
             </div>
           </div>
