@@ -2,11 +2,12 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 // Matrix-style falling binary animation component
 function MatrixRain() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const animationFrameRef = useRef<number>()
+  const animationFrameRef = useRef<number | undefined>(undefined)
   const columnsRef = useRef<Array<{ y: number; speed: number; length: number }>>([])
 
   useEffect(() => {
@@ -465,10 +466,13 @@ export default function Hero() {
             {/* Right Column - AI Head Image */}
             <div className={`relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] 2xl:h-[800px] opacity-0 translate-y-8 transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : ''}`} style={{ transitionDelay: '300ms' }}>
               <div className="relative w-full h-full overflow-visible flex items-center justify-center">
-                <img
+                <Image
                   src="/images/ai-head.png"
                   alt="AI Technology"
+                  width={800}
+                  height={800}
                   className="w-full h-full object-contain object-center max-w-full"
+                  priority
                   style={{
                     display: 'block',
                     margin: 0,

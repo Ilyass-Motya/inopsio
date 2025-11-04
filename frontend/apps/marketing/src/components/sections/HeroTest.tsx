@@ -2,66 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-
-// Floating metric card component
-function MetricCard({
-  title,
-  value,
-  trend,
-  icon,
-  delay = 0,
-  badge
-}: {
-  title: string
-  value: string
-  trend?: string
-  icon: React.ReactNode
-  delay?: number
-  badge?: string
-}) {
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), delay)
-    return () => clearTimeout(timer)
-  }, [delay])
-
-  return (
-    <div
-      className={`
-        backdrop-blur-xl bg-white/10 dark:bg-slate-900/40
-        border border-white/20 dark:border-slate-700/50
-        rounded-2xl p-5 shadow-2xl
-        transform transition-all duration-700 ease-out
-        hover:scale-105 hover:bg-white/15 hover:shadow-blue-500/20
-        ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-      `}
-    >
-      <div className="flex items-start justify-between mb-3">
-        <div className="p-2 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-lg">
-          {icon}
-        </div>
-        {badge && (
-          <span className="px-2 py-1 text-xs font-bold bg-gradient-to-r from-green-400 to-emerald-500 text-white rounded-full">
-            {badge}
-          </span>
-        )}
-      </div>
-      <div className="space-y-1">
-        <p className="text-sm text-slate-300 font-medium">{title}</p>
-        <p className="text-2xl font-bold text-white">{value}</p>
-        {trend && (
-          <p className="text-xs text-green-400 flex items-center gap-1">
-            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clipRule="evenodd" />
-            </svg>
-            {trend}
-          </p>
-        )}
-      </div>
-    </div>
-  )
-}
+import Image from 'next/image'
 
 // Grid characters overlay component
 function GridCharacters() {
@@ -182,9 +123,12 @@ function AIHeadImage() {
     <div className="absolute right-0 overflow-visible" style={{ bottom: '0px', height: '100vh', width: '65%' }}>
       {/* AI Head Image */}
       <div className="absolute right-0 w-full h-full" style={{ bottom: '0px', margin: 0, padding: 0, lineHeight: 0 }}>
-        <img
+        <Image
           src="/images/ai-head.png"
           alt="AI Technology"
+          width={1200}
+          height={1200}
+          priority
           style={{
             width: '100%',
             height: '100%',
@@ -270,10 +214,29 @@ export default function HeroTest() {
 
   return (
     <>
+      {/* 44% Primary Color Background from Top with Smoke Effect */}
+      <div 
+        className="fixed inset-0 top-0 z-0"
+        style={{
+          width: '100%',
+          height: '44%',
+          top: 0,
+          background: 'linear-gradient(to bottom, #0048e7 0%, #0048e7 91%, rgba(0, 72, 231, 0.8) 94%, rgba(0, 72, 231, 0.5) 96%, rgba(0, 72, 231, 0.2) 98%, transparent 100%)'
+        }}
+      ></div>
+
       {/* Hero Container with Border - Matches Header Pill */}
       <div className="fixed inset-0 top-4 z-0">
         <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 h-full">
-          <div className="relative h-full rounded-lg border border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950" style={{ overflow: 'visible' }}>
+          <div 
+            className="relative h-full rounded-lg backdrop-blur-xl bg-slate-900/40 border border-white/20 dark:border-white/10 shadow-2xl"
+            style={{ 
+              overflow: 'visible',
+              boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+              backdropFilter: 'blur(20px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(20px) saturate(180%)'
+            }}
+          >
 
         {/* BOTTOM LINE TO SEE THE BOUNDARY */}
         <div className="absolute bottom-0 left-0 right-0 h-1 bg-red-500 z-50" style={{ margin: 0, padding: 0 }}></div>
@@ -325,12 +288,12 @@ export default function HeroTest() {
                 </h1>
 
                 {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full backdrop-blur-sm">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 dark:bg-slate-900/40 border border-white/20 dark:border-slate-700/50 rounded-full backdrop-blur-sm">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
                   </span>
-                  <span className="text-sm font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  <span className="text-sm font-semibold text-blue-400">
                     Next-Gen Enterprise Security Platform
                   </span>
                 </div>
@@ -363,7 +326,7 @@ export default function HeroTest() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   href="/demo"
-                  className="group inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 transition-all duration-300 rounded-xl shadow-xl hover:shadow-blue-500/50 transform hover:scale-105 hover:-translate-y-1"
+                  className="group inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 transition-all duration-300 rounded-xl shadow-xl hover:shadow-blue-500/50 transform hover:scale-105 hover:-translate-y-1"
                 >
                   <svg className="w-5 h-5 mr-2 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />

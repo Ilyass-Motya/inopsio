@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, useCallback } from 'react'
 
 type Theme = 'light' | 'dark' | 'system'
 
@@ -23,7 +23,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }
 
   // Apply theme based on current setting
-  const applyTheme = (currentTheme: Theme) => {
+  const applyTheme = useCallback((currentTheme: Theme) => {
     let effectiveTheme: 'light' | 'dark'
     
     if (currentTheme === 'system') {
@@ -34,7 +34,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
     setResolvedTheme(effectiveTheme)
     document.documentElement.classList.toggle('dark', effectiveTheme === 'dark')
-  }
+  }, [])
 
   // Load theme from localStorage on mount
   useEffect(() => {
@@ -61,7 +61,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       mediaQuery.addEventListener('change', handleChange)
       return () => mediaQuery.removeEventListener('change', handleChange)
     }
-  }, [theme])
+  }, [theme, applyTheme])
 
   // Update theme
   const setTheme = (newTheme: Theme) => {
